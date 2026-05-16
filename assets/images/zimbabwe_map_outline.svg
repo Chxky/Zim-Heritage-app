@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" fill="none">
+  <!-- Stylized Zimbabwe map outline with provinces -->
+  <g opacity="0.15">
+    <!-- Major border outline -->
+    <path d="M10 180 L20 140 L40 100 L60 70 L80 50 L100 30 L130 20 L160 10 L190 5 L220 8 L250 15 L270 25 L290 40 L310 60 L330 80 L350 100 L370 120 L385 140 L395 160 L398 180 L395 200 L385 220 L370 240 L350 260 L330 280 L310 295 L290 305 L270 315 L250 320 L220 325 L190 328 L160 325 L130 320 L100 310 L70 295 L50 280 L35 260 L20 240 L10 220 L5 200 Z"
+      fill="#006B3F" stroke="#FFC72C" stroke-width="1.5"/>
+    
+    <!-- Province dividers -->
+    <path d="M190 10 L180 80 L160 140 L150 200 L160 260 L180 300" stroke="#FFC72C" stroke-width="0.8" fill="none"/>
+    <path d="M250 20 L240 90 L260 150 L280 210 L270 280" stroke="#FFC72C" stroke-width="0.8" fill="none"/>
+    <path d="M100 60 L120 120 L140 180 L120 240 L100 290" stroke="#FFC72C" stroke-width="0.8" fill="none"/>
+    <path d="M310 80 L300 140 L320 200 L330 260" stroke="#FFC72C" stroke-width="0.8" fill="none"/>
+    
+    <!-- Province labels -->
+    <text x="150" y="140" font-size="8" fill="#FFC72C" opacity="0.5">Mashonaland</text>
+    <text x="210" y="220" font-size="7" fill="#FFC72C" opacity="0.5">Midlands</text>
+    <text x="170" y="260" font-size="8" fill="#FFC72C" opacity="0.5">Masvingo</text>
+    <text x="90" y="180" font-size="7" fill="#FFC72C" opacity="0.5">Mat North</text>
+    <text x="80" y="270" font-size="7" fill="#FFC72C" opacity="0.5">Mat South</text>
+    <text x="280" y="100" font-size="7" fill="#FFC72C" opacity="0.5">Manicaland</text>
+  </g>
+</svg>

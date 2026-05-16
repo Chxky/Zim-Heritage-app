@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867646528840",
+    "project_id": "zim-edu-bridge",
+    "storage_bucket": "zim-edu-bridge.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867646528840:android:ebcb52ae1906d0f078277d",
+        "android_client_info": {
+          "package_name": "com.zim_heritage_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867646528840-mc462l4hslbi1gmet80hs7rm9der7n9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9aazY4oUSu-CpMzT6WNofnpOkmjG8XXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867646528840-mc462l4hslbi1gmet80hs7rm9der7n9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

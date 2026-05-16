@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Zimbabwe Bird - stylized forward-facing silhouette with wings -->
+  <!-- Base bird shape -->
+  <g transform="translate(100, 100)">
+    <!-- Pedestal/Base -->
+    <rect x="-30" y="55" width="60" height="12" rx="3" fill="#004D2E"/>
+    <rect x="-35" y="60" width="70" height="8" rx="2" fill="#FFC72C"/>
+    
+    <!-- Body -->
+    <path d="M-8 50 C-8 50 -20 30 -15 10 C-10 -10 -5 -20 0 -25 C5 -20 10 -10 15 10 C20 30 8 50 8 50 Z" fill="#004D2E"/>
+    
+    <!-- Chest highlight -->
+    <path d="M-3 45 C-3 45 -12 28 -8 12 C-4 -4 0 -12 0 -15 C0 -12 4 -4 8 12 C12 28 3 45 3 45 Z" fill="#006B3F"/>
+    
+    <!-- Left Wing - elegant sweep upward -->
+    <path d="M-8 15 C-15 5 -35 -5 -50 -15 C-55 -18 -52 -12 -48 -8 C-40 0 -25 8 -15 12 Z" fill="#004D2E"/>
+    <path d="M-10 10 C-18 2 -35 -8 -48 -18 C-50 -20 -48 -14 -45 -10 C-38 -2 -25 6 -16 10 Z" fill="#FFC72C"/>
+    
+    <!-- Right Wing - elegant sweep upward -->
+    <path d="M8 15 C15 5 35 -5 50 -15 C55 -18 52 -12 48 -8 C40 0 25 8 15 12 Z" fill="#004D2E"/>
+    <path d="M10 10 C18 2 35 -8 48 -18 C50 -20 48 -14 45 -10 C38 -2 25 6 16 10 Z" fill="#FFC72C"/>
+    
+    <!-- Head -->
+    <ellipse cx="0" cy="-30" rx="10" ry="8" fill="#004D2E"/>
+    
+    <!-- Comb/Crest on head - Star-shaped like the real Zimbabwe Bird -->
+    <path d="M0 -38 L-3 -50 L0 -45 L3 -50 Z" fill="#FFC72C"/>
+    <path d="M-4 -36 L-10 -46 L-6 -42 L-8 -48 Z" fill="#FFC72C"/>
+    <path d="M4 -36 L10 -46 L6 -42 L8 -48 Z" fill="#FFC72C"/>
+    <circle cx="0" cy="-52" r="3" fill="#FFC72C"/>
+    
+    <!-- Eye -->
+    <circle cx="0" cy="-32" r="2" fill="#FFC72C"/>
+    <circle cx="0" cy="-32" r="1" fill="#004D2E"/>
+    
+    <!-- Beak -->
+    <path d="M-3 -28 L0 -22 L3 -28 Z" fill="#FFC72C"/>
+    
+    <!-- Star accent on chest -->
+    <polygon points="0,5 1.5,1 6,1 2.5,-1 4,-5.5 0,-3 -4,-5.5 -2.5,-1 -6,1 -1.5,1" fill="#FFC72C" opacity="0.8"/>
+  </g>
+</svg>
