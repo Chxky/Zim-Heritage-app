@@ -245,6 +245,109 @@ final Map<String, List<PastExamQuestion>> pastExamQuestions = {
       marks: 11, answer: 'a) Transition metals are elements with partially filled d-orbitals.\nb) Variable oxidation states, coloured compounds, catalytic activity, formation of complexes (any three)\nc) Iron catalyses the Haber process (N₂ + 3H₂ ⇌ 2NH₃). It provides a surface for adsorption of N₂ and H₂, weakening their bonds and lowering activation energy, without being consumed in the reaction.',
       explanation: 'Transition metals have unique properties due to their d-electron configuration.', topic: 'Inorganic Chemistry'),
   ],
+
+  // ======================== CAMBRIDGE PRIMARY - GRADE 5 ========================
+  'cam_g5_eng': [
+    PastExamQuestion(id: 'pe_cam_g5_eng_1', subjectId: 'cam_g5_eng', gradeLevel: 'Grade 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Write a composition of about 200 words on: "My Favourite Place"', marks: 30,
+      answer: 'A well-structured essay describing a favourite place with sensory details, personal feelings, and reasons why it is special.',
+      explanation: 'Marked on: Content (10), Organisation (8), Language (7), Accuracy (5)', topic: 'Descriptive Writing'),
+  ],
+  'cam_g5_mat': [
+    PastExamQuestion(id: 'pe_cam_g5_mat_1', subjectId: 'cam_g5_mat', gradeLevel: 'Grade 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Express the ratio 8:12 in its simplest form. (2 marks)\nb) If 5 oranges cost \$2.50, how much do 8 oranges cost? (3 marks)',
+      marks: 5, answer: 'a) 8:12 = 2:3 (divide both by 4)\nb) One orange = \$2.50/5 = \$0.50. 8 oranges = 8 x \$0.50 = \$4.00',
+      explanation: 'For ratios, divide by the highest common factor. For proportion, find the unit cost first.', topic: 'Ratio and Proportion'),
+  ],
+  'cam_g5_sci': [
+    PastExamQuestion(id: 'pe_cam_g5_sci_1', subjectId: 'cam_g5_sci', gradeLevel: 'Grade 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Name the three states of matter. (3 marks)\nb) What happens to water when it is heated to 100°C? (2 marks)\nc) Explain why you can smell cooking food from another room. (3 marks)',
+      marks: 8, answer: 'a) Solid, liquid, gas\nb) It boils and turns into steam (gas)\nc) The particles of the cooking food gain energy and spread through the air by diffusion.',
+      explanation: 'Remember: heating gives particles energy to move faster and spread out.', topic: 'States of Matter'),
+  ],
+
+  // ======================== CAMBRIDGE PRIMARY - GRADE 6 CHECKPOINT ========================
+  'cam_g6_eng': [
+    PastExamQuestion(id: 'pe_cam_g6_eng_1', subjectId: 'cam_g6_eng', gradeLevel: 'Grade 6', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Write a persuasive essay on: "Why We Should Protect the Environment" Write at least 250 words.', marks: 30,
+      answer: 'Introduction: State your position. Body: Give reasons (pollution affects health, wildlife is endangered, future generations). Conclusion: Call to action.',
+      explanation: 'Use persuasive techniques: facts, statistics, emotive language.', topic: 'Persuasive Writing'),
+  ],
+  'cam_g6_mat': [
+    PastExamQuestion(id: 'pe_cam_g6_mat_1', subjectId: 'cam_g6_mat', gradeLevel: 'Grade 6', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Solve: 2x + 7 = 15', marks: 3,
+      answer: '2x + 7 = 15\n2x = 15 - 7\n2x = 8\nx = 4', explanation: 'Subtract 7 from both sides, then divide by 2.', topic: 'Algebra'),
+  ],
+  'cam_g6_sci': [
+    PastExamQuestion(id: 'pe_cam_g6_sci_1', subjectId: 'cam_g6_sci', gradeLevel: 'Grade 6', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) What is an element? (2 marks)\nb) Give three examples of elements. (3 marks)\nc) What is the difference between a compound and a mixture? (4 marks)',
+      marks: 9, answer: 'a) An element is a pure substance made of only one type of atom.\nb) Oxygen (O), Hydrogen (H), Carbon (C) - any three valid elements.\nc) A compound has elements chemically bonded in fixed proportions. A mixture has substances physically combined that can be separated easily.',
+      explanation: 'Elements are on the periodic table. Compounds have chemical bonds, mixtures do not.', topic: 'Chemistry Basics'),
+  ],
+
+  // ======================== CAMBRIDGE IGCSE - FORM 3 ========================
+  'cam_o3_eng': [
+    PastExamQuestion(id: 'pe_cam_o3_eng_1', subjectId: 'cam_o3_eng', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Read the passage below and answer the questions.\n\n[Passage about climate change]\n\na) Summarise the passage in about 80 words. (5 marks)\nb) Explain the writer\'s use of language in paragraph 2. (4 marks)',
+      marks: 9, answer: 'a) Summary should capture: climate change causes, effects on environment, solutions proposed.\nb) Identify language techniques and explain their effect on the reader.',
+      explanation: 'For summary, identify key points and use your own words. For language analysis, quote and explain.', topic: 'Reading and Comprehension'),
+  ],
+  'cam_o3_mat': [
+    PastExamQuestion(id: 'pe_cam_o3_mat_1', subjectId: 'cam_o3_mat', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Solve: 3x - 7 = 14 (3 marks)\nb) Simplify: 2(3x + 4) - 5x (3 marks)\nc) Factorise: x² + 5x + 6 (3 marks)',
+      marks: 9, answer: 'a) 3x = 21, x = 7\nb) 6x + 8 - 5x = x + 8\nc) (x + 2)(x + 3)',
+      explanation: 'For factorisation, find two numbers that multiply to give 6 and add to give 5.', topic: 'Number and Algebra'),
+  ],
+  'cam_o3_bio': [
+    PastExamQuestion(id: 'pe_cam_o3_bio_1', subjectId: 'cam_o3_bio', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Draw and label a plant cell. (5 marks)\nb) Name three structures found in plant cells but not in animal cells. (3 marks)\nc) Explain the function of chloroplasts. (3 marks)',
+      marks: 11, answer: 'a) Should include: cell wall, cell membrane, cytoplasm, nucleus, vacuole, chloroplasts\nb) Cell wall, chloroplasts, permanent vacuole\nc) Chloroplasts contain chlorophyll and are the site of photosynthesis, where light energy is converted to chemical energy (glucose).',
+      explanation: 'Plant cells have rigid cell walls and chloroplasts for photosynthesis.', topic: 'Cell Biology'),
+  ],
+  'cam_o3_che': [
+    PastExamQuestion(id: 'pe_cam_o3_che_1', subjectId: 'cam_o3_che', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Define relative atomic mass. (2 marks)\nb) Calculate the relative atomic mass of chlorine given: Cl-35 (75%) and Cl-37 (25%). (3 marks)',
+      marks: 5, answer: 'a) The relative atomic mass is the weighted average mass of isotopes of an element, relative to 1/12 of carbon-12.\nb) (35 x 0.75) + (37 x 0.25) = 26.25 + 9.25 = 35.5',
+      explanation: 'Use the weighted average formula: (isotope1 x abundance1) + (isotope2 x abundance2).', topic: 'Atomic Structure'),
+  ],
+  'cam_o3_phy': [
+    PastExamQuestion(id: 'pe_cam_o3_phy_1', subjectId: 'cam_o3_phy', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'A car travels 100m in 5 seconds. Calculate:\na) Its speed (2 marks)\nb) If it accelerates from rest to 30 m/s in 6 seconds, what is its acceleration? (3 marks)',
+      marks: 5, answer: 'a) Speed = distance/time = 100/5 = 20 m/s\nb) Acceleration = (v-u)/t = (30-0)/6 = 5 m/s²',
+      explanation: 'Speed = distance/time. Acceleration = change in velocity/time.', topic: 'Mechanics'),
+  ],
+  'cam_o3_eco': [
+    PastExamQuestion(id: 'pe_cam_o3_eco_1', subjectId: 'cam_o3_eco', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) What is the basic economic problem? (2 marks)\nb) Explain the difference between needs and wants. (3 marks)\nc) Give an example of opportunity cost. (2 marks)',
+      marks: 7, answer: 'a) Scarcity - unlimited wants but limited resources.\nb) Needs are essentials for survival (food, water, shelter). Wants are desires that improve quality of life but are not essential.\nc) Choosing to study instead of going to a party. The opportunity cost is the enjoyment of the party.',
+      explanation: 'The basic economic problem forces societies to make choices about resource allocation.', topic: 'Basic Economic Ideas'),
+  ],
+
+  // ======================== CAMBRIDGE A-LEVEL - FORM 5 ========================
+  'cam_a5_mat': [
+    PastExamQuestion(id: 'pe_cam_a5_mat_1', subjectId: 'cam_a5_mat', gradeLevel: 'Form 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Differentiate f(x) = 3x⁴ - 2x² + 5x - 1 (4 marks)\nb) Find the gradient of the curve y = x³ - 3x at the point where x = 2. (3 marks)',
+      marks: 7, answer: 'a) f\'(x) = 12x³ - 4x + 5\nb) dy/dx = 3x² - 3. At x=2: 3(4) - 3 = 12 - 3 = 9',
+      explanation: 'Apply the power rule for differentiation. Gradient = dy/dx at the given point.', topic: 'Pure Mathematics 1'),
+  ],
+  'cam_a5_bio': [
+    PastExamQuestion(id: 'pe_cam_a5_bio_1', subjectId: 'cam_a5_bio', gradeLevel: 'Form 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Describe the fluid mosaic model of cell membranes. (5 marks)\nb) Explain how substances cross cell membranes by facilitated diffusion. (4 marks)',
+      marks: 9, answer: 'a) Phospholipid bilayer with proteins (integral and peripheral), cholesterol, glycoproteins. The membrane is fluid - components can move laterally.\b) Carrier proteins bind to specific molecules, change shape, and transport them across the membrane down the concentration gradient. No energy required.',
+      explanation: 'The fluid mosaic model was proposed by Singer and Nicolson in 1972.', topic: 'Cell Structure'),
+  ],
+  'cam_a5_che': [
+    PastExamQuestion(id: 'pe_cam_a5_che_1', subjectId: 'cam_a5_che', gradeLevel: 'Form 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'a) Calculate the number of moles in 24g of carbon-12. (2 marks)\nb) What volume does 0.5 mol of gas occupy at room temperature and pressure? (2 marks)',
+      marks: 4, answer: 'a) Moles = mass/Mr = 24/12 = 2 mol\nb) Volume = moles x 24 = 0.5 x 24 = 12 dm³',
+      explanation: 'At RTP, 1 mole of gas occupies 24 dm³.', topic: 'Physical Chemistry'),
+  ],
+  'cam_a5_phy': [
+    PastExamQuestion(id: 'pe_cam_a5_phy_1', subjectId: 'cam_a5_phy', gradeLevel: 'Form 5', year: '2023', term: 'Term 1', paper: '1',
+      question: 'A ball is thrown vertically upward at 20 m/s. Calculate:\na) The maximum height reached (3 marks)\nb) The time taken to return to the starting point (3 marks)\n(g = 10 m/s²)',
+      marks: 6, answer: 'a) v² = u² + 2as → 0 = 400 - 20s → s = 20m\nb) Time up = (v-u)/a = (0-20)/(-10) = 2s. Total time = 2 x 2 = 4s',
+      explanation: 'At maximum height, velocity = 0. Time up equals time down (symmetry).', topic: 'Mechanics'),
+  ],
 };
 
 List<PastExamQuestion> getPastQuestionsForSubjectAndGrade(String subjectId, String gradeLevel) {

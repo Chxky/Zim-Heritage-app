@@ -755,6 +755,178 @@ final Map<String, List<Lesson>> lessonsByTopic = {
       references: ['New Express English Form 4', 'ZIMSEC O-Level English Past Papers'],
     ),
   ],
+
+  // ========== CAMBRIDGE PRIMARY - GRADE 1 ENGLISH ==========
+  'cam_g1_eng_1': [
+    Lesson(
+      id: 'lsn_cam_g1_eng_1', subjectId: 'cam_g1_eng', topicId: 'cam_g1_eng_1',
+      title: 'Phonics and Reading', gradeLevel: 'Grade 1',
+      objectives: ['Recognise letter sounds', 'Blend sounds to read words', 'Read simple sentences'],
+      sections: [
+        LessonSection(
+          heading: 'Letter Sounds',
+          content: 'Each letter of the alphabet makes a sound. Learning these sounds helps us read words.',
+          bulletPoints: ['A says /a/ as in apple', 'B says /b/ as in ball', 'C says /c/ as in cat'],
+          example: 'The letter M says /m/ as in mat, moon, and mouse.',
+        ),
+        LessonSection(
+          heading: 'Blending Sounds',
+          content: 'Blending means putting sounds together to read a word. Start slowly, then speed up.',
+          bulletPoints: ['c-a-t = cat', 'd-o-g = dog', 's-u-n = sun'],
+          example: 'Try blending: m-a-t = mat. Say each sound, then say them faster together.',
+        ),
+      ],
+      keyPoints: ['Every letter has a sound', 'Blend sounds from left to right', 'Practice with simple CVC words'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'What word do these sounds make: b-u-s?', answer: 'bus', explanation: 'Blend the sounds b, u, s together to make the word bus.'),
+        PracticeQuestion(question: 'Which word starts with the /s/ sound? cat, sun, dog', answer: 'sun', explanation: 'Sun starts with the /s/ sound.'),
+      ],
+      references: ['Cambridge Primary English Learner\'s Book 1'],
+    ),
+  ],
+
+  // ========== CAMBRIDGE PRIMARY - GRADE 1 MATHEMATICS ==========
+  'cam_g1_mat_1': [
+    Lesson(
+      id: 'lsn_cam_g1_mat_1', subjectId: 'cam_g1_mat', topicId: 'cam_g1_mat_1',
+      title: 'Numbers and Counting', gradeLevel: 'Grade 1',
+      objectives: ['Count from 1 to 100', 'Recognise numbers', 'Understand place value'],
+      sections: [
+        LessonSection(
+          heading: 'Counting to 100',
+          content: 'We count objects one by one to find out how many there are.',
+          bulletPoints: ['Count 1, 2, 3, 4, 5...', 'Use fingers to help count', 'Touch each object as you count'],
+          example: 'Count the apples: 1, 2, 3, 4, 5. There are 5 apples.',
+        ),
+        LessonSection(
+          heading: 'Place Value',
+          content: 'Numbers have tens and ones. For example, 23 has 2 tens and 3 ones.',
+          bulletPoints: ['10 ones = 1 ten', '25 = 2 tens and 5 ones', '50 = 5 tens'],
+          example: 'The number 47 has 4 tens (40) and 7 ones.',
+        ),
+      ],
+      keyPoints: ['Count objects one by one', 'Numbers have tens and ones', 'Practice counting every day'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'How many tens are in the number 35?', answer: '3 tens', explanation: '35 = 30 + 5, so there are 3 tens and 5 ones.'),
+        PracticeQuestion(question: 'What number comes after 49?', answer: '50', explanation: 'After 49 comes 50. The tens change from 4 to 5.'),
+      ],
+      references: ['Cambridge Primary Mathematics Learner\'s Book 1'],
+    ),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - FORM 3 ENGLISH ==========
+  'cam_o3_eng_1': [
+    Lesson(
+      id: 'lsn_cam_o3_eng_1', subjectId: 'cam_o3_eng', topicId: 'cam_o3_eng_1',
+      title: 'Reading and Comprehension', gradeLevel: 'Form 3',
+      objectives: ['Analyse passages critically', 'Write effective summaries', 'Identify language techniques'],
+      sections: [
+        LessonSection(
+          heading: 'Reading Strategies',
+          content: 'Effective reading involves understanding the main idea, supporting details, and the writer\'s purpose.',
+          bulletPoints: ['Read the passage twice', 'Identify the main idea', 'Look for supporting evidence', 'Consider the writer\'s tone'],
+          example: 'If the passage is about climate change, the main idea might be that human activities are causing global warming.',
+        ),
+        LessonSection(
+          heading: 'Summary Writing',
+          content: 'A summary captures the key points of a passage in your own words.',
+          bulletPoints: ['Identify 4-5 key points', 'Use your own words', 'Stay within the word limit', 'Do not add your opinion'],
+          example: 'Key points might be: causes of climate change, effects on environment, possible solutions.',
+        ),
+      ],
+      keyPoints: ['Read actively and critically', 'Summary = key points in your own words', 'Identify language techniques and their effects'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'What is the difference between a fact and an opinion?', answer: 'A fact can be proven true. An opinion is a personal belief that may vary between people.', explanation: 'Facts use evidence. Opinions use words like I think, I believe, in my opinion.'),
+      ],
+      references: ['Cambridge IGCSE English First Language Coursebook'],
+    ),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - FORM 3 BIOLOGY ==========
+  'cam_o3_bio_1': [
+    Lesson(
+      id: 'lsn_cam_o3_bio_1', subjectId: 'cam_o3_bio', topicId: 'cam_o3_bio_1',
+      title: 'Cell Biology', gradeLevel: 'Form 3',
+      objectives: ['Describe cell structure', 'Compare plant and animal cells', 'Explain cell functions'],
+      sections: [
+        LessonSection(
+          heading: 'Cell Structure',
+          content: 'All living things are made of cells. Cells are the basic units of life.',
+          bulletPoints: ['Nucleus - controls cell activities', 'Cytoplasm - where chemical reactions happen', 'Cell membrane - controls what enters and leaves', 'Mitochondria - site of respiration'],
+          example: 'A cheek cell has a nucleus, cytoplasm, and cell membrane.',
+        ),
+        LessonSection(
+          heading: 'Plant vs Animal Cells',
+          content: 'Plant cells have extra structures that animal cells do not have.',
+          bulletPoints: ['Cell wall - rigid structure for support', 'Chloroplasts - for photosynthesis', 'Permanent vacuole - stores cell sap'],
+          example: 'A leaf cell has chloroplasts for photosynthesis. An animal cell does not.',
+        ),
+      ],
+      keyPoints: ['All cells have nucleus, cytoplasm, membrane', 'Plant cells also have cell wall, chloroplasts, vacuole', 'Mitochondria release energy from glucose'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Name three structures found in plant cells but not animal cells.', answer: 'Cell wall, chloroplasts, permanent vacuole', explanation: 'These structures help plants make food and maintain their shape.'),
+      ],
+      references: ['Cambridge IGCSE Biology Coursebook'],
+    ),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - FORM 3 MATHEMATICS ==========
+  'cam_o3_mat_1': [
+    Lesson(
+      id: 'lsn_cam_o3_mat_1', subjectId: 'cam_o3_mat', topicId: 'cam_o3_mat_1',
+      title: 'Number and Algebra', gradeLevel: 'Form 3',
+      objectives: ['Simplify algebraic expressions', 'Solve linear equations', 'Work with indices'],
+      sections: [
+        LessonSection(
+          heading: 'Algebraic Expressions',
+          content: 'Algebra uses letters to represent unknown numbers. We can simplify expressions by combining like terms.',
+          bulletPoints: ['Like terms have the same variable and power', '3x + 5x = 8x', '4x² and 7x² are like terms', '3x and 5y are NOT like terms'],
+          example: 'Simplify: 2a + 3b - a + 5b = a + 8b',
+        ),
+        LessonSection(
+          heading: 'Solving Equations',
+          content: 'To solve an equation, find the value of the unknown that makes it true.',
+          bulletPoints: ['Do the same to both sides', 'Get the variable on its own', 'Check your answer by substituting back'],
+          example: 'Solve 2x + 3 = 11: 2x = 8, x = 4. Check: 2(4) + 3 = 11 ✓',
+        ),
+      ],
+      keyPoints: ['Combine like terms to simplify', 'Do the same operation to both sides of an equation', 'Always check your answer'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Simplify: 5x + 3y - 2x + y', answer: '3x + 4y', explanation: 'Combine x terms: 5x - 2x = 3x. Combine y terms: 3y + y = 4y.'),
+        PracticeQuestion(question: 'Solve: 3x - 7 = 14', answer: 'x = 7', explanation: '3x = 14 + 7 = 21. x = 21/3 = 7.'),
+      ],
+      references: ['Cambridge IGCSE Mathematics Coursebook'],
+    ),
+  ],
+
+  // ========== CAMBRIDGE A-LEVEL - FORM 5 MATHEMATICS ==========
+  'cam_a5_mat_1': [
+    Lesson(
+      id: 'lsn_cam_a5_mat_1', subjectId: 'cam_a5_mat', topicId: 'cam_a5_mat_1',
+      title: 'Pure Mathematics 1', gradeLevel: 'Form 5',
+      objectives: ['Differentiate polynomials', 'Apply the power rule', 'Find gradients of curves'],
+      sections: [
+        LessonSection(
+          heading: 'Differentiation',
+          content: 'Differentiation finds the rate of change of a function. It gives us the gradient at any point on a curve.',
+          bulletPoints: ['Power rule: d/dx(xⁿ) = nxⁿ⁻¹', 'Differentiate term by term', 'Constants disappear when differentiated', 'The result is called the derivative'],
+          example: 'If f(x) = x³, then f\'(x) = 3x².',
+        ),
+        LessonSection(
+          heading: 'Applications',
+          content: 'Differentiation can find gradients, rates of change, and turning points.',
+          bulletPoints: ['Gradient at x = a is f\'(a)', 'Stationary points where f\'(x) = 0', 'Maximum when gradient changes + to -', 'Minimum when gradient changes - to +'],
+          example: 'For f(x) = x² - 4x + 3, f\'(x) = 2x - 4. Stationary point at x = 2.',
+        ),
+      ],
+      keyPoints: ['Power rule: bring down the power, reduce by 1', 'Derivative gives gradient at any point', 'Stationary points where derivative = 0'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Differentiate f(x) = 4x³ - 2x + 5', answer: 'f\'(x) = 12x² - 2', explanation: 'Apply power rule: 4x³ → 12x², -2x → -2, constant 5 → 0.'),
+        PracticeQuestion(question: 'Find the gradient of y = x² + 3x at x = 2', answer: '7', explanation: 'dy/dx = 2x + 3. At x = 2: 2(2) + 3 = 7.'),
+      ],
+      references: ['Cambridge International AS & A Level Mathematics Coursebook'],
+    ),
+  ],
 };
 
 List<Lesson> getLessonsForTopic(String topicId) {

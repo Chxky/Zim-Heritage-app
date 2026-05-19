@@ -160,6 +160,114 @@ final Map<String, List<AnswerKey>> answerKeysBySubject = {
       AnswerKeyEntry(question: 'Explain "Kudada kunobva muhombe"', answer: 'Pride comes from greatness / One can only be proud of genuine achievements', explanation: 'This Ndebele proverb teaches that true pride comes from real accomplishments.', marks: 3),
     ]),
   ],
+
+  // ========== CAMBRIDGE PRIMARY - ENGLISH ==========
+  'cam_g1_eng': [
+    AnswerKey(id: 'ak_cam_g1_eng_1', subjectId: 'cam_g1_eng', topicId: 'cam_g1_eng_1', title: 'Phonics and Reading', gradeLevel: 'Grade 1', entries: [
+      AnswerKeyEntry(question: 'Blend the sounds: c-a-t', answer: 'cat', explanation: 'Blend each sound together slowly, then faster: c-a-t = cat.', marks: 1),
+      AnswerKeyEntry(question: 'Which word rhymes with "hat"? a) dog  b) mat  c) cup', answer: 'b) mat', explanation: 'Hat and mat both end with the -at sound.', marks: 1),
+    ]),
+  ],
+  'cam_g3_eng': [
+    AnswerKey(id: 'ak_cam_g3_eng_1', subjectId: 'cam_g3_eng', topicId: 'cam_g3_eng_1', title: 'Reading Comprehension', gradeLevel: 'Grade 3', entries: [
+      AnswerKeyEntry(question: 'Read the passage. What is the main idea?', answer: 'The main idea is the most important point the author wants to share.', explanation: 'Look at the first and last sentences for the main idea.', marks: 2),
+      AnswerKeyEntry(question: 'Write a sentence using the word "because"', answer: 'Example: I went inside because it started raining.', explanation: '"Because" connects a reason to an action.', marks: 2),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE PRIMARY - MATHEMATICS ==========
+  'cam_g1_mat': [
+    AnswerKey(id: 'ak_cam_g1_mat_1', subjectId: 'cam_g1_mat', topicId: 'cam_g1_mat_1', title: 'Numbers and Counting', gradeLevel: 'Grade 1', entries: [
+      AnswerKeyEntry(question: 'Count the objects: How many?', answer: 'Count each object one by one', explanation: 'Touch each object as you count to avoid counting twice.', marks: 2),
+      AnswerKeyEntry(question: 'What is 5 + 3?', answer: '8', explanation: 'Use fingers or objects to help count: 5, then count 3 more: 6, 7, 8.', marks: 1),
+    ]),
+  ],
+  'cam_g3_mat': [
+    AnswerKey(id: 'ak_cam_g3_mat_1', subjectId: 'cam_g3_mat', topicId: 'cam_g3_mat_1', title: 'Multiplication and Division', gradeLevel: 'Grade 3', entries: [
+      AnswerKeyEntry(question: 'What is 7 x 6?', answer: '42', explanation: '7 x 6 means 7 groups of 6, or 6+6+6+6+6+6+6 = 42.', marks: 1),
+      AnswerKeyEntry(question: 'Share 24 sweets equally among 4 children. How many does each get?', answer: '6 sweets each', explanation: '24 ÷ 4 = 6. Each child gets 6 sweets.', marks: 2),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - ENGLISH ==========
+  'cam_o3_eng': [
+    AnswerKey(id: 'ak_cam_o3_eng_1', subjectId: 'cam_o3_eng', topicId: 'cam_o3_eng_1', title: 'Reading and Comprehension', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'Summarise the passage in your own words.', answer: 'A good summary captures the main points using different wording from the passage.', explanation: 'Focus on key ideas, not details. Use your own words.', marks: 5),
+      AnswerKeyEntry(question: 'Explain the effect of the metaphor in paragraph 3.', answer: 'The metaphor creates a vivid image that helps the reader understand the feeling being described.', explanation: 'Identify the metaphor, then explain what image or feeling it creates.', marks: 3),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - MATHEMATICS ==========
+  'cam_o3_mat': [
+    AnswerKey(id: 'ak_cam_o3_mat_1', subjectId: 'cam_o3_mat', topicId: 'cam_o3_mat_1', title: 'Number and Algebra', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'Simplify: 3x + 5x - 2x', answer: '6x', explanation: 'Combine like terms: 3x + 5x - 2x = (3+5-2)x = 6x.', marks: 2),
+      AnswerKeyEntry(question: 'Solve: 2x + 5 = 13', answer: 'x = 4', explanation: '2x + 5 = 13 → 2x = 8 → x = 4.', marks: 3),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - BIOLOGY ==========
+  'cam_o3_bio': [
+    AnswerKey(id: 'ak_cam_o3_bio_1', subjectId: 'cam_o3_bio', topicId: 'cam_o3_bio_1', title: 'Cell Biology', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'Name three differences between plant and animal cells.', answer: 'Plant cells have cell wall, chloroplasts, and permanent vacuole. Animal cells do not.', explanation: 'Plant cells need these for photosynthesis and structural support.', marks: 3),
+      AnswerKeyEntry(question: 'What is the function of mitochondria?', answer: 'Mitochondria are the site of aerobic respiration, where glucose is broken down to release energy (ATP).', explanation: 'Mitochondria are called the powerhouse of the cell.', marks: 2),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - CHEMISTRY ==========
+  'cam_o3_che': [
+    AnswerKey(id: 'ak_cam_o3_che_1', subjectId: 'cam_o3_che', topicId: 'cam_o3_che_1', title: 'Atomic Structure', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'Describe the structure of an atom.', answer: 'An atom has a nucleus containing protons and neutrons, surrounded by electrons in energy levels/shells.', explanation: 'Protons are positive, neutrons are neutral, electrons are negative.', marks: 3),
+      AnswerKeyEntry(question: 'What is the atomic number of carbon?', answer: '6', explanation: 'Carbon has 6 protons in its nucleus. The atomic number equals the number of protons.', marks: 1),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - PHYSICS ==========
+  'cam_o3_phy': [
+    AnswerKey(id: 'ak_cam_o3_phy_1', subjectId: 'cam_o3_phy', topicId: 'cam_o3_phy_1', title: 'Mechanics', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'A car accelerates from 0 to 20 m/s in 4 seconds. What is its acceleration?', answer: '5 m/s²', explanation: 'Acceleration = change in velocity / time = (20-0)/4 = 5 m/s².', marks: 3),
+      AnswerKeyEntry(question: 'State Newton\'s First Law of Motion.', answer: 'An object remains at rest or moves in a straight line at constant speed unless acted upon by a resultant force.', explanation: 'This is also called the law of inertia.', marks: 2),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE IGCSE - ECONOMICS ==========
+  'cam_o3_eco': [
+    AnswerKey(id: 'ak_cam_o3_eco_1', subjectId: 'cam_o3_eco', topicId: 'cam_o3_eco_1', title: 'Basic Economic Ideas', gradeLevel: 'Form 3', entries: [
+      AnswerKeyEntry(question: 'What is the basic economic problem?', answer: 'The basic economic problem is scarcity: unlimited wants but limited resources.', explanation: 'This forces societies to make choices about what to produce.', marks: 2),
+      AnswerKeyEntry(question: 'Define opportunity cost.', answer: 'Opportunity cost is the next best alternative foregone when making a choice.', explanation: 'When you choose one thing, you give up something else. That something else is the opportunity cost.', marks: 2),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE A-LEVEL - MATHEMATICS ==========
+  'cam_a5_mat': [
+    AnswerKey(id: 'ak_cam_a5_mat_1', subjectId: 'cam_a5_mat', topicId: 'cam_a5_mat_1', title: 'Pure Mathematics 1', gradeLevel: 'Form 5', entries: [
+      AnswerKeyEntry(question: 'Differentiate f(x) = 3x⁴ - 2x² + 5x - 1', answer: "f'(x) = 12x³ - 4x + 5", explanation: 'Apply the power rule: d/dx(xⁿ) = nxⁿ⁻¹ to each term.', marks: 4),
+      AnswerKeyEntry(question: 'Find the integral of ∫(6x² + 4x) dx', answer: '2x³ + 2x² + C', explanation: 'Integrate term by term. Increase power by 1 and divide by new power.', marks: 3),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE A-LEVEL - BIOLOGY ==========
+  'cam_a5_bio': [
+    AnswerKey(id: 'ak_cam_a5_bio_1', subjectId: 'cam_a5_bio', topicId: 'cam_a5_bio_1', title: 'Cell Structure', gradeLevel: 'Form 5', entries: [
+      AnswerKeyEntry(question: 'Describe the fluid mosaic model of cell membranes.', answer: 'The membrane consists of a phospholipid bilayer with proteins embedded in it. The bilayer is fluid, allowing lateral movement of components. Cholesterol and glycoproteins are also present.', explanation: 'Singer and Nicolson proposed this model in 1972.', marks: 5),
+      AnswerKeyEntry(question: 'Explain the role of ribosomes in protein synthesis.', answer: 'Ribosomes read mRNA and assemble amino acids in the correct order using tRNA. They can be free in the cytoplasm or attached to rough ER.', explanation: 'Ribosomes are the site of translation.', marks: 3),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE A-LEVEL - CHEMISTRY ==========
+  'cam_a5_che': [
+    AnswerKey(id: 'ak_cam_a5_che_1', subjectId: 'cam_a5_che', topicId: 'cam_a5_che_1', title: 'Physical Chemistry', gradeLevel: 'Form 5', entries: [
+      AnswerKeyEntry(question: 'Calculate the number of moles in 12g of carbon-12.', answer: '1 mole', explanation: 'Moles = mass / molar mass = 12g / 12g/mol = 1 mol.', marks: 2),
+      AnswerKeyEntry(question: 'Explain what happens to the rate of reaction when temperature increases.', answer: 'Rate increases because particles have more kinetic energy, collide more frequently, and more collisions have energy greater than the activation energy.', explanation: 'Use the collision theory to explain rate changes.', marks: 4),
+    ]),
+  ],
+
+  // ========== CAMBRIDGE A-LEVEL - PHYSICS ==========
+  'cam_a5_phy': [
+    AnswerKey(id: 'ak_cam_a5_phy_1', subjectId: 'cam_a5_phy', topicId: 'cam_a5_phy_1', title: 'Mechanics', gradeLevel: 'Form 5', entries: [
+      AnswerKeyEntry(question: 'A ball is thrown vertically upward at 20 m/s. Calculate the maximum height reached. (g = 10 m/s²)', answer: '20 m', explanation: 'Using v² = u² + 2as: 0 = 400 - 20s, so s = 20m.', marks: 4),
+      AnswerKeyEntry(question: 'State the principle of conservation of energy.', answer: 'Energy cannot be created or destroyed, only converted from one form to another. The total energy in a closed system remains constant.', explanation: 'This is a fundamental law of physics.', marks: 2),
+    ]),
+  ],
 };
 
 AnswerKey? getAnswerKey(String subjectId) {
