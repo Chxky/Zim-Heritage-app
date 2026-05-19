@@ -16,7 +16,7 @@ class HeritageService {
     return getHeritageSites().where((s) => s.province == province).toList();
   }
 
-  static List<HeritageSite> unescapedSites() {
+  static List<HeritageSite> unescoSites() {
     return getHeritageSites().where((s) => s.isUnesco).toList();
   }
 

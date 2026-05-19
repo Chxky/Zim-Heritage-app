@@ -30,14 +30,18 @@ class _ViewHomeworkScreenState extends State<ViewHomeworkScreen> {
   }
 
   Future<void> _loadData() async {
-    final homeworks = await HomeworkRepository.getHomeworksByGrade(widget.user.gradeLevel);
-    final submissions = await SubmissionRepository.getSubmissionsByStudent(widget.user.id);
-    if (mounted) {
-      setState(() {
-        _homeworks = homeworks;
-        _submissions = submissions;
-        _loading = false;
-      });
+    try {
+      final homeworks = await HomeworkRepository.getHomeworksByGrade(widget.user.gradeLevel);
+      final submissions = await SubmissionRepository.getSubmissionsByStudent(widget.user.id);
+      if (mounted) {
+        setState(() {
+          _homeworks = homeworks;
+          _submissions = submissions;
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
     }
   }
 

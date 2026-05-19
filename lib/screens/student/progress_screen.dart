@@ -26,12 +26,16 @@ class _StudentProgressScreenState extends State<StudentProgressScreen> {
   }
 
   Future<void> _loadProgress() async {
-    final progress = await ProgressRepository.getProgressForStudent(widget.user.id);
-    if (mounted) {
-      setState(() {
-        _progressList = progress;
-        _loading = false;
-      });
+    try {
+      final progress = await ProgressRepository.getProgressForStudent(widget.user.id);
+      if (mounted) {
+        setState(() {
+          _progressList = progress;
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
     }
   }
 

@@ -28,17 +28,19 @@ class _ParentChildDetailScreenState extends State<ParentChildDetailScreen> {
   }
 
   Future<void> _loadData() async {
-    final results = await Future.wait([
-      ProgressRepository.getProgressForStudent(widget.child.id),
-      SubmissionRepository.getSubmissionsByStudent(widget.child.id),
-    ]);
-    if (mounted) {
-      setState(() {
-        _progressList = results[0] as List<StudentProgress>;
-        _submissions = results[1] as List<HomeworkSubmission>;
-        _submissions.sort((a, b) => b.submittedAt.compareTo(a.submittedAt));
-        _loading = false;
-      });
+    try {
+      final progress = await ProgressRepository.getProgressForStudent(widget.child.id);
+      final submissions = await SubmissionRepository.getSubmissionsByStudent(widget.child.id);
+      if (mounted) {
+        setState(() {
+          _progressList = progress;
+          _submissions = submissions;
+          _submissions.sort((a, b) => b.submittedAt.compareTo(a.submittedAt));
+          _loading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) setState(() => _loading = false);
     }
   }
 

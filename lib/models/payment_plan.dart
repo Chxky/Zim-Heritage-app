@@ -95,7 +95,7 @@ class PaymentPlan {
         'Priority support',
       ],
       isPopular: true,
-      maxChildren: 10,
+      maxChildren: 6,
     ),
     PaymentPlan(
       id: 'family',
@@ -104,14 +104,14 @@ class PaymentPlan {
       description: 'Complete family education package',
       features: [
         'Everything in Premium',
-        'Up to 6 children',
+        'Up to 10 children',
         'Personalized learning plans',
         'Career guidance insights',
         'Exam preparation tools',
         'Exclusive webinars',
       ],
       isPopular: false,
-      maxChildren: 6,
+      maxChildren: 10,
     ),
   ];
 

@@ -146,6 +146,7 @@ class _SubmitHomeworkScreenState extends State<SubmitHomeworkScreen>
       totalAnswers: _maxScore,
     );
 
+    if (!mounted) return;
     setState(() {
       _totalScore = totalScore;
       _isSubmitting = false;
@@ -158,6 +159,40 @@ class _SubmitHomeworkScreenState extends State<SubmitHomeworkScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.homework.questions.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.homework.title, overflow: TextOverflow.ellipsis),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppTheme.surfaceDark, AppTheme.surfaceMid],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.quiz_outlined, size: 64, color: AppTheme.white30),
+              const SizedBox(height: 16),
+              const Text('No questions available', style: TextStyle(color: AppTheme.white60, fontSize: 18)),
+              const SizedBox(height: 8),
+              const Text('This homework has no questions yet.', style: TextStyle(color: AppTheme.white30)),
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back),
+                label: const Text('Go Back'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.homework.title, overflow: TextOverflow.ellipsis),

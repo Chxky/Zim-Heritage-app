@@ -85,11 +85,11 @@ class _ParentPaymentScreenState extends State<ParentPaymentScreen> {
     try {
       final updatedUser = await PaymentService.subscribeToPlan(_user, plan.id);
       await UserRepository.updateUser(_user.id, updatedUser.toMap());
+      if (!mounted) return;
       setState(() {
         _user = updatedUser;
         _processingPlan = false;
       });
-      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(plan.price == 0
@@ -130,11 +130,11 @@ class _ParentPaymentScreenState extends State<ParentPaymentScreen> {
     try {
       final updatedUser = await PaymentService.cancelSubscription(_user);
       await UserRepository.updateUser(_user.id, updatedUser.toMap());
+      if (!mounted) return;
       setState(() {
         _user = updatedUser;
         _processingPlan = false;
       });
-      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Subscription cancelled'), backgroundColor: AppTheme.gold),
       );

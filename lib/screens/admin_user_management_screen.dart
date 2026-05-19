@@ -37,8 +37,8 @@ class _AdminUserManagementScreenState
         setState(() {
           _allUsers = users;
           _loading = false;
-          _applyFilters();
         });
+        _applyFilters();
       }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
