@@ -38,19 +38,21 @@ class _StudentDashboardState extends State<StudentDashboard> {
   }
 
   Future<void> _loadData() async {
-    final homeworks = await HomeworkRepository.getHomeworksByGrade(widget.user.gradeLevel);
-    final progress = await ProgressRepository.getProgressForStudent(widget.user.id);
-    if (mounted) {
-      String avg = '--';
-      if (progress.isNotEmpty) {
-        final total = progress.fold<double>(0, (sum, p) => sum + p.averageScore);
-        avg = (total / progress.length).toStringAsFixed(0);
+    try {
+      final homeworks = await HomeworkRepository.getHomeworksByGrade(widget.user.gradeLevel);
+      final progress = await ProgressRepository.getProgressForStudent(widget.user.id);
+      if (mounted) {
+        String avg = '--';
+        if (progress.isNotEmpty) {
+          final total = progress.fold<double>(0, (sum, p) => sum + p.averageScore);
+          avg = (total / progress.length).toStringAsFixed(0);
+        }
+        setState(() {
+          _pendingCount = homeworks.length;
+          _averageScore = avg;
+        });
       }
-      setState(() {
-        _pendingCount = homeworks.length;
-        _averageScore = avg;
-      });
-    }
+    } catch (_) {}
   }
 
   @override
@@ -133,7 +135,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
   }
 
   Widget _buildOverview() {
-    final subjects = getSubjectsForGrade(widget.user.gradeLevel);
+    final subjects = getSubjectsForGradeAndCurriculum(widget.user.gradeLevel, widget.user.curriculum);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -279,6 +281,80 @@ class _StudentDashboardState extends State<StudentDashboard> {
                 ),
               ],
             ),
+          ),
+          const SizedBox(height: 16),
+          // Leaderboard & Challenges
+          Row(
+            children: [
+              Expanded(
+                child: GlassCard(
+                  padding: const EdgeInsets.all(16),
+                  borderColor: AppTheme.gold.withValues(alpha: 0.2),
+                  onTap: () => Navigator.pushNamed(context, '/leaderboard'),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppTheme.gold.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.leaderboard, color: AppTheme.gold, size: 28),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('Leaderboard', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.white)),
+                      const Text('See rankings', style: TextStyle(color: AppTheme.white60, fontSize: 11)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: GlassCard(
+                  padding: const EdgeInsets.all(16),
+                  borderColor: Colors.orange.withValues(alpha: 0.2),
+                  onTap: () => Navigator.pushNamed(context, '/challenges'),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.flag, color: Colors.orange, size: 28),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('Challenges', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.white)),
+                      const Text('Earn XP', style: TextStyle(color: AppTheme.white60, fontSize: 11)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: GlassCard(
+                  padding: const EdgeInsets.all(16),
+                  borderColor: Colors.purple.withValues(alpha: 0.2),
+                  onTap: () => Navigator.pushNamed(context, '/zimbabwe-map'),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.purple.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.map, color: Colors.purple, size: 28),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('Map', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.white)),
+                      const Text('Explore', style: TextStyle(color: AppTheme.white60, fontSize: 11)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           // ZIMSEC Exam Predictor
@@ -560,6 +636,16 @@ Widget _buildSubjectCard(Subject data) {
       case 'sports': return Icons.sports;
       case 'computer': return Icons.computer;
       case 'agriculture': return Icons.agriculture;
+      case 'public': return Icons.public;
+      case 'explore': return Icons.explore;
+      case 'music_note': return Icons.music_note;
+      case 'trending_up': return Icons.trending_up;
+      case 'business': return Icons.business;
+      case 'restaurant': return Icons.restaurant;
+      case 'build': return Icons.build;
+      case 'psychology': return Icons.psychology;
+      case 'groups': return Icons.groups;
+      case 'gavel': return Icons.gavel;
       default: return Icons.book;
     }
   }

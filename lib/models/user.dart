@@ -13,6 +13,7 @@ class User {
   final String? paymentStatus;
   final DateTime? subscriptionStartDate;
   final DateTime? subscriptionEndDate;
+  final String curriculum;
 
   User({
     required this.id,
@@ -29,6 +30,7 @@ class User {
     this.paymentStatus,
     this.subscriptionStartDate,
     this.subscriptionEndDate,
+    this.curriculum = 'zimsec',
   });
 
   bool get isPaymentActive => paymentStatus == 'active';
@@ -50,6 +52,7 @@ class User {
       paymentStatus: map['paymentStatus'] as String?,
       subscriptionStartDate: _parseDate(map['subscriptionStartDate']),
       subscriptionEndDate: _parseDate(map['subscriptionEndDate']),
+      curriculum: map['curriculum'] as String? ?? 'zimsec',
     );
   }
 
@@ -79,6 +82,7 @@ class User {
       'paymentStatus': paymentStatus,
       'subscriptionStartDate': subscriptionStartDate?.toIso8601String(),
       'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
+      'curriculum': curriculum,
     };
   }
 
@@ -97,6 +101,7 @@ class User {
     String? paymentStatus,
     DateTime? subscriptionStartDate,
     DateTime? subscriptionEndDate,
+    String? curriculum,
   }) {
     return User(
       id: id ?? this.id,
@@ -113,6 +118,7 @@ class User {
       paymentStatus: paymentStatus ?? this.paymentStatus,
       subscriptionStartDate: subscriptionStartDate ?? this.subscriptionStartDate,
       subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
+      curriculum: curriculum ?? this.curriculum,
     );
   }
 }

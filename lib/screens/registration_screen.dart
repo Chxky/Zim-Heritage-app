@@ -1,5 +1,5 @@
 // screens/registration_screen.dart
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   String? _selectedRole;
   String? _selectedGrade;
+  String _selectedCurriculum = 'zimsec';
   DateTime? _dateOfBirth;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
@@ -136,6 +137,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         school: _schoolController.text,
         age: _age,
         hasFacialRecognition: _faceCaptured,
+        curriculum: _selectedCurriculum,
       );
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
@@ -349,6 +351,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         const SizedBox(height: 14),
         DropdownButtonFormField<String>(
+          initialValue: _selectedCurriculum,
+          decoration: const InputDecoration(labelText: 'Curriculum', prefixIcon: Icon(Icons.menu_book_outlined)),
+          items: const [
+            DropdownMenuItem(value: 'zimsec', child: Text('ZIMSEC')),
+            DropdownMenuItem(value: 'cambridge', child: Text('Cambridge International')),
+          ],
+          onChanged: (v) => setState(() => _selectedCurriculum = v ?? 'zimsec'),
+        ),
+        const SizedBox(height: 14),
+        DropdownButtonFormField<String>(
           initialValue: _selectedGrade,
           decoration: const InputDecoration(labelText: 'Grade / Level', prefixIcon: Icon(Icons.school_outlined)),
           items: _gradeOptions.map((g) => DropdownMenuItem(value: g, child: Text('$g (${getAgeRange(g)})'))).toList(),
@@ -493,10 +505,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           textAlign: TextAlign.center, style: TextStyle(color: AppTheme.white60)),
         const SizedBox(height: 16),
         if (_faceCaptured && _faceImage != null)
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: FileImage(File(_faceImage!.path)),
-          ),
+          kIsWeb
+              ? CircleAvatar(
+                  radius: 50,
+                  backgroundColor: AppTheme.gold.withValues(alpha: 0.2),
+                  child: const Icon(Icons.check, color: AppTheme.gold, size: 40),
+                )
+              : CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(_faceImage!.path),
+                ),
         if (_faceCaptured) const SizedBox(height: 16),
         SizedBox(
           width: double.infinity,

@@ -39,7 +39,7 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final subjects = getSubjectsForGrade(widget.user.gradeLevel);
+    final subjects = getSubjectsForGradeAndCurriculum(widget.user.gradeLevel, widget.user.curriculum);
     final years = getAvailableYears();
     final gradeBand = extractGradeBand(widget.user.gradeLevel);
     final accent = _accent;
@@ -194,7 +194,7 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
   }
 
   Widget _buildExamCard(PastExamQuestion eq) {
-    final subjects = getSubjectsForGrade(widget.user.gradeLevel);
+    final subjects = getSubjectsForGradeAndCurriculum(widget.user.gradeLevel, widget.user.curriculum);
     final sub = subjects.where((s) => s.id == eq.subjectId).firstOrNull;
     final color = sub != null ? Color(int.parse(sub.color)) : AppTheme.greenBright;
 

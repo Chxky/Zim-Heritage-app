@@ -1,4 +1,5 @@
 import '../models/subject.dart';
+import 'cambridge_curriculum.dart';
 
 final Map<String, List<Subject>> curriculumByGrade = {
   // ========== ECD A (Ages 3-4) ==========
@@ -197,6 +198,28 @@ List<Subject> getAllSubjects() {
 
 List<String> getGradeLevels() {
   return curriculumByGrade.keys.toList();
+}
+
+// Curriculum-aware helper functions
+List<Subject> getSubjectsForGradeAndCurriculum(String grade, String curriculum) {
+  if (curriculum == 'cambridge') {
+    return getCambridgeSubjectsForGrade(grade);
+  }
+  return curriculumByGrade[grade] ?? [];
+}
+
+List<Subject> getAllSubjectsForCurriculum(String curriculum) {
+  if (curriculum == 'cambridge') {
+    return getAllCambridgeSubjects();
+  }
+  return curriculumByGrade.values.expand((list) => list).toList();
+}
+
+List<Topic> getTopicsForSubjectAndCurriculum(String subjectId, String gradeLevel, String curriculum) {
+  if (curriculum == 'cambridge') {
+    return getCambridgeTopicsForSubject(subjectId, gradeLevel);
+  }
+  return _allTopics.where((t) => t.subjectId == subjectId && t.gradeLevel == gradeLevel).toList();
 }
 
 String getLevelCategory(String grade) {

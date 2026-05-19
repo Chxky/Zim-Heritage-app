@@ -91,6 +91,7 @@ class MockDataService {
     required String school,
     required int age,
     bool hasFacialRecognition = false,
+    String curriculum = 'zimsec',
   }) async {
     await Future.delayed(const Duration(milliseconds: 300));
     if (_users.any((u) => u.email == email)) throw Exception('Email already registered.');
@@ -99,6 +100,7 @@ class MockDataService {
       id: id, name: name, email: email, role: role,
       gradeLevel: gradeLevel, school: school, age: age,
       isVerified: true, hasFacialRecognition: hasFacialRecognition,
+      curriculum: curriculum,
     );
     _users.add(user);
     _currentUser = user;
@@ -190,6 +192,19 @@ class MockDataService {
   static Future<void> updateHomework(String id, Map<String, dynamic> data) async {
     final index = _homeworks.indexWhere((h) => h.id == id);
     if (index == -1) return;
+    final old = _homeworks[index];
+    _homeworks[index] = Homework(
+      id: old.id,
+      subjectId: data['subjectId'] as String? ?? old.subjectId,
+      title: data['title'] as String? ?? old.title,
+      description: data['description'] as String? ?? old.description,
+      gradeLevel: data['gradeLevel'] as String? ?? old.gradeLevel,
+      dueDate: data['dueDate'] as DateTime? ?? old.dueDate,
+      questions: old.questions,
+      attachments: old.attachments,
+      status: data['status'] as String? ?? old.status,
+      teacherId: data['createdBy'] as String? ?? old.teacherId,
+    );
   }
 
   static Future<void> deleteHomework(String id) async {
@@ -254,6 +269,17 @@ class MockDataService {
   static Future<void> updateProgress(String progressId, Map<String, dynamic> data) async {
     final index = _progress.indexWhere((p) => '${p.studentId}_${p.subjectId}' == progressId);
     if (index == -1) return;
+    final old = _progress[index];
+    _progress[index] = StudentProgress(
+      studentId: old.studentId,
+      subjectId: old.subjectId,
+      subjectName: data['subjectName'] as String? ?? old.subjectName,
+      topics: old.topics,
+      quizzesTaken: data['quizzesTaken'] as int? ?? old.quizzesTaken,
+      homeworksSubmitted: data['homeworksSubmitted'] as int? ?? old.homeworksSubmitted,
+      homeworksReviewed: data['homeworksReviewed'] as int? ?? old.homeworksReviewed,
+      averageScore: (data['averageScore'] as num?)?.toDouble() ?? old.averageScore,
+    );
   }
 
   static Future<void> createProgress(StudentProgress progress) async {

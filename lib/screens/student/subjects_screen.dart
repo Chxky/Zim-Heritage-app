@@ -20,7 +20,7 @@ class SubjectsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subjects = getSubjectsForGrade(user.gradeLevel);
+    final subjects = getSubjectsForGradeAndCurriculum(user.gradeLevel, user.curriculum);
 
     return GridView.builder(
       padding: const EdgeInsets.all(16),
@@ -81,6 +81,16 @@ class SubjectsScreen extends StatelessWidget {
       case 'sports': return Icons.sports;
       case 'computer': return Icons.computer;
       case 'agriculture': return Icons.agriculture;
+      case 'public': return Icons.public;
+      case 'explore': return Icons.explore;
+      case 'music_note': return Icons.music_note;
+      case 'trending_up': return Icons.trending_up;
+      case 'business': return Icons.business;
+      case 'restaurant': return Icons.restaurant;
+      case 'build': return Icons.build;
+      case 'psychology': return Icons.psychology;
+      case 'groups': return Icons.groups;
+      case 'gavel': return Icons.gavel;
       default: return Icons.book;
     }
   }
@@ -107,20 +117,24 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   }
 
   Future<void> _loadHomeworks() async {
-    final homeworks = await HomeworkRepository.getHomeworksByGradeAndSubject(
-      widget.user.gradeLevel, widget.subject.id);
-    if (mounted) {
-      setState(() {
-        _homeworks = homeworks;
-        _loading = false;
-      });
+    try {
+      final homeworks = await HomeworkRepository.getHomeworksByGradeAndSubject(
+        widget.user.gradeLevel, widget.subject.id);
+      if (mounted) {
+        setState(() {
+          _homeworks = homeworks;
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final color = Color(int.parse(widget.subject.color));
-    final topics = getTopicsForSubject(widget.subject.id, user.gradeLevel);
+    final topics = getTopicsForSubjectAndCurriculum(widget.subject.id, user.gradeLevel, user.curriculum);
     final subTheme = SubjectThemes.forSubjectId(widget.subject.id);
 
     return SubjectScaffold(
@@ -423,6 +437,16 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
       case 'sports': return Icons.sports;
       case 'computer': return Icons.computer;
       case 'agriculture': return Icons.agriculture;
+      case 'public': return Icons.public;
+      case 'explore': return Icons.explore;
+      case 'music_note': return Icons.music_note;
+      case 'trending_up': return Icons.trending_up;
+      case 'business': return Icons.business;
+      case 'restaurant': return Icons.restaurant;
+      case 'build': return Icons.build;
+      case 'psychology': return Icons.psychology;
+      case 'groups': return Icons.groups;
+      case 'gavel': return Icons.gavel;
       default: return Icons.book;
     }
   }

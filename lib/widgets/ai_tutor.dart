@@ -25,6 +25,9 @@ class _AITutorState extends State<AITutor> {
     'Mathematics', 'English', 'Shona/Ndebele', 'Science', 'History',
     'Geography', 'Agriculture', 'Biology', 'Chemistry', 'Physics',
     'Accounting', 'Economics', 'Computer Science', 'Heritage Studies',
+    'Global Perspectives', 'ICT', 'Art and Design', 'Music', 'French',
+    'Business Studies', 'Psychology', 'Sociology', 'Law', 'Design and Technology',
+    'Food and Nutrition', 'English Literature', 'Religious Studies',
   ];
   final List<String> _difficulties = ['Easy', 'Medium', 'Hard'];
 

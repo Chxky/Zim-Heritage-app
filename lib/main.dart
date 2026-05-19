@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 import 'theme/app_theme.dart';
 import 'models/user.dart' as models;
 import 'data/zimbabwe_curriculum.dart';
+import 'data/cambridge_curriculum.dart';
 import 'services/auth_service.dart';
 import 'services/env_config.dart';
 import 'services/seeding_service.dart';
@@ -29,6 +30,13 @@ import 'screens/national/exam_predictor_screen.dart';
 import 'screens/national/learner_passport_screen.dart';
 import 'screens/national/heritage_preservation_screen.dart';
 import 'screens/ministry_dashboard_screen.dart';
+import 'screens/zimbabwe_map_screen.dart';
+import 'screens/leaderboard_screen.dart';
+import 'screens/challenges_screen.dart';
+import 'screens/report_card_screen.dart';
+import 'screens/student/attendance_screen.dart';
+import 'screens/messaging/conversation_list_screen.dart';
+import 'screens/calendar_screen.dart';
 import 'widgets/glass_card.dart';
 
 void main() async {
@@ -80,16 +88,20 @@ class ZimHeritageApp extends StatelessWidget {
       case '/forgot-password':
         return _slideRoute(const ForgotPasswordScreen());
       case '/edit-profile':
-        final user1 = settings.arguments as models.User;
+        final user1 = settings.arguments;
+        if (user1 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(EditProfileScreen(user: user1));
       case '/notifications':
-        final user2 = settings.arguments as models.User;
+        final user2 = settings.arguments;
+        if (user2 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(NotificationsScreen(user: user2));
       case '/settings':
-        final user3 = settings.arguments as models.User;
+        final user3 = settings.arguments;
+        if (user3 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(SettingsScreen(user: user3));
       case '/homework-create':
-        final user4 = settings.arguments as models.User;
+        final user4 = settings.arguments;
+        if (user4 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(HomeworkCreateScreen(user: user4));
       case '/national-dashboard':
         return _slideRoute(const NationalDashboard());
@@ -108,13 +120,35 @@ class ZimHeritageApp extends StatelessWidget {
         ));
       case '/ministry-dashboard':
         return _slideRoute(const MinistryDashboardScreen());
+      case '/zimbabwe-map':
+        return _slideRoute(const ZimbabweMapScreen());
+      case '/leaderboard':
+        return _slideRoute(const LeaderboardScreen());
+      case '/challenges':
+        return _slideRoute(const ChallengesScreen());
+      case '/report-card':
+        final rcUser = settings.arguments;
+        if (rcUser is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return _slideRoute(ReportCardScreen(student: rcUser));
+      case '/attendance':
+        final attUser = settings.arguments;
+        if (attUser is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return _slideRoute(AttendanceScreen(user: attUser));
+      case '/messages':
+        final msgUser = settings.arguments;
+        if (msgUser is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return _slideRoute(ConversationListScreen(currentUserId: msgUser.id, currentUserName: msgUser.name));
+      case '/calendar':
+        return _slideRoute(const CalendarScreen());
       case '/user-management':
         return _slideRoute(const AdminUserManagementScreen());
       case '/parent-payment':
-        final user5 = settings.arguments as models.User;
+        final user5 = settings.arguments;
+        if (user5 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(ParentPaymentScreen(user: user5));
       case '/dashboard':
-        final user = settings.arguments as models.User;
+        final user = settings.arguments;
+        if (user is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
         return _slideRoute(_getDashboardForRole(user));
       default:
         return MaterialPageRoute(builder: (context) => const SplashScreen());
@@ -290,38 +324,60 @@ class _SplashScreenState extends State<SplashScreen>
                           );
                         },
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 20),
+                      Text('REPUBLIC OF ZIMBABWE'.toUpperCase(),
+                        style: TextStyle(fontSize: 11, color: AppTheme.white50, letterSpacing: 4, fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 4),
+                      Text('Ministry of Primary & Secondary Education',
+                        style: TextStyle(fontSize: 12, color: AppTheme.white30, letterSpacing: 1)),
+                      const SizedBox(height: 20),
                       const Text('ZimHeritage',
                         style: TextStyle(
-                          fontSize: 42,
+                          fontSize: 48,
                           fontWeight: FontWeight.bold,
                           color: AppTheme.white,
-                          letterSpacing: 1.5,
+                          letterSpacing: 2,
                           shadows: [
-                            Shadow(color: AppTheme.gold, blurRadius: 20),
+                            Shadow(color: AppTheme.gold, blurRadius: 30),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text('Zimbabwe Heritage Curriculum',
-                        style: TextStyle(fontSize: 16, color: AppTheme.gold, letterSpacing: 0.5)),
+                      const SizedBox(height: 6),
+                      const Text('Heritage-Based Curriculum Platform',
+                        style: TextStyle(fontSize: 15, color: AppTheme.gold, letterSpacing: 0.5, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 4),
+                      Text('National Digital Education Infrastructure',
+                        style: TextStyle(fontSize: 11, color: AppTheme.white30, letterSpacing: 0.5)),
+                      const SizedBox(height: 16),
                       SlideTransition(
                         position: _slideUp,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppTheme.gold.withValues(alpha: 0.2), AppTheme.gold.withValues(alpha: 0.05)],
+                              colors: [AppTheme.gold.withValues(alpha: 0.15), AppTheme.gold.withValues(alpha: 0.05)],
                             ),
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(24),
                             border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
                           ),
-                          child: const Text('ECD • Primary • O-Level • A-Level',
-                            style: TextStyle(fontSize: 13, color: AppTheme.gold, fontWeight: FontWeight.w500)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.verified, color: AppTheme.gold, size: 14),
+                              const SizedBox(width: 8),
+                              const Text('ECD • Primary • O-Level • A-Level',
+                                style: TextStyle(fontSize: 12, color: AppTheme.gold, fontWeight: FontWeight.w600)),
+                            ],
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 8),
+                      SlideTransition(
+                        position: _slideUp,
+                        child: Text('9,872 Schools • 4.8M Students • 148,200 Teachers',
+                          style: TextStyle(fontSize: 10, color: AppTheme.white20, letterSpacing: 0.5)),
+                      ),
+                      const SizedBox(height: 40),
                       const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(AppTheme.gold),
                         strokeWidth: 3,
@@ -416,12 +472,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: SvgPicture.asset('assets/images/zimbabwe_bird_logo.svg', fit: BoxFit.cover),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text('Welcome Back',
-                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                    const SizedBox(height: 12),
+                    Text('REPUBLIC OF ZIMBABWE'.toUpperCase(),
+                      style: TextStyle(fontSize: 9, color: AppTheme.white30, letterSpacing: 3, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 12),
+                    const Text('ZimHeritage',
+                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.white, letterSpacing: 1)),
                     const SizedBox(height: 4),
-                    Text('Sign in to continue learning',
-                      style: TextStyle(fontSize: 14, color: AppTheme.white70)),
+                    const Text('Heritage-Based Curriculum Platform',
+                      style: TextStyle(fontSize: 13, color: AppTheme.gold, fontWeight: FontWeight.w500)),
+                    const SizedBox(height: 6),
+                    Text('Sign in to continue',
+                      style: TextStyle(fontSize: 13, color: AppTheme.white50)),
                     const SizedBox(height: 32),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -1024,24 +1086,40 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  _buildAdminAction(context, Icons.people, 'User Management', Colors.blue, () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => AdminUserManagementScreen(),
-                    ));
-                  }),
-                  const SizedBox(height: 8),
                   _buildAdminAction(context, Icons.dashboard, 'National Command Centre', Colors.amber, () {
                     Navigator.pushNamed(context, '/national-dashboard');
                   }),
                   const SizedBox(height: 8),
-                  _buildAdminAction(context, Icons.assignment, 'Curriculum Overview', Colors.green, () {}),
+                  _buildAdminAction(context, Icons.analytics, 'Ministry Intelligence Dashboard', const Color(0xFFFFC72C), () {
+                    Navigator.pushNamed(context, '/ministry-dashboard');
+                  }),
+                  const SizedBox(height: 8),
+                  _buildAdminAction(context, Icons.map_outlined, 'Zimbabwe Education Map', Colors.teal, () {
+                    Navigator.pushNamed(context, '/zimbabwe-map');
+                  }),
+                  const SizedBox(height: 8),
+                  _buildAdminAction(context, Icons.people, 'User Management', Colors.blue, () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdminUserManagementScreen()));
+                  }),
+                  const SizedBox(height: 8),
+                  _buildAdminAction(context, Icons.leaderboard, 'National Leaderboard', Colors.orange, () {
+                    Navigator.pushNamed(context, '/leaderboard');
+                  }),
+                  const SizedBox(height: 8),
+                  _buildAdminAction(context, Icons.calendar_month, 'School Calendar', Colors.indigo, () {
+                    Navigator.pushNamed(context, '/calendar');
+                  }),
+                  const SizedBox(height: 8),
+                  _buildAdminAction(context, Icons.chat, 'Messages', Colors.cyan, () {
+                    Navigator.pushNamed(context, '/messages', arguments: widget.user);
+                  }),
                   const SizedBox(height: 8),
                   _buildAdminAction(context, Icons.landscape, 'Heritage Preservation', Colors.purple, () {
                     Navigator.pushNamed(context, '/heritage');
                   }),
                   const SizedBox(height: 8),
-                  _buildAdminAction(context, Icons.dashboard, 'Ministry Dashboard', const Color(0xFFFFC72C), () {
-                    Navigator.pushNamed(context, '/ministry-dashboard');
+                  _buildAdminAction(context, Icons.flag, 'Challenges & Rewards', Colors.deepOrange, () {
+                    Navigator.pushNamed(context, '/challenges');
                   }),
                 ],
               ),
@@ -1127,6 +1205,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Widget _buildGradeItem(String level) {
     final subjects = getSubjectsForGrade(level);
+    final cambridgeSubjects = getCambridgeSubjectsForGrade(level);
     String badge;
     Color badgeColor;
     if (level.startsWith('ECD')) { badge = 'ECD'; badgeColor = Colors.orange; }
@@ -1155,7 +1234,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(level, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: AppTheme.white)),
-                Text('${subjects.length} subjects', style: const TextStyle(fontSize: 11, color: AppTheme.white50)),
+                Text('ZIMSEC: ${subjects.length} | Cambridge: ${cambridgeSubjects.length}', style: const TextStyle(fontSize: 11, color: AppTheme.white50)),
               ],
             ),
           ),

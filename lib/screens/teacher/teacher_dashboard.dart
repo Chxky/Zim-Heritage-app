@@ -8,8 +8,8 @@ import '../../services/user_repository.dart';
 import '../../services/submission_repository.dart';
 import '../../services/progress_repository.dart';
 import '../../services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
 import '../../data/answer_keys.dart';
+import '../../data/zimbabwe_curriculum.dart';
 import '../../widgets/nav_bar.dart';
 import '../../widgets/glass_card.dart';
 import 'ai_assistant_screen.dart';
@@ -37,15 +37,17 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
   }
 
   Future<void> _loadData() async {
-    final students = await UserRepository.getUsersByRole('student');
-    final submissions = await SubmissionRepository.getAllSubmissions();
-    if (mounted) {
-      setState(() {
-        _allStudents = students;
-        _pendingCount = submissions.where((s) => s.status == 'submitted').length;
-        _reviewedCount = submissions.where((s) => s.status == 'reviewed').length;
-      });
-    }
+    try {
+      final students = await UserRepository.getUsersByRole('student');
+      final submissions = await SubmissionRepository.getAllSubmissions();
+      if (mounted) {
+        setState(() {
+          _allStudents = students;
+          _pendingCount = submissions.where((s) => s.status == 'submitted').length;
+          _reviewedCount = submissions.where((s) => s.status == 'reviewed').length;
+        });
+      }
+    } catch (_) {}
   }
 
   @override
@@ -254,8 +256,7 @@ class ClassOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final grades = ['ECD A', 'ECD B', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7',
-      'Form 1', 'Form 2', 'Form 3', 'Form 4', 'Form 5', 'Form 6'];
+    final grades = getGradeLevels();
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -438,12 +439,16 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   }
 
   Future<void> _loadProgress() async {
-    final progress = await ProgressRepository.getProgressForStudent(widget.student.id);
-    if (mounted) {
-      setState(() {
-        _progress = progress;
-        _loading = false;
-      });
+    try {
+      final progress = await ProgressRepository.getProgressForStudent(widget.student.id);
+      if (mounted) {
+        setState(() {
+          _progress = progress;
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -576,8 +581,7 @@ class AnswerKeysScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final grades = ['ECD A', 'ECD B', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7',
-      'Form 1', 'Form 2', 'Form 3', 'Form 4', 'Form 5', 'Form 6'];
+    final grades = getGradeLevels();
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -1014,7 +1018,7 @@ class _MarkHomeworkScreenState extends State<MarkHomeworkScreen> {
             onPressed: () async {
               Navigator.pop(ctx);
               try {
-                final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+                final uid = AuthService.currentUser?.id ?? '';
                 await SubmissionRepository.markSubmission(
                   widget.submission.id,
                   {
