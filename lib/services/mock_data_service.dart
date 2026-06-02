@@ -10,10 +10,11 @@ import '../data/answer_keys.dart' as ak;
 
 class MockDataService {
   static final List<User> _users = [
-    User(id: 'student_1', name: 'Tendai Musoni', email: 'student@demo.com', role: 'student', gradeLevel: 'Form 1', school: 'Demo High School', age: 14, isVerified: true),
-    User(id: 'teacher_1', name: 'Teacher Chigumira', email: 'teacher@demo.com', role: 'teacher', gradeLevel: 'N/A', school: 'Demo High School', age: 35, isVerified: true),
-    User(id: 'parent_1', name: 'Amai Moyo', email: 'parent@demo.com', role: 'parent', gradeLevel: 'N/A', school: 'Demo High School', age: 40, isVerified: true),
-    User(id: 'admin_1', name: 'Pardon Mahara', email: 'admin@demo.com', role: 'admin', gradeLevel: 'N/A', school: 'ZimHeritage Education', age: 30, isVerified: true),
+    User(id: 'student_1', name: 'Tendai Musoni', email: 'student@demo.com', role: 'student', gradeLevel: 'Form 1', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 14, isVerified: true),
+    User(id: 'teacher_1', name: 'Teacher Chigumira', email: 'teacher@demo.com', role: 'teacher', gradeLevel: 'N/A', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 35, isVerified: true),
+    User(id: 'parent_1', name: 'Amai Moyo', email: 'parent@demo.com', role: 'parent', gradeLevel: 'N/A', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 40, isVerified: true),
+    User(id: 'admin_1', name: 'Pardon Mahara', email: 'admin@demo.com', role: 'admin', gradeLevel: 'N/A', school: 'ZimHeritage Education', schoolMotto: 'Preserving our heritage', age: 30, isVerified: true),
+    User(id: 'ecd_1', name: 'Ruva', email: 'ecd@demo.com', role: 'student', gradeLevel: 'ECD A', school: 'Sunshine Primary', schoolMotto: 'Shining Bright', age: 4, isVerified: true),
   ];
 
   static User? _currentUser;
@@ -42,36 +43,14 @@ class MockDataService {
       age: 30,
       isVerified: true,
       authProvider: 'google',
-      paymentPlanId: 'free',
-      paymentStatus: 'active',
+      schoolMotto: 'Registered Google User',
     );
     _users.add(user);
     _currentUser = user;
     return user;
   }
 
-  static Future<List<Map<String, dynamic>>> getPaymentHistory(String userId) async {
-    await Future.delayed(const Duration(milliseconds: 200));
-    return [
-      {
-        'id': 'pay_1',
-        'planName': 'Free',
-        'amount': 0.0,
-        'currency': 'USD',
-        'status': 'active',
-        'date': DateTime.now().subtract(const Duration(days: 30)),
-        'method': '',
-      },
-    ];
-  }
 
-  static Future<void> savePaymentMethod({
-    required String userId,
-    required String cardLastFour,
-    required String cardBrand,
-  }) async {
-    await Future.delayed(const Duration(milliseconds: 200));
-  }
 
   static Future<User?> login(String email, String password) async {
     await Future.delayed(const Duration(milliseconds: 300));
@@ -92,6 +71,7 @@ class MockDataService {
     required int age,
     bool hasFacialRecognition = false,
     String curriculum = 'zimsec',
+    String? schoolMotto,
   }) async {
     await Future.delayed(const Duration(milliseconds: 300));
     if (_users.any((u) => u.email == email)) throw Exception('Email already registered.');
@@ -100,7 +80,7 @@ class MockDataService {
       id: id, name: name, email: email, role: role,
       gradeLevel: gradeLevel, school: school, age: age,
       isVerified: true, hasFacialRecognition: hasFacialRecognition,
-      curriculum: curriculum,
+      curriculum: curriculum, schoolMotto: schoolMotto,
     );
     _users.add(user);
     _currentUser = user;
@@ -157,14 +137,7 @@ class MockDataService {
       school: data['school'] as String?,
       age: data['age'] as int?,
       isVerified: data['isVerified'] as bool?,
-      paymentPlanId: data['paymentPlanId'] as String?,
-      paymentStatus: data['paymentStatus'] as String?,
-      subscriptionStartDate: data['subscriptionStartDate'] != null
-          ? DateTime.tryParse(data['subscriptionStartDate'] as String)
-          : null,
-      subscriptionEndDate: data['subscriptionEndDate'] != null
-          ? DateTime.tryParse(data['subscriptionEndDate'] as String)
-          : null,
+      schoolMotto: data['schoolMotto'] as String?,
     );
   }
 

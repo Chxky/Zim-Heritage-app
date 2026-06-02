@@ -477,8 +477,11 @@ class _HeritagePreservationScreenState extends State<HeritagePreservationScreen>
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.videocam),
+                      onPressed: () {
+                        Navigator.pop(context); // Close bottom sheet
+                        Navigator.pushNamed(context, '/virtual-tour', arguments: s.name);
+                      },
+                      icon: const Icon(Icons.vrpano),
                       label: const Text('Virtual Tour'),
                       style: ElevatedButton.styleFrom(backgroundColor: catColor, foregroundColor: AppTheme.white),
                     ),

@@ -1,0 +1,78 @@
+{
+  "@@locale": "nd",
+  "appTitle": "ZimHeritage",
+  "appSubtitle": "Inkundla yeMfundiso yeLifa",
+  "signIn": "Ngena",
+  "signInWithGoogle": "Ngena nge Google",
+  "createAccount": "Dala i-akhawunti",
+  "forgotPassword": "Ukhohlwe iPassword?",
+  "email": "i-Email",
+  "password": "iPassword",
+  "register": "Bhalisa",
+  "logout": "Phuma",
+  "dashboard": "Idashboard",
+  "subjects": "Izifundo",
+  "homework": "Umsebenzi wesikolo",
+  "progress": "Inqubekelaphambili",
+  "aiTutor": "AI Umfundisi",
+  "settings": "Izilungiselelo",
+  "notifications": "Izaziso",
+  "editProfile": "Lungisa iphrofayili",
+  "name": "Ibizo",
+  "school": "Isikolo",
+  "gradeLevel": "Ilebanga",
+  "role": "Indima",
+  "save": "Londoloza",
+  "cancel": "Khansela",
+  "delete": "Susa",
+  "confirm": "Qinisekisa",
+  "loading": "Iyalayisha...",
+  "errorOccurred": "Kuvele iphutha",
+  "tryAgain": "Zama futhi",
+  "noData": "Akukho data",
+  "search": "Phenya",
+  "welcome": "Wamukelekile",
+  "student": "Umfundi",
+  "teacher": "Uthisha",
+  "parent": "Umzali",
+  "admin": "Umphathi",
+  "welcomeStudent": "Wamukelekile, {name}",
+  "@welcomeStudent": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "homeworkDue": "Kusele insuku {days}",
+  "@homeworkDue": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "marksObtained": "Amamaki: {obtained}/{total}",
+  "@marksObtained": {
+    "placeholders": {
+      "obtained": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "offlineMode": "Imodi engekho online",
+  "onlineMode": "Imodi eku-inthanethi",
+  "heritageTitle": "Ukulondolozwa kweLifa",
+  "nationalDashboard": "Idashboard yeSizwe",
+  "learnerPassport": "Iphasipoti yomFundi",
+  "examPredictor": "Isibikezelo seMvavanyo",
+  "leaderboard": "Ibhodi yabaholi",
+  "challenges": "Izinselelo",
+  "calendar": "Ikhalenda",
+  "messages": "Imilayezo",
+  "zimbabweMap": "Imephu yeZimbabwe",
+  "ministryDashboard": "Idashboard yoMnyango",
+  "reportCard": "Ikhadi leMiphumela",
+  "attendance": "Ukuza",
+  "noInternet": "Akukho xhumano lwe-inthanethi",
+  "dataExported": "Idatha ikhishiwe ngempumelelo",
+  "dataDeleted": "Idatha isusiwe ngempumelelo",
+  "confirmDeleteData": "Uqinisekile ukuthi ufuna ukususa yonke idatha yakho? Lesi senzo asikwazi ukuhlehliswa.",
+  "exportMyData": "Khipha Idatha Yami",
+  "deleteMyData": "Susa Idatha Yami"
+}

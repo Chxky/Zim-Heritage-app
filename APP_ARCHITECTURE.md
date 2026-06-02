@@ -15,11 +15,15 @@ ZimHeritage is a **Flutter web application** built for the **Zimbabwe Heritage-B
 |-------|-----------|
 | Framework | Flutter 3.x (Dart 3.11+) |
 | Platform | Web (Chrome), with Android/iOS/Desktop configs |
-| State Management | setState (no external library) |
+| State Management | setState (+ GetIt DI container for shared services) |
 | Routing | onGenerateRoute with named routes |
-| Data | Firebase Firestore (online) or hardcoded static classes in `lib/data/` (offline) |
-| Backend | Firebase Auth + Firestore + Storage (optional — app works fully offline) |
+| Data | Firebase Firestore (online) / Hive (offline cache) / hardcoded static classes in `lib/data/` (offline fallback) |
+| Backend | Firebase Auth + Firestore + Storage + FCM (optional — app works fully offline) |
 | Camera | image_picker package (facial recognition) |
+| Error Monitoring | Sentry (optional — configured via .env) |
+| Localization | Custom AppLocalizations delegate (en/sn/nd) |
+| Accessibility | Material 3 Semantics + accessibility_helper service |
+| Persistence | Hive (local cache, session storage, offline support) |
 | Styling | Material 3 with custom theme |
 
 ---
@@ -42,6 +46,10 @@ lib/
 │   ├── sample_data.dart               # 10 homeworks, 6 submissions, 9 progress records, 15 students
 │   ├── answer_keys.dart               # Answer keys for all grade/subject combinations
 │   └── zimbabwe_curriculum.dart       # Full curriculum: 15 grades, subjects, topics by term
+├── l10n/                              # Localization ARB files
+│   ├── app_en.arb                     # English translations
+│   ├── app_sn.arb                     # chiShona translations
+│   └── app_nd.arb                     # isiNdebele translations
 ├── screens/
 │   ├── registration_screen.dart       # 3-step wizard: account → age verify → facial capture
 │   ├── student/
@@ -52,10 +60,35 @@ lib/
 │   └── teacher/
 │       ├── teacher_dashboard.dart      # Teacher hub, class overview, answer keys, review/marking
 │       └── ai_assistant_screen.dart    # AI chat for lesson planning, strategies, assessments
+├── services/                          # Business logic & infrastructure
+│   ├── analytics_service.dart         # Engagement analytics (paper-based/online tracking)
+│   ├── app_config.dart                # Firebase toggle, feature flags
+│   ├── auth_service.dart              # Email/password authentication (online + mock)
+│   ├── challenge_service.dart         # Weekly challenges and competitions
+│   ├── deep_link_service.dart         # Deep link route resolution
+│   ├── di_container.dart              # GetIt dependency injection setup
+│   ├── env_config.dart                # .env variable loader (USE_FIREBASE, GEMINI_API_KEY, SENTRY_DSN, APP_LOCALE)
+│   ├── heritage_service.dart          # Heritage content CRUD
+│   ├── homework_repository.dart       # Homework CRUD operations
+│   ├── l10n_service.dart              # Localization delegate + in-memory translations
+│   ├── local_persistence_service.dart # Hive-based offline cache + session storage
+│   ├── mock_data_service.dart         # Offline mock data provider
+│   ├── notification_service.dart      # FCM push notification handler
+│   ├── passport_service.dart          # Learner Passport feature
+│   ├── payment_service.dart           # Payment / subscription management
+│   ├── privacy_service.dart           # GDPR-style data export & deletion
+│   ├── progress_repository.dart       # Student progress tracking
+│   ├── security_service.dart          # Input sanitization, validation, XSS prevention
+│   ├── seeding_service.dart           # Database seeding for new deployments
+│   ├── sentry_service.dart            # Sentry error monitoring integration
+│   ├── submission_repository.dart     # Homework submission management
+│   ├── update_service.dart            # In-app update check + store launcher
+│   └── user_repository.dart           # User profile CRUD
 └── widgets/                           # Reusable widgets
-    ├── nav_bar.dart                   # StudentNavBar (5-tab) + TeacherNavBar (5-tab)
     ├── ai_reading_assistant.dart       # ECD reading exercise with AI correction + star rewards
-    └── ai_tutor.dart                  # Grade-aware AI tutor for all levels
+    ├── ai_tutor.dart                  # Grade-aware AI tutor for all levels
+    ├── nav_bar.dart                   # StudentNavBar (5-tab) + TeacherNavBar (5-tab)
+    └── state_widgets.dart             # Reusable LoadingState, ErrorState, EmptyState widgets
 ```
 
 ---
@@ -72,6 +105,95 @@ The app uses `onGenerateRoute` with named routes:
 | `/dashboard` | Role-based dashboard | `User` object |
 
 Routes use a **SlideTransition** for smooth page transitions.
+
+---
+
+## New Service Tiers (added post-MVP)
+
+### CI/CD Pipeline (`.github/workflows/ci.yml`)
+The project includes a GitHub Actions workflow that runs on every push/PR to `main`:
+- **analyze**: `flutter pub get` + `flutter analyze` (lint enforcement)
+- **test**: `flutter test` (20+ unit tests)
+- **build-web**: `flutter build web` (production web bundle)
+- **build-android**: `flutter build apk` (release APK)
+
+### Error Monitoring (`lib/services/sentry_service.dart`)
+Optional Sentry integration for crash reporting and performance tracing:
+- Initialized in `main.dart` via `SentryFlutter.init()` with 20% traces sample rate
+- `captureError()` / `captureMessage()` for manual error reporting
+- `setUserContext()` / `clearUserContext()` for user-scoped error context
+- Configured via `SENTRY_DSN` in `.env` — silently skipped when empty
+
+### Dependency Injection (`lib/services/di_container.dart`)
+Uses `GetIt` for lightweight service location:
+- `LocalPersistenceService` — Hive-backed offline cache
+- `NotificationService` — FCM push notifications
+- Registered as singletons, accessed via `DiContainer.get<T>()`
+
+### Local Persistence (`lib/services/local_persistence_service.dart`)
+Hive-based storage for offline caching:
+- `saveCache(key, data)` / `getCache(key)` / `clearCache()` — generic JSON cache
+- `saveSession(data)` / `getSession()` — authenticated session persistence
+- `clearAll()` — full data reset (used by privacy data deletion)
+
+### Push Notifications (`lib/services/notification_service.dart`)
+Firebase Cloud Messaging integration:
+- Request notification permissions on init
+- Route FCM token to user context
+- Handle foreground messages via `onMessage` stream
+- Background message handler for offline delivery
+- Runs as singleton via `DiContainer`
+
+### Localization (`lib/l10n/` + `lib/services/l10n_service.dart`)
+Trilingual support for English, chiShona (sn), and isiNdebele (nd):
+- ARB files in `lib/l10n/` for each locale
+- Custom `AppLocalizations` delegate with in-memory translation maps
+- `L10nService.getString(context, key)` for runtime lookups
+- `L10nService.supportedLocales` + `localeNames` for language picker
+- Language picker UI in Settings screen (bottom sheet selection)
+
+### Accessibility (`lib/services/accessibility_helper.dart`)
+Semantic markup helpers for screen reader support:
+- `wrapButton()` — `Semantics`-wrapped button with label
+- `wrapImage()` — accessible image with description
+- `wrapHeader()` — level-appropriate heading semantics
+- `wrapTextField()` — labeled input field semantics
+
+### Security (`lib/services/security_service.dart`)
+Input sanitization and validation:
+- `sanitizeInput()` — HTML-entity encoding (`<`, `>`, `"`, `'`, `&`)
+- `isValidEmail()` — regex-based email validation
+- `isValidPassword()` — minimum 6 characters
+- `isValidName()` — minimum 2 characters, alphabetic + spaces
+- `isValidPhoneNumber()` — Zimbabwean phone format check
+- `sanitizeFilename()` — removes illegal filesystem characters
+- `stripHtml()` — removes all HTML tags from strings
+- Applied to registration and login form fields
+
+### Deep Linking (`lib/services/deep_link_service.dart`)
+Route resolution for incoming deep links:
+- `resolveRoute(path)` — maps path segments to named routes
+- `parseQueryParams(query)` — URL-encoded query string parser
+- Supported routes: `dashboard`, `login`, `register`, `leaderboard`, `challenges`, `heritage`, `calendar`, `map`, `national-dashboard`, `ministry-dashboard`
+
+### Privacy Compliance (`lib/services/privacy_service.dart`)
+GDPR-style data management:
+- `exportUserData()` — generates a JSON export of user profile + preferences
+- `deleteUserData()` — clears all local persistence (session, cache)
+- Accessible from Settings screen as "Export My Data" and "Delete My Data"
+
+### In-App Updates (`lib/services/update_service.dart`)
+Version check and store navigation:
+- `checkForUpdate()` — reads `package_info_plus` version
+- `goToStore()` — opens platform app store listing via `url_launcher`
+- Displayed in Settings as current version + "Check for Updates" button
+
+### State Widgets (`lib/widgets/state_widgets.dart`)
+Reusable UI patterns for loading/error/empty states:
+- `LoadingState(message)` — centered spinner with optional label
+- `ErrorState(message, onRetry)` — error icon + message + retry button
+- `EmptyState(message)` — empty icon + message
+- All widgets include `Semantics` annotations for accessibility
 
 ---
 
@@ -320,9 +442,14 @@ start build\web\index.html
 # Analyze code
 flutter analyze
 
+# Run tests
+flutter test
+
 # Available batch files
-run_dev.bat      # flutter run -d chrome
-run_offline.bat  # opens build/web/index.html
+run_dev.bat          # dart pub audit + flutter analyze + flutter run -d chrome
+run_tests.bat        # dart pub audit + flutter analyze + flutter test
+deploy.bat           # dart pub audit + flutter analyze + flutter test + flutter build web
+run_offline.bat      # opens build/web/index.html
 ```
 
 ---

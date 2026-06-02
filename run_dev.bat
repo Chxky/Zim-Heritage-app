@@ -1,4 +1,9 @@
 @echo off
 cd /d "%~dp0"
+echo [1/3] Checking dependencies...
+call flutter pub get
+echo [2/3] Running security audit...
+call dart pub audit
+echo [3/3] Starting development server...
 flutter run -d chrome
 pause

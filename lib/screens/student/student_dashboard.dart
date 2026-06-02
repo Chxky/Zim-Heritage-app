@@ -14,6 +14,7 @@ import 'subjects_screen.dart';
 import 'view_homework_screen.dart';
 import 'progress_screen.dart';
 import 'past_exams_screen.dart';
+import 'ecd_play_screen.dart';
 import '../national/exam_predictor_screen.dart';
 import '../national/learner_passport_screen.dart';
 
@@ -112,6 +113,20 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ),
           ),
           IconButton(
+            icon: const Icon(Icons.local_library, color: AppTheme.gold),
+            tooltip: 'Digital Library',
+            onPressed: () => Navigator.pushNamed(context, '/digital-library'),
+          ),
+          IconButton(
+            icon: const Icon(Icons.security, color: AppTheme.primaryGreen),
+            tooltip: 'Cyber Security',
+            onPressed: () => Navigator.pushNamed(context, '/security'),
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () => Navigator.pushNamed(context, '/notifications', arguments: widget.user),
+          ),
+          IconButton(
             icon: const Icon(Icons.logout, size: 20),
             tooltip: 'Logout',
             onPressed: () async {
@@ -136,6 +151,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   Widget _buildOverview() {
     final subjects = getSubjectsForGradeAndCurriculum(widget.user.gradeLevel, widget.user.curriculum);
+    final isECD = widget.user.gradeLevel.startsWith('ECD');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -144,16 +160,59 @@ class _StudentDashboardState extends State<StudentDashboard> {
         children: [
           _buildWelcomeCard(),
           const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: _buildStatCard(Icons.book, 'Subjects', '${subjects.length}', Colors.blue, Icons.school)),
-              const SizedBox(width: 12),
-              Expanded(child: _buildStatCard(Icons.assignment, 'Homework', '$_pendingCount', Colors.orange, Icons.pending)),
-              const SizedBox(width: 12),
-              Expanded(child: _buildStatCard(Icons.trending_up, 'Average', _averageScore, AppTheme.greenBright, Icons.analytics)),
-            ],
-          ),
-          const SizedBox(height: 24),
+          if (!isECD) ...[
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/heritage-learning'),
+              child: GlassCard(
+                padding: const EdgeInsets.all(16),
+                borderColor: AppTheme.gold.withValues(alpha: 0.4),
+                boxShadow: AppTheme.goldGlow,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.school, color: AppTheme.gold, size: 32),
+                    ),
+                    const SizedBox(width: 16),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Heritage Learning Hub', 
+                            style: TextStyle(color: AppTheme.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                          SizedBox(height: 4),
+                          Text('Interactive curriculum & VR History', 
+                            style: TextStyle(color: AppTheme.gold, fontSize: 13)),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right, color: AppTheme.gold),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+          if (isECD) ...[
+            _buildECDPlayArea(),
+            const SizedBox(height: 20),
+          ],
+          if (!isECD) ...[
+            Row(
+              children: [
+                Expanded(child: _buildStatCard(Icons.book, 'Subjects', '${subjects.length}', Colors.blue, Icons.school)),
+                const SizedBox(width: 12),
+                Expanded(child: _buildStatCard(Icons.assignment, 'Homework', '$_pendingCount', Colors.orange, Icons.pending)),
+                const SizedBox(width: 12),
+                Expanded(child: _buildStatCard(Icons.trending_up, 'Average', _averageScore, AppTheme.greenBright, Icons.analytics)),
+              ],
+            ),
+            const SizedBox(height: 24),
+          ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -486,6 +545,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     const SizedBox(height: 2),
                     Text(widget.user.school,
                       style: const TextStyle(color: AppTheme.white60, fontSize: 13)),
+                    if (widget.user.schoolMotto != null && widget.user.schoolMotto!.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text('"${widget.user.schoolMotto!}"',
+                        style: const TextStyle(color: AppTheme.gold, fontSize: 11, fontStyle: FontStyle.italic)),
+                    ],
                   ],
                 ),
               ),
@@ -592,12 +656,20 @@ Widget _buildSubjectCard(Subject data) {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
+              image: _getSubjectImage(data.name) != null ? DecorationImage(
+                image: AssetImage(_getSubjectImage(data.name)!),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(color.withValues(alpha: 0.5), BlendMode.screen),
+              ) : null,
             ),
-            child: Icon(_getIcon(data.icon), color: color, size: 24),
+            child: _getSubjectImage(data.name) == null
+              ? Center(child: Icon(_getIcon(data.icon), color: color, size: 24))
+              : null,
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -648,5 +720,95 @@ Widget _buildSubjectCard(Subject data) {
       case 'gavel': return Icons.gavel;
       default: return Icons.book;
     }
+  }
+
+  String? _getSubjectImage(String name) {
+    if (name.contains('Math')) return 'assets/images/subject_math.png';
+    if (name.contains('Science')) return 'assets/images/subject_science.png';
+    if (name.contains('English')) return 'assets/images/subject_english.png';
+    return null;
+  }
+
+  Widget _buildECDPlayArea() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Play & Learn', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.white)),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: GlassCard(
+                padding: const EdgeInsets.all(16),
+                borderColor: Colors.pinkAccent.withValues(alpha: 0.4),
+                boxShadow: [BoxShadow(color: Colors.pinkAccent.withValues(alpha: 0.2), blurRadius: 10)],
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'stories')));
+                },
+                child: Column(
+                  children: [
+                    const Icon(Icons.menu_book_rounded, color: Colors.pinkAccent, size: 40),
+                    const SizedBox(height: 8),
+                    const Text('Story Books', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+                    const Text('Read & Color', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: GlassCard(
+                padding: const EdgeInsets.all(16),
+                borderColor: Colors.lightBlueAccent.withValues(alpha: 0.4),
+                boxShadow: [BoxShadow(color: Colors.lightBlueAccent.withValues(alpha: 0.2), blurRadius: 10)],
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'folktales')));
+                },
+                child: Column(
+                  children: [
+                    const Icon(Icons.record_voice_over, color: Colors.lightBlueAccent, size: 40),
+                    const SizedBox(height: 8),
+                    const Text('Folk Tales', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+                    const Text('Listen & Learn', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        GlassCard(
+          padding: const EdgeInsets.all(16),
+          borderColor: Colors.orangeAccent.withValues(alpha: 0.4),
+          boxShadow: [BoxShadow(color: Colors.orangeAccent.withValues(alpha: 0.2), blurRadius: 10)],
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'spelling')));
+          },
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orangeAccent.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.spellcheck, color: Colors.orangeAccent, size: 30),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Spelling & Pronunciation', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                    const SizedBox(height: 4),
+                    const Text('Practice words with smart voice helper', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -89,6 +89,7 @@ class AuthService {
     required int age,
     bool hasFacialRecognition = false,
     String curriculum = 'zimsec',
+    String? schoolMotto,
   }) async {
     if (AppConfig.useFirebase) {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -101,6 +102,7 @@ class AuthService {
         gradeLevel: gradeLevel, school: school, age: age,
         isVerified: true, hasFacialRecognition: hasFacialRecognition,
         curriculum: curriculum,
+        schoolMotto: schoolMotto,
       );
       await FirebaseFirestore.instance.collection('users').doc(uid).set(user.toMap());
       _currentUser = user;
@@ -111,6 +113,7 @@ class AuthService {
       gradeLevel: gradeLevel, school: school, age: age,
       hasFacialRecognition: hasFacialRecognition,
       curriculum: curriculum,
+      schoolMotto: schoolMotto,
     );
     _currentUser = user;
     return user;

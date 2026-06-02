@@ -22,21 +22,29 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ministry Intelligence Dashboard',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        title: Column(
+          children: [
+            const Text('REPUBLIC OF ZIMBABWE', style: TextStyle(fontSize: 10, color: AppTheme.gold, letterSpacing: 2, fontWeight: FontWeight.bold)),
+            const Text('Ministry Intelligence Dashboard', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
+          ],
+        ),
         centerTitle: true,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [AppTheme.surfaceDark, AppTheme.surfaceMid],
+              colors: [AppTheme.surfaceDark, AppTheme.gold.withValues(alpha: 0.1)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
           ),
         ),
         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Image.asset('assets/images/zim_flag_real.png', height: 20, width: 30, fit: BoxFit.cover),
+          ),
           IconButton(
-            icon: const Icon(Icons.map_outlined),
+            icon: const Icon(Icons.map_outlined, color: AppTheme.gold),
             tooltip: 'Zimbabwe Map',
             onPressed: () => Navigator.pushNamed(context, '/zimbabwe-map'),
           ),
@@ -75,24 +83,38 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
     ];
 
     return GridView.count(
-      crossAxisCount: 4,
+      crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 1.1,
+      childAspectRatio: 1.8,
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
       children: kpis.map((kpi) => GlassCard(
         padding: const EdgeInsets.all(12),
-        child: Column(
+        borderColor: AppTheme.gold.withValues(alpha: 0.4),
+        boxShadow: AppTheme.goldGlow,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(kpi['icon'] as IconData, color: AppTheme.gold, size: 28),
-            const SizedBox(height: 8),
-            Text(kpi['value'] as String,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.white)),
-            const SizedBox(height: 4),
-            Text(kpi['label'] as String,
-              style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(kpi['icon'] as IconData, color: AppTheme.gold, size: 28),
+            ),
+            const SizedBox(width: 16),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(kpi['value'] as String,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                Text(kpi['label'] as String,
+                  style: const TextStyle(fontSize: 12, color: AppTheme.gold, fontWeight: FontWeight.w500)),
+              ],
+            ),
           ],
         ),
       )).toList(),
@@ -102,21 +124,22 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
   Widget _buildProvinceChart() {
     final provinces = DemoData.provinceMetrics.entries.toList();
     return GlassCard(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Text('Pass Rate %', style: TextStyle(color: AppTheme.white70, fontSize: 12)),
-              Switch(
-                value: _showRiskMap,
-                onChanged: (val) => setState(() => _showRiskMap = val),
-                activeThumbColor: AppTheme.gold,
-              ),
-              const Text('Risk Map', style: TextStyle(color: AppTheme.white70, fontSize: 12)),
-            ],
-          ),
+        borderColor: AppTheme.gold.withValues(alpha: 0.2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text('Pass Rate %', style: TextStyle(color: AppTheme.white70, fontSize: 12)),
+                Switch(
+                  value: _showRiskMap,
+                  onChanged: (val) => setState(() => _showRiskMap = val),
+                  activeThumbColor: AppTheme.gold,
+                  activeTrackColor: AppTheme.gold.withValues(alpha: 0.3),
+                ),
+                const Text('Risk Map', style: TextStyle(color: AppTheme.gold, fontSize: 12, fontWeight: FontWeight.bold)),
+              ],
+            ),
           const SizedBox(height: 16),
           SizedBox(
             height: 220,
@@ -373,12 +396,20 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
   }
 
   Widget _buildSectionTitle(String title, {IconData? icon}) {
-    return Row(
-      children: [
-        if (icon != null) Icon(icon, color: AppTheme.gold, size: 24),
-        const SizedBox(width: 8),
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.gold)),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.gold.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border(left: BorderSide(color: AppTheme.gold, width: 4)),
+      ),
+      child: Row(
+        children: [
+          if (icon != null) Icon(icon, color: AppTheme.gold, size: 24),
+          const SizedBox(width: 12),
+          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.gold, letterSpacing: 1)),
+        ],
+      ),
     );
   }
 }

@@ -1,0 +1,78 @@
+{
+  "@@locale": "sn",
+  "appTitle": "ZimHeritage",
+  "appSubtitle": "Chikuwanano cheDzidzo yeNhaka",
+  "signIn": "Pinda",
+  "signInWithGoogle": "Pinda ne Google",
+  "createAccount": "Gadzira Akaundi Itsva",
+  "forgotPassword": "Kanganwa Password?",
+  "email": "E-mail",
+  "password": "Password",
+  "register": "Nyoresa",
+  "logout": "Buditsa",
+  "dashboard": "Dashboard",
+  "subjects": "Zvidzidzo",
+  "homework": "Basa rechikoro",
+  "progress": "Budiriro",
+  "aiTutor": "AI Mudzidzisi",
+  "settings": "Zvigadziriso",
+  "notifications": "Ziviso",
+  "editProfile": "Gadzirisa Profile",
+  "name": "Zita",
+  "school": "Chikoro",
+  "gradeLevel": "Giredhi",
+  "role": "Basa",
+  "save": "Seva",
+  "cancel": "Kanzura",
+  "delete": "Bvisa",
+  "confirm": "Simudzira",
+  "loading": "Kurodha...",
+  "errorOccurred": "Pane chakakanganisika",
+  "tryAgain": "Edza Zvakare",
+  "noData": "Hapana data",
+  "search": "Tsvaga",
+  "welcome": "Tinokugamuchira",
+  "student": "Mudzidzi",
+  "teacher": "Mudzidzisi",
+  "parent": "Mubereki",
+  "admin": "Mutongi",
+  "welcomeStudent": "Tinokugamuchira, {name}",
+  "@welcomeStudent": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "homeworkDue": "Inosvika mumazuva {days}",
+  "@homeworkDue": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "marksObtained": "Mamaki: {obtained}/{total}",
+  "@marksObtained": {
+    "placeholders": {
+      "obtained": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "offlineMode": "Offline Mode",
+  "onlineMode": "Online Mode",
+  "heritageTitle": "Kuchengetedza Nhaka",
+  "nationalDashboard": "Dashboard yeNyika",
+  "learnerPassport": "Pasipoti yeMudzidzi",
+  "examPredictor": "Kufanotaura Bvunzo",
+  "leaderboard": "Bhodi yeVatungamiri",
+  "challenges": "Zvinetswa",
+  "calendar": "Karenda",
+  "messages": "Mameseji",
+  "zimbabweMap": "Mepu yeZimbabwe",
+  "ministryDashboard": "Dashboard yeShumiro",
+  "reportCard": "Chikumbiro cheMamaki",
+  "attendance": "Kuuya",
+  "noInternet": "Hapana internet",
+  "dataExported": "Data yabuditswa zvakabudirira",
+  "dataDeleted": "Data yabviswa zvakabudirira",
+  "confirmDeleteData": "Une chokwadi chekuti unoda kubvisa data yako yose? Ichi chiito hachigoneki.",
+  "exportMyData": "Buditsa Data Yangu",
+  "deleteMyData": "Bvisa Data Yangu"
+}

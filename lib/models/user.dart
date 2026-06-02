@@ -9,10 +9,7 @@ class User {
   final bool isVerified;
   final bool hasFacialRecognition;
   final String authProvider;
-  final String? paymentPlanId;
-  final String? paymentStatus;
-  final DateTime? subscriptionStartDate;
-  final DateTime? subscriptionEndDate;
+  final String? schoolMotto;
   final String curriculum;
 
   User({
@@ -26,15 +23,10 @@ class User {
     this.isVerified = false,
     this.hasFacialRecognition = false,
     this.authProvider = 'email',
-    this.paymentPlanId,
-    this.paymentStatus,
-    this.subscriptionStartDate,
-    this.subscriptionEndDate,
+    this.schoolMotto,
     this.curriculum = 'zimsec',
   });
 
-  bool get isPaymentActive => paymentStatus == 'active';
-  bool get hasActiveSubscription => paymentPlanId != null && paymentPlanId != 'free' && isPaymentActive;
 
   factory User.fromMap(Map<String, dynamic> map, String id) {
     return User(
@@ -48,10 +40,7 @@ class User {
       isVerified: map['isVerified'] as bool? ?? false,
       hasFacialRecognition: map['hasFacialRecognition'] as bool? ?? false,
       authProvider: map['authProvider'] as String? ?? 'email',
-      paymentPlanId: map['paymentPlanId'] as String?,
-      paymentStatus: map['paymentStatus'] as String?,
-      subscriptionStartDate: _parseDate(map['subscriptionStartDate']),
-      subscriptionEndDate: _parseDate(map['subscriptionEndDate']),
+      schoolMotto: map['schoolMotto'] as String?,
       curriculum: map['curriculum'] as String? ?? 'zimsec',
     );
   }
@@ -78,10 +67,7 @@ class User {
       'isVerified': isVerified,
       'hasFacialRecognition': hasFacialRecognition,
       'authProvider': authProvider,
-      'paymentPlanId': paymentPlanId,
-      'paymentStatus': paymentStatus,
-      'subscriptionStartDate': subscriptionStartDate?.toIso8601String(),
-      'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
+      'schoolMotto': schoolMotto,
       'curriculum': curriculum,
     };
   }
@@ -97,10 +83,7 @@ class User {
     bool? isVerified,
     bool? hasFacialRecognition,
     String? authProvider,
-    String? paymentPlanId,
-    String? paymentStatus,
-    DateTime? subscriptionStartDate,
-    DateTime? subscriptionEndDate,
+    String? schoolMotto,
     String? curriculum,
   }) {
     return User(
@@ -114,10 +97,7 @@ class User {
       isVerified: isVerified ?? this.isVerified,
       hasFacialRecognition: hasFacialRecognition ?? this.hasFacialRecognition,
       authProvider: authProvider ?? this.authProvider,
-      paymentPlanId: paymentPlanId ?? this.paymentPlanId,
-      paymentStatus: paymentStatus ?? this.paymentStatus,
-      subscriptionStartDate: subscriptionStartDate ?? this.subscriptionStartDate,
-      subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
+      schoolMotto: schoolMotto ?? this.schoolMotto,
       curriculum: curriculum ?? this.curriculum,
     );
   }

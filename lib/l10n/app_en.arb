@@ -1,0 +1,78 @@
+{
+  "@@locale": "en",
+  "appTitle": "ZimHeritage",
+  "appSubtitle": "Heritage-Based Curriculum Platform",
+  "signIn": "Sign In",
+  "signInWithGoogle": "Sign in with Google",
+  "createAccount": "Create New Account",
+  "forgotPassword": "Forgot Password?",
+  "email": "Email",
+  "password": "Password",
+  "register": "Register",
+  "logout": "Logout",
+  "dashboard": "Dashboard",
+  "subjects": "Subjects",
+  "homework": "Homework",
+  "progress": "Progress",
+  "aiTutor": "AI Tutor",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "editProfile": "Edit Profile",
+  "name": "Name",
+  "school": "School",
+  "gradeLevel": "Grade Level",
+  "role": "Role",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "confirm": "Confirm",
+  "loading": "Loading...",
+  "errorOccurred": "An error occurred",
+  "tryAgain": "Try Again",
+  "noData": "No data available",
+  "search": "Search",
+  "welcome": "Welcome",
+  "student": "Student",
+  "teacher": "Teacher",
+  "parent": "Parent",
+  "admin": "Administrator",
+  "welcomeStudent": "Welcome, {name}",
+  "@welcomeStudent": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "homeworkDue": "Due in {days} days",
+  "@homeworkDue": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "marksObtained": "Marks: {obtained}/{total}",
+  "@marksObtained": {
+    "placeholders": {
+      "obtained": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "offlineMode": "Offline Mode",
+  "onlineMode": "Online Mode",
+  "heritageTitle": "Heritage Preservation",
+  "nationalDashboard": "National Dashboard",
+  "learnerPassport": "Learner Passport",
+  "examPredictor": "Exam Predictor",
+  "leaderboard": "Leaderboard",
+  "challenges": "Challenges",
+  "calendar": "Calendar",
+  "messages": "Messages",
+  "zimbabweMap": "Zimbabwe Map",
+  "ministryDashboard": "Ministry Dashboard",
+  "reportCard": "Report Card",
+  "attendance": "Attendance",
+  "noInternet": "No internet connection",
+  "dataExported": "Data exported successfully",
+  "dataDeleted": "Data deleted successfully",
+  "confirmDeleteData": "Are you sure you want to delete all your data? This action cannot be undone.",
+  "exportMyData": "Export My Data",
+  "deleteMyData": "Delete My Data"
+}

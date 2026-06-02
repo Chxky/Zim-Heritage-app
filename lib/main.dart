@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 import 'theme/app_theme.dart';
 import 'models/user.dart' as models;
@@ -14,6 +17,16 @@ import 'services/seeding_service.dart';
 import 'services/user_repository.dart';
 import 'services/submission_repository.dart';
 import 'services/homework_repository.dart';
+import 'services/sentry_service.dart';
+import 'services/di_container.dart';
+import 'services/notification_service.dart';
+import 'services/l10n_service.dart';
+import 'services/local_persistence_service.dart';
+import 'services/privacy_service.dart';
+import 'services/security_service.dart';
+import 'services/deep_link_service.dart';
+import 'services/update_service.dart';
+import 'services/security_service.dart';
 import 'screens/student/student_dashboard.dart';
 import 'screens/teacher/teacher_dashboard.dart';
 import 'screens/registration_screen.dart';
@@ -24,13 +37,17 @@ import 'screens/notifications_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/admin_user_management_screen.dart';
 import 'screens/teacher/homework_create_screen.dart';
-import 'screens/parent_payment_screen.dart';
 import 'screens/national/national_dashboard.dart';
 import 'screens/national/exam_predictor_screen.dart';
 import 'screens/national/learner_passport_screen.dart';
 import 'screens/national/heritage_preservation_screen.dart';
 import 'screens/ministry_dashboard_screen.dart';
 import 'screens/zimbabwe_map_screen.dart';
+import 'screens/virtual_tour_screen.dart';
+import 'screens/registration_screen.dart';
+import 'screens/cyber_security_screen.dart';
+import 'screens/student/digital_library_screen.dart';
+import 'screens/student/heritage_learning_hub.dart';
 import 'screens/leaderboard_screen.dart';
 import 'screens/challenges_screen.dart';
 import 'screens/report_card_screen.dart';
@@ -39,21 +56,38 @@ import 'screens/messaging/conversation_list_screen.dart';
 import 'screens/calendar_screen.dart';
 import 'widgets/glass_card.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await EnvConfig.load();
 
+  try {
+    await setupDependencyInjection();
+  } catch (e) {
+    debugPrint('DI setup failed (non-fatal): $e');
+  }
+
   if (EnvConfig.useFirebase) {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     try {
+      await NotificationService.init();
       await SeedingService.seedAllIfNeeded();
-    } catch (_) {}
+    } catch (e) {
+      SentryService.captureError(e, StackTrace.current, hint: 'Firebase init');
+    }
   } else {
     try {
       await SeedingService.seedAllIfNeeded();
     } catch (_) {}
   }
+
+  try {
+    await SentryService.init();
+  } catch (e) {
+    debugPrint('Sentry init failed (non-fatal): $e');
+  }
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -61,6 +95,11 @@ void main() async {
     statusBarIconBrightness: Brightness.light,
   ));
   runApp(const ZimHeritageApp());
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 }
 
 class ZimHeritageApp extends StatelessWidget {
@@ -74,7 +113,33 @@ class ZimHeritageApp extends StatelessWidget {
       theme: AppTheme.theme,
       initialRoute: '/',
       onGenerateRoute: _generateRoute,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: L10nService.supportedLocales,
+      locale: _resolveLocale,
+      localeResolutionCallback: (locale, supportedLocales) {
+        if (locale != null) {
+          for (final supported in supportedLocales) {
+            if (supported.languageCode == locale.languageCode) {
+              return supported;
+            }
+          }
+        }
+        return L10nService.fallbackLocale;
+      },
     );
+  }
+
+  Locale? get _resolveLocale {
+    try {
+      final code = EnvConfig.appLocale;
+      if (code == 'sn') return const Locale('sn');
+      if (code == 'nd') return const Locale('nd');
+    } catch (_) {}
+    return null;
   }
 
   Route<dynamic>? _generateRoute(RouteSettings settings) {
@@ -85,6 +150,12 @@ class ZimHeritageApp extends StatelessWidget {
         return _slideRoute(const LoginScreen());
       case '/register':
         return _slideRoute(const RegistrationScreen());
+      case '/security':
+        return _slideRoute(const CyberSecurityScreen());
+      case '/digital-library':
+        return _slideRoute(const DigitalLibraryScreen());
+      case '/heritage-learning':
+        return _slideRoute(const HeritageLearningHub());
       case '/forgot-password':
         return _slideRoute(const ForgotPasswordScreen());
       case '/edit-profile':
@@ -120,6 +191,9 @@ class ZimHeritageApp extends StatelessWidget {
         ));
       case '/ministry-dashboard':
         return _slideRoute(const MinistryDashboardScreen());
+      case '/virtual-tour':
+        final site = settings.arguments as String? ?? 'Great Zimbabwe';
+        return _slideRoute(VirtualTourScreen(siteName: site));
       case '/zimbabwe-map':
         return _slideRoute(const ZimbabweMapScreen());
       case '/leaderboard':
@@ -142,10 +216,6 @@ class ZimHeritageApp extends StatelessWidget {
         return _slideRoute(const CalendarScreen());
       case '/user-management':
         return _slideRoute(const AdminUserManagementScreen());
-      case '/parent-payment':
-        final user5 = settings.arguments;
-        if (user5 is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
-        return _slideRoute(ParentPaymentScreen(user: user5));
       case '/dashboard':
         final user = settings.arguments;
         if (user is! models.User) return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -360,18 +430,39 @@ class _SplashScreenState extends State<SplashScreen>
                             borderRadius: BorderRadius.circular(24),
                             border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.verified, color: AppTheme.gold, size: 14),
-                              const SizedBox(width: 8),
-                              const Text('ECD • Primary • O-Level • A-Level',
+                              Icon(Icons.verified, color: AppTheme.gold, size: 14),
+                              SizedBox(width: 8),
+                              Text('ECD • Primary • O-Level • A-Level',
                                 style: TextStyle(fontSize: 12, color: AppTheme.gold, fontWeight: FontWeight.w600)),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
+                      SlideTransition(
+                        position: _slideUp,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryGreen.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppTheme.primaryGreen.withValues(alpha: 0.5)),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.wifi_off, color: AppTheme.greenBright, size: 12),
+                              SizedBox(width: 6),
+                              Text('RURAL OFFLINE AI READY',
+                                style: TextStyle(fontSize: 10, color: AppTheme.greenBright, fontWeight: FontWeight.bold, letterSpacing: 1)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
                       SlideTransition(
                         position: _slideUp,
                         child: Text('9,872 Schools • 4.8M Students • 148,200 Teachers',
@@ -401,13 +492,28 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
   String? _error;
+  String _selectedCurriculum = 'ZIMSEC (Core Heritage Curriculum)';
+  final List<String> _curricula = [
+    'ZIMSEC (Core Heritage Curriculum)',
+    'Cambridge (Supplementary Pathway)'
+  ];
+  late AnimationController _spinController;
+
+  @override
+  void initState() {
+    super.initState();
+    _spinController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 8),
+    )..repeat();
+  }
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
@@ -415,7 +521,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       try {
         final user = await AuthService.login(
-          _emailController.text.trim(),
+          SecurityService.sanitizeInput(_emailController.text.trim()),
           _passwordController.text,
         );
         if (!mounted) return;
@@ -432,6 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    _spinController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -460,29 +567,43 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 40),
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.4), width: 2),
-                        boxShadow: [BoxShadow(color: AppTheme.gold.withValues(alpha: 0.15), blurRadius: 25)],
-                      ),
-                      child: ClipOval(
-                        child: SvgPicture.asset('assets/images/zimbabwe_bird_logo.svg', fit: BoxFit.cover),
-                      ),
+                    AnimatedBuilder(
+                      animation: _spinController,
+                      builder: (context, child) {
+                        return Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppTheme.gold.withValues(alpha: 0.4), width: 2),
+                            boxShadow: [
+                              BoxShadow(color: AppTheme.gold.withValues(alpha: 0.4), blurRadius: 30),
+                              BoxShadow(color: AppTheme.primaryGreen.withValues(alpha: 0.2), blurRadius: 50, spreadRadius: 10),
+                            ],
+                          ),
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(_spinController.value * 2.0 * 3.141592653589793),
+                            child: ClipOval(
+                              child: Image.asset('assets/images/zim_bird_real.png', fit: BoxFit.cover),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 12),
-                    Text('REPUBLIC OF ZIMBABWE'.toUpperCase(),
-                      style: TextStyle(fontSize: 9, color: AppTheme.white30, letterSpacing: 3, fontWeight: FontWeight.w600)),
+                    Text('MINISTRY OF PRIMARY AND SECONDARY EDUCATION',
+                      style: const TextStyle(fontSize: 11, color: AppTheme.white60, letterSpacing: 1.5, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 12),
                     const Text('ZimHeritage',
                       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.white, letterSpacing: 1)),
                     const SizedBox(height: 4),
-                    const Text('Heritage-Based Curriculum Platform',
+                    const Text('National Education Infrastructure',
                       style: TextStyle(fontSize: 13, color: AppTheme.gold, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 6),
-                    Text('Sign in to continue',
+                    Text('Secure Login Portal',
                       style: TextStyle(fontSize: 13, color: AppTheme.white50)),
                     const SizedBox(height: 32),
                     Container(
@@ -509,6 +630,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               key: _formKey,
                               child: Column(
                                 children: [
+                                  DropdownButtonFormField<String>(
+                                    value: _selectedCurriculum,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Curriculum Pathway',
+                                      prefixIcon: Icon(Icons.menu_book),
+                                    ),
+                                    dropdownColor: AppTheme.surfaceDark,
+                                    style: const TextStyle(color: AppTheme.white, fontSize: 13),
+                                    items: _curricula.map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _selectedCurriculum = newValue!;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(height: 16),
                                   TextFormField(
                                     controller: _emailController,
                                     decoration: const InputDecoration(
@@ -574,6 +716,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onPressed: () async {
                                         setState(() { _isLoading = true; _error = null; });
                                         try {
+                                          await launchUrl(Uri.parse('https://accounts.google.com/signup'), mode: LaunchMode.externalApplication);
+                                        } catch (_) {}
+                                        try {
                                           final user = await AuthService.signInWithGoogle();
                                           if (!context.mounted) return;
                                           Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
@@ -607,6 +752,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                         foregroundColor: AppTheme.gold,
                                       ),
                                     ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.shield_outlined, color: AppTheme.greenBright, size: 16),
+                                      const SizedBox(width: 4),
+                                      Flexible(
+                                        child: Text('Protected by Zimbabwe Cyber and Data Protection Act [Chap 12:07]',
+                                          style: TextStyle(color: AppTheme.greenBright, fontSize: 9, fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -673,6 +832,10 @@ class _ParentDashboardState extends State<ParentDashboard> {
         ),
         actions: [
           Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Image.asset('assets/images/zim_flag_real.png', height: 20, width: 30, fit: BoxFit.cover),
+          ),
+          Padding(
             padding: const EdgeInsets.only(right: 4),
             child: CircleAvatar(
               backgroundColor: AppTheme.gold.withValues(alpha: 0.2),
@@ -733,58 +896,44 @@ class _ParentDashboardState extends State<ParentDashboard> {
             const FlagBar(height: 3),
             const SizedBox(height: 16),
             GlassCard(
-              padding: const EdgeInsets.all(16),
-              borderColor: AppTheme.gold.withValues(alpha: 0.2),
-              onTap: () {
-                Navigator.pushNamed(context, '/parent-payment', arguments: widget.user);
-              },
-              child: Row(
+              padding: const EdgeInsets.all(20),
+              borderColor: AppTheme.greenBright.withValues(alpha: 0.3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: (widget.user.isPaymentActive ? AppTheme.greenBright : AppTheme.gold).withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      widget.user.isPaymentActive ? Icons.card_membership : Icons.card_giftcard,
-                      color: widget.user.isPaymentActive ? AppTheme.greenBright : AppTheme.gold,
-                      size: 24,
-                    ),
+                  Row(
+                    children: [
+                      Icon(Icons.smart_toy_outlined, color: AppTheme.greenBright),
+                      const SizedBox(width: 8),
+                      Text('Smart Learning Advisor', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                    ],
                   ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.user.hasActiveSubscription ? 'Premium Plan Active' : 'Free Plan',
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppTheme.white),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          widget.user.hasActiveSubscription ? 'Tap to manage subscription' : 'Upgrade for more features',
-                          style: TextStyle(color: AppTheme.white50, fontSize: 12),
-                        ),
-                      ],
+                  const SizedBox(height: 12),
+                  if (_children.isNotEmpty)
+                    Text('AI Analysis: ${_children.first.name.split(' ').first} excels in Heritage Studies and Science. We recommend focusing on practical experiments and folk literature.',
+                      style: TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.4)),
+                  if (_children.isEmpty)
+                    Text('Link a child to receive personalized AI learning paths and subject strength analysis.',
+                      style: TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.4)),
+                  const SizedBox(height: 12),
+                  if (_children.isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppTheme.greenBright.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.trending_up, color: AppTheme.greenBright, size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text('Recommended: Advanced Ngano (Folk Tales) module.',
+                              style: TextStyle(color: AppTheme.greenBright, fontSize: 12, fontWeight: FontWeight.bold)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: AppTheme.gold.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Manage', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.gold)),
-                        const SizedBox(width: 2),
-                        Icon(Icons.chevron_right, size: 14, color: AppTheme.gold),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),

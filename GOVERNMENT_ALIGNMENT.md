@@ -13,6 +13,8 @@ The Zimbabwe Ministry of Primary and Secondary Education introduced the Heritage
 | **5 cross-cutting themes** | ICT, gender, inclusivity, environment, and life skills integrated across subjects |
 | **Continuous assessment** | Built-in homework, quizzes, and progress tracking system |
 | **Foundation learning (ECD)** | Visual aids and age-appropriate content for ECD A & B |
+| **Multi-language support** | Full chiShona and isiNdebele translations alongside English |
+| **Inclusive design** | Screen reader support (Semantics), high-contrast colors, accessible touch targets |
 
 ## 2. National Development Strategy 1 (NDS1) — Education Pillar
 
@@ -61,10 +63,12 @@ The app's past exam questions and assessment formats follow ZIMSEC examination s
 
 ## 7. Regulatory Compliance
 
-- **Data Protection**: Aligned with Zimbabwe's Cyber and Data Protection Act
-- **Child Protection**: Age-appropriate content, parental consent mechanisms
+- **Data Protection**: Aligned with Zimbabwe's Cyber and Data Protection Act — users can export or delete their data in-app
+- **Child Protection**: Age-appropriate content, parental consent mechanisms, input sanitization for all user-entered text
 - **Curriculum Authority**: Content mapped to Curriculum Development Unit (CDU) syllabi
 - **Quality Assurance**: Alignment with Standards Control and Quality Assurance Directorate
+- **Accessibility**: WCAG-aligned semantic markup for screen readers, language selection for indigenous languages
+- **Security**: XSS prevention via HTML entity encoding, email/password validation, filename sanitization
 
 ---
 

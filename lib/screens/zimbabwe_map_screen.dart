@@ -71,15 +71,11 @@ class _ZimbabweMapScreenState extends State<ZimbabweMapScreen> {
               child: Stack(
                 children: [
                   Center(
-                    child: SvgPicture.asset(
-                      'assets/images/zimbabwe_map_outline.svg',
+                    child: Image.asset(
+                      'assets/images/real_zimbabwe_map.png',
                       width: double.infinity,
                       height: double.infinity,
                       fit: BoxFit.contain,
-                      colorFilter: const ColorFilter.mode(
-                        AppTheme.primaryGreen,
-                        BlendMode.srcIn,
-                      ),
                     ),
                   ),
                   if (_showProvinces) ..._buildProvinceMarkers(),

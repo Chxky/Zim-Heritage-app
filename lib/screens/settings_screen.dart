@@ -1,9 +1,14 @@
-// screens/settings_screen.dart
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../models/user.dart';
 import '../widgets/glass_card.dart';
 import '../services/auth_service.dart';
+import '../services/l10n_service.dart';
+import '../services/privacy_service.dart';
+import '../services/update_service.dart';
+import '../services/security_service.dart';
+import '../services/accessibility_helper.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
   final User user;
@@ -16,6 +21,21 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _notificationsEnabled = true;
+  String _appVersion = '2.0.0';
+  String _locale = 'en';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAppInfo();
+  }
+
+  Future<void> _loadAppInfo() async {
+    try {
+      final version = await UpdateService.getCurrentVersion();
+      if (mounted) setState(() => _appVersion = version);
+    } catch (_) {}
+  }
 
   void _showSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -30,6 +50,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _exportData() async {
+    try {
+      final data = await PrivacyService.exportUserData(widget.user.id);
+      final json = PrivacyService.generateDataExportJson(data);
+      _showSnackbar('Data exported. Copying to clipboard...');
+    } catch (e) {
+      _showSnackbar('Failed to export data: $e');
+    }
+  }
+
+  Future<void> _deleteData() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Delete All Data'),
+        content: const Text('Are you sure you want to delete all your data? This action cannot be undone.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Delete', style: TextStyle(color: AppTheme.redBright)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      try {
+        await PrivacyService.deleteUserData(widget.user.id);
+        if (mounted) {
+          _showSnackbar('All data deleted.');
+          Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
+        }
+      } catch (e) {
+        _showSnackbar('Failed to delete data: $e');
+      }
+    }
+  }
+
   Widget _sectionHeader(String title, IconData icon) {
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 12),
@@ -37,12 +95,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           Icon(icon, color: AppTheme.gold, size: 20),
           const SizedBox(width: 8),
-          Text(title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.white,
-            )),
+          Semantics(header: true, child: Text(title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white))),
         ],
       ),
     );
@@ -56,29 +110,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Color? iconColor,
     VoidCallback? onTap,
   }) {
-    return ListTile(
-      leading: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: (iconColor ?? AppTheme.primaryGreen).withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(10),
+    return Semantics(
+      label: title,
+      hint: subtitle,
+      button: onTap != null,
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: (iconColor ?? AppTheme.primaryGreen).withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: iconColor ?? AppTheme.greenBright, size: 20),
         ),
-        child: Icon(icon, color: iconColor ?? AppTheme.greenBright, size: 20),
+        title: Text(title,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: AppTheme.white)),
+        subtitle: subtitle != null
+            ? Text(subtitle, style: const TextStyle(color: AppTheme.white50, fontSize: 12))
+            : null,
+        trailing: trailing,
+        onTap: onTap,
+        contentPadding: EdgeInsets.zero,
+        dense: true,
       ),
-      title: Text(title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 15,
-          color: AppTheme.white,
-        )),
-      subtitle: subtitle != null
-          ? Text(subtitle,
-              style: const TextStyle(color: AppTheme.white50, fontSize: 12))
-          : null,
-      trailing: trailing,
-      onTap: onTap,
-      contentPadding: EdgeInsets.zero,
-      dense: true,
     );
   }
 
@@ -123,21 +177,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 children: [
                   _settingsTile(
-                    icon: Icons.dark_mode,
-                    title: 'Dark Mode',
-                    trailing: Switch(
-                      value: true,
-                      onChanged: null,
-                      activeThumbColor: AppTheme.gold,
-                      inactiveThumbColor: AppTheme.white30,
-                    ),
-                  ),
-                  const Divider(),
-                  _settingsTile(
                     icon: Icons.language,
                     title: 'Language',
-                    subtitle: 'English',
+                    subtitle: _locale == 'sn' ? 'chiShona' : _locale == 'nd' ? 'isiNdebele' : 'English',
                     trailing: const Icon(Icons.chevron_right, color: AppTheme.white30),
+                    onTap: () => _showLanguagePicker(),
                   ),
                   const Divider(),
                   _settingsTile(
@@ -154,6 +198,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             const SizedBox(height: 24),
+            _sectionHeader('Privacy & Data', Icons.shield_outlined),
+            GlassCard(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Column(
+                children: [
+                  _settingsTile(
+                    icon: Icons.file_download_outlined,
+                    title: 'Export My Data',
+                    subtitle: 'Download all your data as JSON',
+                    onTap: _exportData,
+                  ),
+                  const Divider(),
+                  _settingsTile(
+                    icon: Icons.delete_forever_outlined,
+                    iconColor: AppTheme.redBright,
+                    title: 'Delete My Data',
+                    subtitle: 'Permanently remove all your data',
+                    onTap: _deleteData,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
             _sectionHeader('App Info', Icons.info_outline),
             GlassCard(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -162,13 +229,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _settingsTile(
                     icon: Icons.smartphone,
                     title: 'App Version',
-                    subtitle: '2.0.0',
+                    subtitle: _appVersion,
+                  ),
+                  const Divider(),
+                  _settingsTile(
+                    icon: Icons.update,
+                    title: 'Check for Updates',
+                    onTap: () => UpdateService.openStoreListing(),
                   ),
                   const Divider(),
                   _settingsTile(
                     icon: Icons.public,
                     title: 'About ZimHeritage',
-                    onTap: () => _showSnackbar('ZimHeritage v2.0.0 — Preserving Zimbabwean heritage through education.'),
+                    onTap: () => _showSnackbar('ZimHeritage v$_appVersion — Preserving Zimbabwean heritage through education.'),
                   ),
                 ],
               ),
@@ -207,6 +280,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showLanguagePicker() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.surfaceDark,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text('Select Language', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.language, color: AppTheme.gold),
+              title: const Text('English', style: TextStyle(color: AppTheme.white)),
+              trailing: _locale == 'en' ? const Icon(Icons.check, color: AppTheme.gold) : null,
+              onTap: () { setState(() => _locale = 'en'); Navigator.pop(ctx); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language, color: AppTheme.gold),
+              title: const Text('chiShona', style: TextStyle(color: AppTheme.white)),
+              trailing: _locale == 'sn' ? const Icon(Icons.check, color: AppTheme.gold) : null,
+              onTap: () { setState(() => _locale = 'sn'); Navigator.pop(ctx); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language, color: AppTheme.gold),
+              title: const Text('isiNdebele', style: TextStyle(color: AppTheme.white)),
+              trailing: _locale == 'nd' ? const Icon(Icons.check, color: AppTheme.gold) : null,
+              onTap: () { setState(() => _locale = 'nd'); Navigator.pop(ctx); },
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
