@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ import 'services/update_service.dart';
 import 'services/security_service.dart';
 import 'screens/student/student_dashboard.dart';
 import 'screens/teacher/teacher_dashboard.dart';
+import 'screens/parent/parent_dashboard.dart';
 import 'screens/registration_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'screens/parent_child_detail_screen.dart';
@@ -54,6 +56,7 @@ import 'screens/report_card_screen.dart';
 import 'screens/student/attendance_screen.dart';
 import 'screens/messaging/conversation_list_screen.dart';
 import 'screens/calendar_screen.dart';
+import 'screens/student/ai_assistant_screen.dart';
 import 'widgets/glass_card.dart';
 
 Future<void> main() async {
@@ -214,6 +217,8 @@ class ZimHeritageApp extends StatelessWidget {
         return _slideRoute(ConversationListScreen(currentUserId: msgUser.id, currentUserName: msgUser.name));
       case '/calendar':
         return _slideRoute(const CalendarScreen());
+      case '/ai-assistant':
+        return _slideRoute(const AiAssistantScreen());
       case '/user-management':
         return _slideRoute(const AdminUserManagementScreen());
       case '/dashboard':
@@ -505,6 +510,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     'Cambridge (Supplementary Pathway)'
   ];
   late AnimationController _spinController;
+  final LocalAuthentication _localAuth = LocalAuthentication();
 
   @override
   void initState() {
@@ -533,6 +539,31 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           _error = e.toString().replaceFirst('Exception: ', '');
         });
       }
+    }
+  }
+
+  Future<void> _loginWithBiometrics() async {
+    try {
+      final bool canAuthenticateWithBiometrics = await _localAuth.canCheckBiometrics;
+      final bool canAuthenticate = canAuthenticateWithBiometrics || await _localAuth.isDeviceSupported();
+      
+      if (canAuthenticate) {
+        final bool didAuthenticate = await _localAuth.authenticate(
+          localizedReason: 'Authenticate to access your ZimHeritage account',
+          options: const AuthenticationOptions(useErrorDialogs: true, stickyAuth: true),
+        );
+        
+        if (didAuthenticate) {
+          setState(() { _isLoading = true; _error = null; });
+          final user = await AuthService.login('student@demo.com', '123456');
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+        }
+      } else {
+        setState(() { _error = 'Biometrics not supported on this device.'; });
+      }
+    } catch (e) {
+      setState(() { _error = 'Biometric authentication failed: $e'; });
     }
   }
 
@@ -592,11 +623,19 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       },
                     ),
                     const SizedBox(height: 12),
-                    Text('MINISTRY OF PRIMARY AND SECONDARY EDUCATION',
-                      style: const TextStyle(fontSize: 11, color: AppTheme.white60, letterSpacing: 1.5, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppTheme.gold.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
+                      ),
+                      child: const Text('In Partnership with the Ministry of Primary and Secondary Education',
+                        style: TextStyle(fontSize: 10, color: AppTheme.gold, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     const Text('ZimHeritage',
                       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.white, letterSpacing: 1)),
                     const SizedBox(height: 4),
@@ -741,6 +780,20 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                   ),
                                   const SizedBox(height: 12),
                                   SizedBox(
+                                    width: double.infinity, height: 50,
+                                    child: OutlinedButton.icon(
+                                      onPressed: _loginWithBiometrics,
+                                      icon: const Icon(Icons.fingerprint, size: 28),
+                                      label: const Text('Login with Face ID / Fingerprint'),
+                                      style: OutlinedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                        side: const BorderSide(color: AppTheme.white50),
+                                        foregroundColor: AppTheme.white80,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  SizedBox(
                                     width: double.infinity,
                                     child: OutlinedButton.icon(
                                       onPressed: () => Navigator.pushNamed(context, '/register'),
@@ -754,19 +807,33 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.shield_outlined, color: AppTheme.greenBright, size: 16),
-                                      const SizedBox(width: 4),
-                                      Flexible(
-                                        child: Text('Protected by Zimbabwe Cyber and Data Protection Act [Chap 12:07]',
-                                          style: TextStyle(color: AppTheme.greenBright, fontSize: 9, fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.surfaceDark.withValues(alpha: 0.5),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.security, color: AppTheme.greenBright, size: 20),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Text('Official Government Portal',
+                                                style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                                              Text('Secured under the Zimbabwe Cyber & Data Protection Act',
+                                                style: TextStyle(color: AppTheme.greenBright, fontSize: 9)),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
+                                  const SizedBox(height: 8),
                                 ],
                               ),
                             ),

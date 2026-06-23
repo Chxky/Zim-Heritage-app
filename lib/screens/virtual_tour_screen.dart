@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:panorama_viewer/panorama_viewer.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
@@ -51,54 +52,27 @@ class _VirtualTourScreenState extends State<VirtualTourScreen> with TickerProvid
       backgroundColor: AppTheme.surfaceDark,
       body: Stack(
         children: [
-          // Simulated 3D Environment Background
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/zim_bird_real.png', 
-              fit: BoxFit.cover,
-              color: AppTheme.surfaceDark.withValues(alpha: 0.7),
-              colorBlendMode: BlendMode.darken,
-            ),
+          PanoramaViewer(
+            zoom: 1,
+            sensorControl: SensorControl.orientation,
+            child: Image.asset('assets/images/great_zimbabwe_360.png'),
+            hotspots: [
+              Hotspot(
+                latitude: -10.0,
+                longitude: 20.0,
+                width: 60,
+                height: 60,
+                widget: _buildHotspot('Conical Tower'),
+              ),
+              Hotspot(
+                latitude: 5.0,
+                longitude: -30.0,
+                width: 60,
+                height: 60,
+                widget: _buildHotspot('Great Enclosure Wall'),
+              ),
+            ],
           ),
-          
-          if (!_isInitializing) ...[
-            // Scanning line effect
-            AnimatedBuilder(
-              animation: _scanController,
-              builder: (context, child) {
-                return Positioned(
-                  top: MediaQuery.of(context).size.height * _scanController.value,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 2,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.5),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            
-            // Floating Interactive Hotspots
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.4,
-              left: MediaQuery.of(context).size.width * 0.3,
-              child: _buildHotspot('Historical Marker'),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.6,
-              right: MediaQuery.of(context).size.width * 0.2,
-              child: _buildHotspot('Artifact Detail'),
-            ),
-          ],
-
           SafeArea(
             child: Column(
               children: [
@@ -293,35 +267,91 @@ class _VirtualTourScreenState extends State<VirtualTourScreen> with TickerProvid
   Widget _buildHotspot(String tooltip) {
     return FadeTransition(
       opacity: _pulseController,
-      child: Tooltip(
-        message: tooltip,
-        preferBelow: false,
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceDark.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppTheme.gold),
-        ),
-        textStyle: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.bold, fontSize: 12),
-        child: Container(
-          width: 24,
-          height: 24,
+      child: GestureDetector(
+        onTap: () => _showQuizDialog(tooltip),
+        child: Tooltip(
+          message: tooltip,
+          preferBelow: false,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: AppTheme.gold, width: 2),
-            color: AppTheme.gold.withValues(alpha: 0.3),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.gold.withValues(alpha: 0.6),
-                blurRadius: 10,
-                spreadRadius: 2,
-              )
-            ],
+            color: AppTheme.surfaceDark.withValues(alpha: 0.9),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppTheme.gold),
           ),
-          child: const Center(
-            child: Icon(Icons.add, color: AppTheme.white, size: 16),
+          textStyle: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.bold, fontSize: 12),
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppTheme.gold, width: 2),
+              color: AppTheme.gold.withValues(alpha: 0.3),
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.gold.withValues(alpha: 0.6),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                )
+              ],
+            ),
+            child: const Center(
+              child: Icon(Icons.add, color: AppTheme.white, size: 16),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  void _showQuizDialog(String title) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppTheme.surfaceDark.withValues(alpha: 0.95),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: AppTheme.gold.withValues(alpha: 0.5)),
+          ),
+          title: Row(
+            children: [
+              const Icon(Icons.quiz, color: AppTheme.gold),
+              const SizedBox(width: 8),
+              Expanded(child: Text('Interactive Quiz: $title', style: const TextStyle(color: AppTheme.gold, fontSize: 16))),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('What was the primary purpose of the $title?', style: const TextStyle(color: AppTheme.white, fontSize: 14)),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(foregroundColor: AppTheme.white, side: const BorderSide(color: AppTheme.white50)),
+                  onPressed: () { 
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Incorrect. Try again later!'), backgroundColor: AppTheme.redBright));
+                  },
+                  child: const Text('To store grain for the kingdom'),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(foregroundColor: AppTheme.white, side: const BorderSide(color: AppTheme.white50)),
+                  onPressed: () { 
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Correct! +50 XP Earned'), backgroundColor: AppTheme.greenBright));
+                  },
+                  child: const Text('As a symbol of the king\'s power and majesty'),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
     );
   }
 }

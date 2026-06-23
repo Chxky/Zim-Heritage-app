@@ -111,6 +111,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 _buildSectionTitle('Academic Profile', Icons.school),
                                 const SizedBox(height: 16),
                                 _buildDropdown('Curriculum Pathway', _curricula, _selectedCurriculum, (v) => setState(() => _selectedCurriculum = v!)),
+                                const SizedBox(height: 12),
+                                _buildTextField('MoPSE School Registration Code', Icons.numbers),
                                 
                                 const SizedBox(height: 24),
                                 _buildSectionTitle('Geo-Tagging & Demographics', Icons.my_location),
@@ -144,6 +146,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       }
                                     },
                                     child: const Text('REGISTER & GEO-TAG ACCOUNT', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: AppTheme.surfaceDark.withValues(alpha: 0.5),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.security, color: AppTheme.greenBright, size: 20),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Text('Official Government Portal',
+                                              style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                                            Text('Secured under the Zimbabwe Cyber & Data Protection Act',
+                                              style: TextStyle(color: AppTheme.greenBright, fontSize: 9)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],

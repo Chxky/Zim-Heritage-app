@@ -154,9 +154,38 @@ final List<Book> allBooks = [
 ];
 
 List<Book> getBooksForSubject(String subjectId, String gradeLevel) {
-  return allBooks.where((b) =>
+  final books = allBooks.where((b) =>
     b.subjectId == subjectId && b.gradeLevels.contains(gradeLevel)
   ).toList();
+  
+  if (books.isEmpty) {
+    // Provide some mock reading material if none exist
+    return [
+      Book(
+        id: '${subjectId}_mock_1',
+        subjectId: subjectId,
+        title: 'Core Principles of $subjectId',
+        author: 'Education Board',
+        description: 'Essential reading material for $gradeLevel covering fundamental concepts.',
+        type: 'textbook',
+        url: '',
+        gradeLevels: [gradeLevel],
+        topics: [],
+      ),
+      Book(
+        id: '${subjectId}_mock_2',
+        subjectId: subjectId,
+        title: 'Practice & Activity Book',
+        author: 'Education Board',
+        description: 'Interactive exercises and extra reading material.',
+        type: 'activity_book',
+        url: '',
+        gradeLevels: [gradeLevel],
+        topics: [],
+      )
+    ];
+  }
+  return books;
 }
 
 List<Book> getBooksForTopic(String subjectId, String gradeLevel, String topicName) {

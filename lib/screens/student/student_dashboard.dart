@@ -15,6 +15,9 @@ import 'view_homework_screen.dart';
 import 'progress_screen.dart';
 import 'past_exams_screen.dart';
 import 'ecd_play_screen.dart';
+import 'ecd_coloring_screen.dart';
+import 'ecd_word_games_screen.dart';
+import 'ecd_story_screen.dart';
 import '../national/exam_predictor_screen.dart';
 import '../national/learner_passport_screen.dart';
 
@@ -145,6 +148,12 @@ class _StudentDashboardState extends State<StudentDashboard> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/ai-assistant'),
+        backgroundColor: AppTheme.gold,
+        tooltip: 'ZimHeritage AI Assistant',
+        child: const Icon(Icons.auto_awesome, color: AppTheme.black),
+      ),
       ),
     );
   }
@@ -159,6 +168,47 @@ class _StudentDashboardState extends State<StudentDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildWelcomeCard(),
+          const SizedBox(height: 20),
+          GlassCard(
+            padding: const EdgeInsets.all(16),
+            borderColor: Colors.red.withValues(alpha: 0.3),
+            boxShadow: [
+              BoxShadow(color: Colors.red.withValues(alpha: 0.15), blurRadius: 12, offset: const Offset(0, 4)),
+            ],
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.campaign, color: Colors.redAccent, size: 24),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Ministry Circular', style: TextStyle(color: Colors.redAccent, fontSize: 14, fontWeight: FontWeight.bold)),
+                          const Text('Today', style: TextStyle(color: AppTheme.white60, fontSize: 10)),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      const Text('Term 2 Curriculum Updates', style: TextStyle(color: AppTheme.white, fontSize: 15, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4),
+                      const Text('Please review the updated term dates and new Heritage-Based continuous assessment requirements.',
+                        style: TextStyle(color: AppTheme.white70, fontSize: 12)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 20),
           if (!isECD) ...[
             GestureDetector(
@@ -299,6 +349,59 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     border: Border.all(color: AppTheme.gold.withValues(alpha: 0.2)),
                   ),
                   child: const Icon(Icons.auto_awesome, color: AppTheme.gold, size: 40),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Offline Sync Manager
+          GlassCard(
+            padding: const EdgeInsets.all(16),
+            borderColor: AppTheme.primaryGreen.withValues(alpha: 0.2),
+            boxShadow: [
+              BoxShadow(color: AppTheme.primaryGreen.withValues(alpha: 0.12), blurRadius: 16, offset: const Offset(0, 4)),
+            ],
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Offline Learning Resources',
+                        style: TextStyle(color: AppTheme.greenBright, fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4),
+                      const Text('Download VR & Audio for rural access',
+                        style: TextStyle(color: AppTheme.white60, fontSize: 13)),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: const LinearProgressIndicator(
+                                value: 0.7,
+                                backgroundColor: AppTheme.surfaceDark,
+                                color: AppTheme.greenBright,
+                                minHeight: 6,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Text('70%', style: TextStyle(color: AppTheme.greenBright, fontSize: 12, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryGreen.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppTheme.primaryGreen.withValues(alpha: 0.2)),
+                  ),
+                  child: const Icon(Icons.cloud_download, color: AppTheme.greenBright, size: 32),
                 ),
               ],
             ),
@@ -676,7 +779,33 @@ Widget _buildSubjectCard(Subject data) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(data.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppTheme.white)),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(data.name, 
+                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppTheme.white),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: AppTheme.greenBright.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.verified, color: AppTheme.greenBright, size: 10),
+                          SizedBox(width: 2),
+                          Text('NDS1 Aligned', style: TextStyle(color: AppTheme.greenBright, fontSize: 8, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 2),
                 Text(data.description, maxLines: 1, overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: AppTheme.white50, fontSize: 12)),
@@ -743,14 +872,14 @@ Widget _buildSubjectCard(Subject data) {
                 borderColor: Colors.pinkAccent.withValues(alpha: 0.4),
                 boxShadow: [BoxShadow(color: Colors.pinkAccent.withValues(alpha: 0.2), blurRadius: 10)],
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'stories')));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdStoryScreen()));
                 },
-                child: Column(
+                child: const Column(
                   children: [
-                    const Icon(Icons.menu_book_rounded, color: Colors.pinkAccent, size: 40),
-                    const SizedBox(height: 8),
-                    const Text('Story Books', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-                    const Text('Read & Color', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                    Icon(Icons.menu_book_rounded, color: Colors.pinkAccent, size: 40),
+                    SizedBox(height: 8),
+                    Text('Story Time', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+                    Text('Read & Listen', style: TextStyle(color: Colors.white70, fontSize: 11)),
                   ],
                 ),
               ),
@@ -762,14 +891,14 @@ Widget _buildSubjectCard(Subject data) {
                 borderColor: Colors.lightBlueAccent.withValues(alpha: 0.4),
                 boxShadow: [BoxShadow(color: Colors.lightBlueAccent.withValues(alpha: 0.2), blurRadius: 10)],
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'folktales')));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdWordGamesScreen()));
                 },
-                child: Column(
+                child: const Column(
                   children: [
-                    const Icon(Icons.record_voice_over, color: Colors.lightBlueAccent, size: 40),
-                    const SizedBox(height: 8),
-                    const Text('Folk Tales', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-                    const Text('Listen & Learn', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                    Icon(Icons.record_voice_over, color: Colors.lightBlueAccent, size: 40),
+                    SizedBox(height: 8),
+                    Text('Word Games', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+                    Text('Animals & Transport', style: TextStyle(color: Colors.white70, fontSize: 11)),
                   ],
                 ),
               ),
@@ -782,7 +911,7 @@ Widget _buildSubjectCard(Subject data) {
           borderColor: Colors.orangeAccent.withValues(alpha: 0.4),
           boxShadow: [BoxShadow(color: Colors.orangeAccent.withValues(alpha: 0.2), blurRadius: 10)],
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdPlayScreen(category: 'spelling')));
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const EcdColoringScreen()));
           },
           child: Row(
             children: [
@@ -792,16 +921,16 @@ Widget _buildSubjectCard(Subject data) {
                   color: Colors.orangeAccent.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.spellcheck, color: Colors.orangeAccent, size: 30),
+                child: const Icon(Icons.palette, color: Colors.orangeAccent, size: 30),
               ),
               const SizedBox(width: 16),
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Spelling & Pronunciation', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                    const SizedBox(height: 4),
-                    const Text('Practice words with smart voice helper', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                    Text('Coloring Book', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                    SizedBox(height: 4),
+                    Text('Draw and color animals on canvas', style: TextStyle(color: Colors.white70, fontSize: 12)),
                   ],
                 ),
               ),

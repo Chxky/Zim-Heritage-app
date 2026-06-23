@@ -51,6 +51,30 @@ class _EcdPlayScreenState extends State<EcdPlayScreen> {
       return;
     }
     
+    // Dynamically adjust voice for Shona and Ndebele
+    if (_selectedLanguage == 'Shona') {
+      // Try Shona, fallback to Swahili which has similar Bantu phonetics
+      var snAvailable = await flutterTts.isLanguageAvailable("sn-ZW");
+      if (snAvailable is bool && snAvailable) {
+        await flutterTts.setLanguage("sn-ZW");
+      } else {
+        await flutterTts.setLanguage("sw-KE"); 
+      }
+    } else if (_selectedLanguage == 'Ndebele') {
+      // Try Ndebele, fallback to Zulu which is phonetically very similar
+      var ndAvailable = await flutterTts.isLanguageAvailable("nd-ZW");
+      var zuAvailable = await flutterTts.isLanguageAvailable("zu-ZA");
+      if (ndAvailable is bool && ndAvailable) {
+        await flutterTts.setLanguage("nd-ZW");
+      } else if (zuAvailable is bool && zuAvailable) {
+        await flutterTts.setLanguage("zu-ZA");
+      } else {
+        await flutterTts.setLanguage("en-ZA");
+      }
+    } else {
+      await flutterTts.setLanguage("en-ZA");
+    }
+
     setState(() {
       _isPlaying = true;
       _currentText = text;
