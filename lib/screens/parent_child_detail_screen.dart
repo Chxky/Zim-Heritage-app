@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
+
 import '../../models/progress.dart';
 import '../../models/submission.dart';
+import '../../models/user.dart';
 import '../../services/progress_repository.dart';
 import '../../services/submission_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class ParentChildDetailScreen extends StatefulWidget {
@@ -142,7 +143,7 @@ class _ParentChildDetailScreenState extends State<ParentChildDetailScreen> {
               style: const TextStyle(color: AppTheme.white60, fontSize: 13)),
           ],
           const SizedBox(height: 16),
-          Divider(color: AppTheme.white10),
+          const Divider(color: AppTheme.white10),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -368,15 +369,15 @@ class _ParentChildDetailScreenState extends State<ParentChildDetailScreen> {
   }
 
   Widget _buildEmptyState() {
-    return GlassCard(
-      padding: const EdgeInsets.all(40),
+    return const GlassCard(
+      padding: EdgeInsets.all(40),
       child: Column(
         children: [
           Icon(Icons.inbox, size: 48, color: AppTheme.white30),
-          const SizedBox(height: 12),
-          const Text('No data available yet',
+          SizedBox(height: 12),
+          Text('No data available yet',
             style: TextStyle(color: AppTheme.white60, fontSize: 16)),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text('Progress and submissions will appear here once available.',
             textAlign: TextAlign.center,
             style: TextStyle(color: AppTheme.white30, fontSize: 13)),

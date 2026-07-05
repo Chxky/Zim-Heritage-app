@@ -358,7 +358,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     }
     return Container(
       width: 36, height: 36,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppTheme.white10,
         shape: BoxShape.circle,
       ),

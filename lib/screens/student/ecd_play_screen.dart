@@ -24,7 +24,7 @@ class _EcdPlayScreenState extends State<EcdPlayScreen> {
   }
 
   Future<void> _initTts() async {
-    await flutterTts.setLanguage("en-ZA");
+    await flutterTts.setLanguage('en-ZA');
     await flutterTts.setSpeechRate(0.35); // Slower, clearer speed for toddlers
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(1.2); // Slightly higher, friendly pitch for kids
@@ -54,25 +54,25 @@ class _EcdPlayScreenState extends State<EcdPlayScreen> {
     // Dynamically adjust voice for Shona and Ndebele
     if (_selectedLanguage == 'Shona') {
       // Try Shona, fallback to Swahili which has similar Bantu phonetics
-      var snAvailable = await flutterTts.isLanguageAvailable("sn-ZW");
+      final snAvailable = await flutterTts.isLanguageAvailable('sn-ZW');
       if (snAvailable is bool && snAvailable) {
-        await flutterTts.setLanguage("sn-ZW");
+        await flutterTts.setLanguage('sn-ZW');
       } else {
-        await flutterTts.setLanguage("sw-KE"); 
+        await flutterTts.setLanguage('sw-KE'); 
       }
     } else if (_selectedLanguage == 'Ndebele') {
       // Try Ndebele, fallback to Zulu which is phonetically very similar
-      var ndAvailable = await flutterTts.isLanguageAvailable("nd-ZW");
-      var zuAvailable = await flutterTts.isLanguageAvailable("zu-ZA");
+      final ndAvailable = await flutterTts.isLanguageAvailable('nd-ZW');
+      final zuAvailable = await flutterTts.isLanguageAvailable('zu-ZA');
       if (ndAvailable is bool && ndAvailable) {
-        await flutterTts.setLanguage("nd-ZW");
+        await flutterTts.setLanguage('nd-ZW');
       } else if (zuAvailable is bool && zuAvailable) {
-        await flutterTts.setLanguage("zu-ZA");
+        await flutterTts.setLanguage('zu-ZA');
       } else {
-        await flutterTts.setLanguage("en-ZA");
+        await flutterTts.setLanguage('en-ZA');
       }
     } else {
-      await flutterTts.setLanguage("en-ZA");
+      await flutterTts.setLanguage('en-ZA');
     }
 
     setState(() {
@@ -202,14 +202,14 @@ class _EcdPlayScreenState extends State<EcdPlayScreen> {
         );
       }
     } else {
-      return Center(
+      return const Center(
         child: Text('Coming Soon! Color and Read...', style: TextStyle(color: AppTheme.white70, fontSize: 18)),
       );
     }
   }
 
   Widget _buildPlayCard(String title, String story, Color accentColor) {
-    bool isActive = _isPlaying && _currentText == story;
+    final bool isActive = _isPlaying && _currentText == story;
     return GlassCard(
       padding: const EdgeInsets.all(20),
       borderColor: accentColor.withValues(alpha: 0.4),
@@ -234,7 +234,7 @@ class _EcdPlayScreenState extends State<EcdPlayScreen> {
   }
 
   Widget _buildSpellingCard(String letter, String word, String speech, Color accentColor) {
-    bool isActive = _isPlaying && _currentText == speech;
+    final bool isActive = _isPlaying && _currentText == speech;
     return GlassCard(
       padding: const EdgeInsets.all(16),
       borderColor: accentColor.withValues(alpha: 0.4),

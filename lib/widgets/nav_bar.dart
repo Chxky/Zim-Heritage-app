@@ -28,9 +28,9 @@ class AppNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppTheme.surfaceDark,
-        border: const Border(
+        border: Border(
           top: BorderSide(color: AppTheme.white10),
         ),
       ),
@@ -121,9 +121,9 @@ class TeacherNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppTheme.surfaceDark,
-        border: const Border(
+        border: Border(
           top: BorderSide(color: AppTheme.white10),
         ),
       ),

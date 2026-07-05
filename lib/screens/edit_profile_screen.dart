@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../services/user_repository.dart';
+
 import '../models/user.dart';
+import '../services/user_repository.dart';
+import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 
 class EditProfileScreen extends StatefulWidget {

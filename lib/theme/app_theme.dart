@@ -109,7 +109,7 @@ class AppTheme {
       useMaterial3: true,
       primaryColor: primaryGreen,
       scaffoldBackgroundColor: background,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: primaryGreen,
         secondary: gold,
         error: red,
@@ -155,7 +155,7 @@ class AppTheme {
         shadowColor: greenGlow.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: white10),
+          side: const BorderSide(color: white10),
         ),
         clipBehavior: Clip.antiAlias,
       ),
@@ -190,17 +190,17 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: surfaceMid,
-        hintStyle: TextStyle(color: white30),
-        labelStyle: TextStyle(color: white60),
+        hintStyle: const TextStyle(color: white30),
+        labelStyle: const TextStyle(color: white60),
         prefixIconColor: white50,
         suffixIconColor: white50,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: white20),
+          borderSide: const BorderSide(color: white20),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: white20),
+          borderSide: const BorderSide(color: white20),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -221,7 +221,7 @@ class AppTheme {
         selectedLabelStyle: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600),
         unselectedLabelStyle: GoogleFonts.poppins(fontSize: 10),
       ),
-      dividerTheme: DividerThemeData(
+      dividerTheme: const DividerThemeData(
         color: white10,
         thickness: 1,
       ),
@@ -235,7 +235,7 @@ class AppTheme {
         backgroundColor: surfaceDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: white20),
+          side: const BorderSide(color: white20),
         ),
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 20,
@@ -250,7 +250,7 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: surfaceMid,
         labelStyle: const TextStyle(color: white80, fontSize: 12),
-        side: BorderSide(color: white20),
+        side: const BorderSide(color: white20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -263,10 +263,10 @@ class AppTheme {
         color: surfaceDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: white20),
+          side: const BorderSide(color: white20),
         ),
       ),
-      expansionTileTheme: ExpansionTileThemeData(
+      expansionTileTheme: const ExpansionTileThemeData(
         backgroundColor: Colors.transparent,
         collapsedBackgroundColor: Colors.transparent,
         iconColor: white70,

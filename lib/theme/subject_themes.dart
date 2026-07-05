@@ -103,7 +103,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _engDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -127,7 +127,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _matDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -151,7 +151,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _shoDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -175,7 +175,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _hssDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -199,7 +199,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _sciDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -223,7 +223,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _agrDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -247,7 +247,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _artDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -271,7 +271,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _frmDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -295,7 +295,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _peDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -319,7 +319,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _ictDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -343,7 +343,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _sciDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -367,7 +367,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _sedDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -390,8 +390,8 @@ class SubjectThemes {
       ),
       backgroundGradient: LinearGradient(
         colors: [
-          Color(0xFF880E4F).withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF880E4F).withValues(alpha: 0.3),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -414,8 +414,8 @@ class SubjectThemes {
       ),
       backgroundGradient: LinearGradient(
         colors: [
-          Color(0xFFB71C1C).withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFFB71C1C).withValues(alpha: 0.3),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -438,8 +438,8 @@ class SubjectThemes {
       ),
       backgroundGradient: LinearGradient(
         colors: [
-          Color(0xFF4A148C).withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF4A148C).withValues(alpha: 0.3),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -463,7 +463,7 @@ class SubjectThemes {
       backgroundGradient: LinearGradient(
         colors: [
           _engDark.withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -475,344 +475,344 @@ class SubjectThemes {
 
     // Cambridge-specific subjects
     'gp': SubjectThemeData(
-      primaryColor: Color(0xFFFF9800),
-      accentColor: Color(0xFFFFB74D),
-      glowColor: Color(0xFFFFB74D),
-      cardTint: Color(0xFFFF9800).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF9800),
+      accentColor: const Color(0xFFFFB74D),
+      glowColor: const Color(0xFFFFB74D),
+      cardTint: const Color(0xFFFF9800).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFE65100), Color(0xFFFF9800), Color(0xFFFFB74D)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFE65100).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFE65100).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'art': SubjectThemeData(
-      primaryColor: Color(0xFFE91E63),
-      accentColor: Color(0xFFF48FB1),
-      glowColor: Color(0xFFF48FB1),
-      cardTint: Color(0xFFE91E63).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFE91E63),
+      accentColor: const Color(0xFFF48FB1),
+      glowColor: const Color(0xFFF48FB1),
+      cardTint: const Color(0xFFE91E63).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF880E4F), Color(0xFFE91E63), Color(0xFFF48FB1)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF880E4F).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF880E4F).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFF48FB1).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFF48FB1).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'rs': SubjectThemeData(
-      primaryColor: Color(0xFF795548),
-      accentColor: Color(0xFFBCAAA4),
-      glowColor: Color(0xFFBCAAA4),
-      cardTint: Color(0xFF795548).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF795548),
+      accentColor: const Color(0xFFBCAAA4),
+      glowColor: const Color(0xFFBCAAA4),
+      cardTint: const Color(0xFF795548).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF3E2723), Color(0xFF795548), Color(0xFFBCAAA4)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF3E2723).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF3E2723).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFBCAAA4).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFBCAAA4).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'music': SubjectThemeData(
-      primaryColor: Color(0xFFFF5722),
-      accentColor: Color(0xFFFF8A65),
-      glowColor: Color(0xFFFF8A65),
-      cardTint: Color(0xFFFF5722).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF5722),
+      accentColor: const Color(0xFFFF8A65),
+      glowColor: const Color(0xFFFF8A65),
+      cardTint: const Color(0xFFFF5722).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFBF360C), Color(0xFFFF5722), Color(0xFFFF8A65)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFBF360C).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFBF360C).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFF8A65).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFF8A65).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'his': SubjectThemeData(
-      primaryColor: Color(0xFFFF9800),
-      accentColor: Color(0xFFFFCC80),
-      glowColor: Color(0xFFFFCC80),
-      cardTint: Color(0xFFFF9800).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF9800),
+      accentColor: const Color(0xFFFFCC80),
+      glowColor: const Color(0xFFFFCC80),
+      cardTint: const Color(0xFFFF9800).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFE65100), Color(0xFFFF9800), Color(0xFFFFCC80)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFE65100).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFE65100).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFFCC80).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFFCC80).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'geo': SubjectThemeData(
-      primaryColor: Color(0xFF795548),
-      accentColor: Color(0xFFA1887F),
-      glowColor: Color(0xFFA1887F),
-      cardTint: Color(0xFF795548).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF795548),
+      accentColor: const Color(0xFFA1887F),
+      glowColor: const Color(0xFFA1887F),
+      cardTint: const Color(0xFF795548).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF4E342E), Color(0xFF795548), Color(0xFFA1887F)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF4E342E).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF4E342E).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFA1887F).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFA1887F).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'eco': SubjectThemeData(
-      primaryColor: Color(0xFFE91E63),
-      accentColor: Color(0xFFEC407A),
-      glowColor: Color(0xFFEC407A),
-      cardTint: Color(0xFFE91E63).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFE91E63),
+      accentColor: const Color(0xFFEC407A),
+      glowColor: const Color(0xFFEC407A),
+      cardTint: const Color(0xFFE91E63).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF880E4F), Color(0xFFE91E63), Color(0xFFEC407A)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF880E4F).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF880E4F).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFEC407A).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFEC407A).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'bus': SubjectThemeData(
-      primaryColor: Color(0xFF4CAF50),
-      accentColor: Color(0xFF81C784),
-      glowColor: Color(0xFF81C784),
-      cardTint: Color(0xFF4CAF50).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF4CAF50),
+      accentColor: const Color(0xFF81C784),
+      glowColor: const Color(0xFF81C784),
+      cardTint: const Color(0xFF4CAF50).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF1B5E20), Color(0xFF4CAF50), Color(0xFF81C784)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF1B5E20).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF1B5E20).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF81C784).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF81C784).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'acc': SubjectThemeData(
-      primaryColor: Color(0xFF4CAF50),
-      accentColor: Color(0xFF66BB6A),
-      glowColor: Color(0xFF66BB6A),
-      cardTint: Color(0xFF4CAF50).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF4CAF50),
+      accentColor: const Color(0xFF66BB6A),
+      glowColor: const Color(0xFF66BB6A),
+      cardTint: const Color(0xFF4CAF50).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF1B5E20), Color(0xFF4CAF50), Color(0xFF66BB6A)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF1B5E20).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF1B5E20).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF66BB6A).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF66BB6A).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'cs': SubjectThemeData(
-      primaryColor: Color(0xFF3F51B5),
-      accentColor: Color(0xFF7986CB),
-      glowColor: Color(0xFF7986CB),
-      cardTint: Color(0xFF3F51B5).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF3F51B5),
+      accentColor: const Color(0xFF7986CB),
+      glowColor: const Color(0xFF7986CB),
+      cardTint: const Color(0xFF3F51B5).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF1A237E), Color(0xFF3F51B5), Color(0xFF7986CB)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF1A237E).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF1A237E).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF7986CB).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF7986CB).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'frn': SubjectThemeData(
-      primaryColor: Color(0xFF2196F3),
-      accentColor: Color(0xFF64B5F6),
-      glowColor: Color(0xFF64B5F6),
-      cardTint: Color(0xFF2196F3).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF2196F3),
+      accentColor: const Color(0xFF64B5F6),
+      glowColor: const Color(0xFF64B5F6),
+      cardTint: const Color(0xFF2196F3).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF0D47A1), Color(0xFF2196F3), Color(0xFF64B5F6)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF0D47A1).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF0D47A1).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF64B5F6).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF64B5F6).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'lit': SubjectThemeData(
-      primaryColor: Color(0xFF2196F3),
-      accentColor: Color(0xFF42A5F5),
-      glowColor: Color(0xFF42A5F5),
-      cardTint: Color(0xFF2196F3).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF2196F3),
+      accentColor: const Color(0xFF42A5F5),
+      glowColor: const Color(0xFF42A5F5),
+      cardTint: const Color(0xFF2196F3).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF0D47A1), Color(0xFF2196F3), Color(0xFF42A5F5)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF0D47A1).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF0D47A1).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF42A5F5).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF42A5F5).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'dnt': SubjectThemeData(
-      primaryColor: Color(0xFFFF9800),
-      accentColor: Color(0xFFFFB74D),
-      glowColor: Color(0xFFFFB74D),
-      cardTint: Color(0xFFFF9800).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF9800),
+      accentColor: const Color(0xFFFFB74D),
+      glowColor: const Color(0xFFFFB74D),
+      cardTint: const Color(0xFFFF9800).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFE65100), Color(0xFFFF9800), Color(0xFFFFB74D)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFE65100).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFE65100).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'ftn': SubjectThemeData(
-      primaryColor: Color(0xFFFF9800),
-      accentColor: Color(0xFFFFCC80),
-      glowColor: Color(0xFFFFCC80),
-      cardTint: Color(0xFFFF9800).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF9800),
+      accentColor: const Color(0xFFFFCC80),
+      glowColor: const Color(0xFFFFCC80),
+      cardTint: const Color(0xFFFF9800).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFE65100), Color(0xFFFF9800), Color(0xFFFFCC80)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFE65100).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFE65100).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFFCC80).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFFCC80).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'comsci': SubjectThemeData(
-      primaryColor: Color(0xFF00BCD4),
-      accentColor: Color(0xFF4DD0E1),
-      glowColor: Color(0xFF4DD0E1),
-      cardTint: Color(0xFF00BCD4).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF00BCD4),
+      accentColor: const Color(0xFF4DD0E1),
+      glowColor: const Color(0xFF4DD0E1),
+      cardTint: const Color(0xFF00BCD4).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF006064), Color(0xFF00BCD4), Color(0xFF4DD0E1)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF006064).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF006064).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF4DD0E1).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF4DD0E1).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'psy': SubjectThemeData(
-      primaryColor: Color(0xFF9C27B0),
-      accentColor: Color(0xFFBA68C8),
-      glowColor: Color(0xFFBA68C8),
-      cardTint: Color(0xFF9C27B0).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF9C27B0),
+      accentColor: const Color(0xFFBA68C8),
+      glowColor: const Color(0xFFBA68C8),
+      cardTint: const Color(0xFF9C27B0).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF4A148C), Color(0xFF9C27B0), Color(0xFFBA68C8)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF4A148C).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF4A148C).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFBA68C8).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFBA68C8).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'soc': SubjectThemeData(
-      primaryColor: Color(0xFFFF9800),
-      accentColor: Color(0xFFFFB74D),
-      glowColor: Color(0xFFFFB74D),
-      cardTint: Color(0xFFFF9800).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFFFF9800),
+      accentColor: const Color(0xFFFFB74D),
+      glowColor: const Color(0xFFFFB74D),
+      cardTint: const Color(0xFFFF9800).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFFE65100), Color(0xFFFF9800), Color(0xFFFFB74D)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFFE65100).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFFE65100).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFFFFB74D).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'law': SubjectThemeData(
-      primaryColor: Color(0xFF795548),
-      accentColor: Color(0xFF8D6E63),
-      glowColor: Color(0xFF8D6E63),
-      cardTint: Color(0xFF795548).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF795548),
+      accentColor: const Color(0xFF8D6E63),
+      glowColor: const Color(0xFF8D6E63),
+      cardTint: const Color(0xFF795548).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF3E2723), Color(0xFF795548), Color(0xFF8D6E63)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF3E2723).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF3E2723).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF8D6E63).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF8D6E63).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'it': SubjectThemeData(
-      primaryColor: Color(0xFF3F51B5),
-      accentColor: Color(0xFF5C6BC0),
-      glowColor: Color(0xFF5C6BC0),
-      cardTint: Color(0xFF3F51B5).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF3F51B5),
+      accentColor: const Color(0xFF5C6BC0),
+      glowColor: const Color(0xFF5C6BC0),
+      cardTint: const Color(0xFF3F51B5).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF1A237E), Color(0xFF3F51B5), Color(0xFF5C6BC0)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF1A237E).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF1A237E).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF5C6BC0).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF5C6BC0).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
     'fmat': SubjectThemeData(
-      primaryColor: Color(0xFF4CAF50),
-      accentColor: Color(0xFF81C784),
-      glowColor: Color(0xFF81C784),
-      cardTint: Color(0xFF4CAF50).withValues(alpha: 0.08),
-      headerGradient: LinearGradient(
+      primaryColor: const Color(0xFF4CAF50),
+      accentColor: const Color(0xFF81C784),
+      glowColor: const Color(0xFF81C784),
+      cardTint: const Color(0xFF4CAF50).withValues(alpha: 0.08),
+      headerGradient: const LinearGradient(
         colors: [Color(0xFF1B5E20), Color(0xFF4CAF50), Color(0xFF81C784)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       backgroundGradient: LinearGradient(
-        colors: [Color(0xFF1B5E20).withValues(alpha: 0.3), Color(0xFF0B1A10)],
+        colors: [const Color(0xFF1B5E20).withValues(alpha: 0.3), const Color(0xFF0B1A10)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      glow: [BoxShadow(color: Color(0xFF81C784).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
+      glow: [BoxShadow(color: const Color(0xFF81C784).withValues(alpha: 0.15), blurRadius: 24, offset: const Offset(0, 4))],
     ),
   };
 
@@ -866,8 +866,8 @@ class SubjectThemes {
       ),
       backgroundGradient: LinearGradient(
         colors: [
-          Color(0xFF004D2E).withValues(alpha: 0.3),
-          Color(0xFF0B1A10),
+          const Color(0xFF004D2E).withValues(alpha: 0.3),
+          const Color(0xFF0B1A10),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,

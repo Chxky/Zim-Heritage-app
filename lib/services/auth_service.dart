@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../models/user.dart';
 import 'app_config.dart';
 import 'mock_data_service.dart';
-import '../models/user.dart';
 
 class AuthService {
   static User? _currentUser;

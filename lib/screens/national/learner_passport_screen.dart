@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/learner_passport.dart';
 import '../../services/passport_service.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class LearnerPassportScreen extends StatelessWidget {
@@ -264,11 +265,11 @@ class LearnerPassportScreen extends StatelessWidget {
               children: [
                 Text(c.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppTheme.white)),
                 Text(c.issuer, style: const TextStyle(fontSize: 11, color: AppTheme.white60)),
-                Text(c.verificationHash, style: TextStyle(fontSize: 9, color: AppTheme.greenBright, fontWeight: FontWeight.w500)),
+                Text(c.verificationHash, style: const TextStyle(fontSize: 9, color: AppTheme.greenBright, fontWeight: FontWeight.w500)),
               ],
             ),
           ),
-          Icon(Icons.verified, size: 20, color: AppTheme.greenBright),
+          const Icon(Icons.verified, size: 20, color: AppTheme.greenBright),
         ],
       ),
     );

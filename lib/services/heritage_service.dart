@@ -1,5 +1,5 @@
-import '../models/heritage.dart';
 import '../data/heritage_data.dart';
+import '../models/heritage.dart';
 
 class HeritageService {
   static List<HeritageSite> searchSites(String query) {

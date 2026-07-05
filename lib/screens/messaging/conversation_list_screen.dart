@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/message.dart';
 import '../../services/messaging_service.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 import 'chat_screen.dart';
 
@@ -51,16 +52,16 @@ class _ConversationListScreenState extends State<ConversationListScreen> {
         ),
       ),
       body: _conversations.isEmpty
-          ? Center(
+          ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.chat_bubble_outline, size: 64, color: AppTheme.white30),
-                  const SizedBox(height: 16),
-                  const Text('No conversations yet',
+                  Icon(Icons.chat_bubble_outline, size: 64, color: AppTheme.white30),
+                  SizedBox(height: 16),
+                  Text('No conversations yet',
                     style: TextStyle(color: AppTheme.white60, fontSize: 18)),
-                  const SizedBox(height: 8),
-                  const Text('Start a conversation with a teacher or parent',
+                  SizedBox(height: 8),
+                  Text('Start a conversation with a teacher or parent',
                     style: TextStyle(color: AppTheme.white30)),
                 ],
               ),

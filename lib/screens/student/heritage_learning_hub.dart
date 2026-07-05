@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
-import 'modules/unhu_ubuntu_screen.dart';
 import 'modules/ancient_states_screen.dart';
-import 'modules/liberation_struggle_screen.dart';
 import 'modules/civic_governance_screen.dart';
+import 'modules/liberation_struggle_screen.dart';
+import 'modules/unhu_ubuntu_screen.dart';
 
 class HeritageLearningHub extends StatelessWidget {
   const HeritageLearningHub({super.key});
@@ -205,11 +206,11 @@ class HeritageLearningHub extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, '/heritage'); // Routes to the Virtual Tour hub
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(Icons.vrpano, color: Colors.white, size: 20),
                         SizedBox(width: 8),
                         Text('Launch VR Virtual Tour', 

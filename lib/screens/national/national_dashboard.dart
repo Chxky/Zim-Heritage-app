@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/national_models.dart';
+
 import '../../data/national_data.dart';
+import '../../models/national_models.dart';
 import '../../services/analytics_service.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class NationalDashboard extends StatefulWidget {
@@ -125,11 +126,11 @@ class _NationalDashboardState extends State<NationalDashboard> with SingleTicker
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   children: [
                     Icon(Icons.warning_amber, color: Colors.orange, size: 20),
-                    const SizedBox(width: 8),
-                    const Text('Early Warning: Intervention Required',
+                    SizedBox(width: 8),
+                    Text('Early Warning: Intervention Required',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
                   ],
                 ),
@@ -259,11 +260,11 @@ class _NationalDashboardState extends State<NationalDashboard> with SingleTicker
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   children: [
-                    const Icon(Icons.track_changes, color: AppTheme.gold, size: 24),
-                    const SizedBox(width: 10),
-                    const Expanded(
+                    Icon(Icons.track_changes, color: AppTheme.gold, size: 24),
+                    SizedBox(width: 10),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

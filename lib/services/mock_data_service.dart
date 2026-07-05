@@ -1,12 +1,12 @@
-import '../models/user.dart';
-import '../models/homework.dart';
-import '../models/submission.dart';
-import '../models/progress.dart';
-import '../models/subject.dart';
-import '../models/answer_key.dart';
+import '../data/answer_keys.dart' as ak;
 import '../data/sample_data.dart';
 import '../data/zimbabwe_curriculum.dart';
-import '../data/answer_keys.dart' as ak;
+import '../models/answer_key.dart';
+import '../models/homework.dart';
+import '../models/progress.dart';
+import '../models/subject.dart';
+import '../models/submission.dart';
+import '../models/user.dart';
 
 class MockDataService {
   static final List<User> _users = [

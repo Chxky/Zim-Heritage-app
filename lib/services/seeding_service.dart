@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'env_config.dart';
-import '../models/user.dart';
+
 import '../data/sample_data.dart';
+import '../models/user.dart';
+import 'env_config.dart';
 
 class SeedingService {
   static Future<void> seedAllIfNeeded() async {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../models/user.dart';
+
 import '../models/progress.dart';
+import '../models/user.dart';
 import '../services/progress_repository.dart';
+import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 
 class ReportCardScreen extends StatefulWidget {
@@ -156,7 +157,7 @@ class _ReportCardScreenState extends State<ReportCardScreen> {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppTheme.white10)),
       ),
       child: Row(
@@ -177,7 +178,7 @@ class _ReportCardScreenState extends State<ReportCardScreen> {
               textAlign: TextAlign.center),
           )),
           Expanded(flex: 2, child: Text(remark,
-            style: TextStyle(color: AppTheme.white60, fontSize: 11), textAlign: TextAlign.center)),
+            style: const TextStyle(color: AppTheme.white60, fontSize: 11), textAlign: TextAlign.center)),
         ],
       ),
     );

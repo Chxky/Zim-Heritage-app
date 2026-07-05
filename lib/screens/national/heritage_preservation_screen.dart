@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/heritage.dart';
+
 import '../../data/heritage_data.dart';
+import '../../models/heritage.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class HeritagePreservationScreen extends StatefulWidget {
@@ -333,7 +334,7 @@ class _HeritagePreservationScreenState extends State<HeritagePreservationScreen>
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.book, size: 12, color: Colors.blue),
+                const Icon(Icons.book, size: 12, color: Colors.blue),
                 const SizedBox(width: 4),
                 Text('Curriculum: ${k.curriculumLink}', style: const TextStyle(fontSize: 10, color: Colors.blue)),
               ],
@@ -391,7 +392,7 @@ class _HeritagePreservationScreenState extends State<HeritagePreservationScreen>
               const SizedBox(height: 6),
               Row(
                 children: [
-                  Icon(Icons.info, size: 12, color: Colors.deepOrange),
+                  const Icon(Icons.info, size: 12, color: Colors.deepOrange),
                   const SizedBox(width: 4),
                   Expanded(child: Text(p.significance, style: const TextStyle(fontSize: 11, color: Colors.deepOrange, fontWeight: FontWeight.w500))),
                 ],
@@ -410,9 +411,9 @@ class _HeritagePreservationScreenState extends State<HeritagePreservationScreen>
       backgroundColor: Colors.transparent,
       builder: (ctx) => Container(
         height: MediaQuery.of(context).size.height * 0.7,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppTheme.surfaceDark,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),

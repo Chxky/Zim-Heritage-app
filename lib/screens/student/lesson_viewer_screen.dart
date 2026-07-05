@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../theme/subject_themes.dart';
+
+import '../../data/lesson_content.dart';
+import '../../data/past_exam_questions.dart';
 import '../../models/lesson.dart';
 import '../../models/subject.dart';
 import '../../models/user.dart';
-import '../../data/lesson_content.dart';
-import '../../data/past_exam_questions.dart';
+import '../../theme/app_theme.dart';
+import '../../theme/subject_themes.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/subject_scaffold.dart';
 
@@ -235,11 +236,11 @@ class _LessonViewerScreenState extends State<LessonViewerScreen> {
                           const SizedBox(height: 4),
                           Text(q.answer, style: const TextStyle(fontSize: 13, color: AppTheme.white80)),
                           const SizedBox(height: 8),
-                          Row(
+                          const Row(
                             children: [
                               Icon(Icons.lightbulb, size: 14, color: AppTheme.gold),
-                              const SizedBox(width: 6),
-                              const Text('Explanation:', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 12)),
+                              SizedBox(width: 6),
+                              Text('Explanation:', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 12)),
                             ],
                           ),
                           const SizedBox(height: 4),
@@ -386,11 +387,11 @@ class _LessonViewerScreenState extends State<LessonViewerScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   children: [
                     Icon(Icons.auto_awesome, size: 14, color: AppTheme.gold),
-                    const SizedBox(width: 6),
-                    const Text('Example:', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 12)),
+                    SizedBox(width: 6),
+                    Text('Example:', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 12)),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -447,15 +448,15 @@ class _LessonViewerScreenState extends State<LessonViewerScreen> {
             const Divider(height: 1),
             Expanded(
               child: exams.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.search_off, size: 48, color: AppTheme.white30),
-                          const SizedBox(height: 12),
-                          const Text('No past exam questions yet',
+                          SizedBox(height: 12),
+                          Text('No past exam questions yet',
                             style: TextStyle(fontSize: 15, color: AppTheme.white60)),
-                          const Text('Check back soon for added content',
+                          Text('Check back soon for added content',
                             style: TextStyle(fontSize: 12, color: AppTheme.white30)),
                         ],
                       ),
@@ -525,10 +526,10 @@ class _LessonViewerScreenState extends State<LessonViewerScreen> {
                                       Text(eq.answer!, style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
                                       if (eq.explanation != null) ...[
                                         const SizedBox(height: 6),
-                                        Row(
+                                        const Row(
                                           children: [
                                             Icon(Icons.lightbulb, size: 14, color: AppTheme.gold),
-                                            const SizedBox(width: 6),
+                                            SizedBox(width: 6),
                                             Text('Tip',
                                               style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 11)),
                                           ],

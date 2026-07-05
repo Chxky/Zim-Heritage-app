@@ -187,21 +187,21 @@ class _StudentDashboardState extends State<StudentDashboard> {
                   child: const Icon(Icons.campaign, color: Colors.redAccent, size: 24),
                 ),
                 const SizedBox(width: 12),
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Ministry Circular', style: TextStyle(color: Colors.redAccent, fontSize: 14, fontWeight: FontWeight.bold)),
-                          const Text('Today', style: TextStyle(color: AppTheme.white60, fontSize: 10)),
+                          Text('Ministry Circular', style: TextStyle(color: Colors.redAccent, fontSize: 14, fontWeight: FontWeight.bold)),
+                          Text('Today', style: TextStyle(color: AppTheme.white60, fontSize: 10)),
                         ],
                       ),
-                      const SizedBox(height: 4),
-                      const Text('Term 2 Curriculum Updates', style: TextStyle(color: AppTheme.white, fontSize: 15, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      const Text('Please review the updated term dates and new Heritage-Based continuous assessment requirements.',
+                      SizedBox(height: 4),
+                      Text('Term 2 Curriculum Updates', style: TextStyle(color: AppTheme.white, fontSize: 15, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 4),
+                      Text('Please review the updated term dates and new Heritage-Based continuous assessment requirements.',
                         style: TextStyle(color: AppTheme.white70, fontSize: 12)),
                     ],
                   ),

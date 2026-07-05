@@ -1,5 +1,5 @@
-import '../models/national_models.dart';
 import '../data/national_data.dart';
+import '../models/national_models.dart';
 
 class AnalyticsService {
   static int totalSchools() {

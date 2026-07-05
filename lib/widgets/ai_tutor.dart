@@ -1,7 +1,8 @@
 // widgets/ai_tutor.dart
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
+
 import '../services/gemini_service.dart';
+import '../theme/app_theme.dart';
 
 class AITutor extends StatefulWidget {
   final String gradeLevel;
@@ -122,7 +123,7 @@ class _AITutorState extends State<AITutor> {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(gradient: AppTheme.primaryGradient),
+          decoration: const BoxDecoration(gradient: AppTheme.primaryGradient),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -257,7 +258,7 @@ class _AITutorState extends State<AITutor> {
               ),
               const SizedBox(width: 8),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: AppTheme.primaryGradient,
                   shape: BoxShape.circle,
                 ),
@@ -292,11 +293,11 @@ class _AITutorState extends State<AITutor> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!message.isUser)
-              Row(
+              const Row(
                 children: [
-                  const Icon(Icons.auto_awesome, size: 14, color: AppTheme.primaryGreen),
-                  const SizedBox(width: 4),
-                  const Text('ZimHeritage AI',
+                  Icon(Icons.auto_awesome, size: 14, color: AppTheme.primaryGreen),
+                  SizedBox(width: 4),
+                  Text('ZimHeritage AI',
                     style: TextStyle(color: AppTheme.primaryGreen, fontSize: 11, fontWeight: FontWeight.bold)),
                 ],
               ),
@@ -360,14 +361,14 @@ class _AITutorState extends State<AITutor> {
           borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
           boxShadow: AppTheme.softShadow,
         ),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.auto_awesome, size: 14, color: AppTheme.primaryGreen),
-            const SizedBox(width: 8),
-            const SizedBox(width: 18, height: 18,
+            Icon(Icons.auto_awesome, size: 14, color: AppTheme.primaryGreen),
+            SizedBox(width: 8),
+            SizedBox(width: 18, height: 18,
               child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.primaryGreen)),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text('Gemini is thinking...', style: TextStyle(color: AppTheme.greyMedium, fontSize: 13)),
           ],
         ),

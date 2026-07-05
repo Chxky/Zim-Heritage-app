@@ -55,7 +55,6 @@ class _VirtualTourScreenState extends State<VirtualTourScreen> with TickerProvid
           PanoramaViewer(
             zoom: 1,
             sensorControl: SensorControl.orientation,
-            child: Image.asset('assets/images/great_zimbabwe_360.png'),
             hotspots: [
               Hotspot(
                 latitude: -10.0,
@@ -72,6 +71,7 @@ class _VirtualTourScreenState extends State<VirtualTourScreen> with TickerProvid
                 widget: _buildHotspot('Great Enclosure Wall'),
               ),
             ],
+            child: Image.asset('assets/images/great_zimbabwe_360.png'),
           ),
           SafeArea(
             child: Column(
@@ -169,7 +169,7 @@ class _VirtualTourScreenState extends State<VirtualTourScreen> with TickerProvid
             ),
             RotationTransition(
               turns: _pulseController,
-              child: SizedBox(
+              child: const SizedBox(
                 width: 80,
                 height: 80,
                 child: CircularProgressIndicator(

@@ -8,7 +8,10 @@
     "description": "Zimbabwe National Heritage-Based Curriculum Digital Education Platform. Ministry of Primary & Secondary Education.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
-    "categories": ["education", "government"],
+    "categories": [
+        "education",
+        "government"
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",

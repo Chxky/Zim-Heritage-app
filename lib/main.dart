@@ -116,7 +116,7 @@ class ZimHeritageApp extends StatelessWidget {
       theme: AppTheme.theme,
       initialRoute: '/',
       onGenerateRoute: _generateRoute,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -401,9 +401,9 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       const SizedBox(height: 20),
                       Text('REPUBLIC OF ZIMBABWE'.toUpperCase(),
-                        style: TextStyle(fontSize: 11, color: AppTheme.white50, letterSpacing: 4, fontWeight: FontWeight.w600)),
+                        style: const TextStyle(fontSize: 11, color: AppTheme.white50, letterSpacing: 4, fontWeight: FontWeight.w600)),
                       const SizedBox(height: 4),
-                      Text('Ministry of Primary & Secondary Education',
+                      const Text('Ministry of Primary & Secondary Education',
                         style: TextStyle(fontSize: 12, color: AppTheme.white30, letterSpacing: 1)),
                       const SizedBox(height: 20),
                       const Text('ZimHeritage',
@@ -421,7 +421,7 @@ class _SplashScreenState extends State<SplashScreen>
                       const Text('Heritage-Based Curriculum Platform',
                         style: TextStyle(fontSize: 15, color: AppTheme.gold, letterSpacing: 0.5, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 4),
-                      Text('National Digital Education Infrastructure',
+                      const Text('National Digital Education Infrastructure',
                         style: TextStyle(fontSize: 11, color: AppTheme.white30, letterSpacing: 0.5)),
                       const SizedBox(height: 16),
                       SlideTransition(
@@ -470,7 +470,7 @@ class _SplashScreenState extends State<SplashScreen>
                       const SizedBox(height: 12),
                       SlideTransition(
                         position: _slideUp,
-                        child: Text('9,872 Schools • 4.8M Students • 148,200 Teachers',
+                        child: const Text('9,872 Schools • 4.8M Students • 148,200 Teachers',
                           style: TextStyle(fontSize: 10, color: AppTheme.white20, letterSpacing: 0.5)),
                       ),
                       const SizedBox(height: 40),
@@ -642,7 +642,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     const Text('National Education Infrastructure',
                       style: TextStyle(fontSize: 13, color: AppTheme.gold, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 6),
-                    Text('Secure Login Portal',
+                    const Text('Secure Login Portal',
                       style: TextStyle(fontSize: 13, color: AppTheme.white50)),
                     const SizedBox(height: 32),
                     Container(
@@ -670,7 +670,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                               child: Column(
                                 children: [
                                   DropdownButtonFormField<String>(
-                                    value: _selectedCurriculum,
+                                    initialValue: _selectedCurriculum,
                                     decoration: const InputDecoration(
                                       labelText: 'Curriculum Pathway',
                                       prefixIcon: Icon(Icons.menu_book),
@@ -806,6 +806,34 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(height: 12),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton.icon(
+                                      onPressed: () async {
+                                        setState(() { _isLoading = true; _error = null; });
+                                        try {
+                                          final user = await AuthService.login('student@demo.com', '123456');
+                                          if (!context.mounted) return;
+                                          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+                                        } catch (e) {
+                                          if (!context.mounted) return;
+                                          setState(() {
+                                            _isLoading = false;
+                                            _error = e.toString().replaceFirst('Exception: ', '');
+                                          });
+                                        }
+                                      },
+                                      icon: const Icon(Icons.play_circle_fill),
+                                      label: const Text('Demo Login (Student)'),
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                        backgroundColor: AppTheme.gold.withValues(alpha: 0.2),
+                                        foregroundColor: AppTheme.gold,
+                                        side: const BorderSide(color: AppTheme.gold, width: 1),
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(height: 16),
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -814,16 +842,16 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.security, color: AppTheme.greenBright, size: 20),
-                                        const SizedBox(width: 8),
+                                        Icon(Icons.security, color: AppTheme.greenBright, size: 20),
+                                        SizedBox(width: 8),
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              const Text('Official Government Portal',
+                                              Text('Official Government Portal',
                                                 style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
                                               Text('Secured under the Zimbabwe Cyber & Data Protection Act',
                                                 style: TextStyle(color: AppTheme.greenBright, fontSize: 9)),
@@ -950,8 +978,8 @@ class _ParentDashboardState extends State<ParentDashboard> {
                           children: [
                             Text('Welcome, ${widget.user.name.split(' ').first}',
                               style: const TextStyle(color: AppTheme.white, fontSize: 22, fontWeight: FontWeight.bold)),
-                            Text('Track your children\'s educational journey',
-                              style: const TextStyle(color: AppTheme.white60, fontSize: 13)),
+                            const Text('Track your children\'s educational journey',
+                              style: TextStyle(color: AppTheme.white60, fontSize: 13)),
                           ],
                         ),
                       ),
@@ -968,19 +996,19 @@ class _ParentDashboardState extends State<ParentDashboard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Icon(Icons.smart_toy_outlined, color: AppTheme.greenBright),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text('Smart Learning Advisor', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
                     ],
                   ),
                   const SizedBox(height: 12),
                   if (_children.isNotEmpty)
                     Text('AI Analysis: ${_children.first.name.split(' ').first} excels in Heritage Studies and Science. We recommend focusing on practical experiments and folk literature.',
-                      style: TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.4)),
+                      style: const TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.4)),
                   if (_children.isEmpty)
-                    Text('Link a child to receive personalized AI learning paths and subject strength analysis.',
+                    const Text('Link a child to receive personalized AI learning paths and subject strength analysis.',
                       style: TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.4)),
                   const SizedBox(height: 12),
                   if (_children.isNotEmpty)
@@ -990,10 +1018,10 @@ class _ParentDashboardState extends State<ParentDashboard> {
                         color: AppTheme.greenBright.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.trending_up, color: AppTheme.greenBright, size: 20),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Expanded(
                             child: Text('Recommended: Advanced Ngano (Folk Tales) module.',
                               style: TextStyle(color: AppTheme.greenBright, fontSize: 12, fontWeight: FontWeight.bold)),
@@ -1017,7 +1045,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
                   ),
-                  child: Text('${_children.length} enrolled', style: TextStyle(fontSize: 12, color: AppTheme.greenBright, fontWeight: FontWeight.w600)),
+                  child: Text('${_children.length} enrolled', style: const TextStyle(fontSize: 12, color: AppTheme.greenBright, fontWeight: FontWeight.w600)),
                 ),
               ],
             ),
@@ -1025,9 +1053,9 @@ class _ParentDashboardState extends State<ParentDashboard> {
             if (_loading)
               const Center(child: CircularProgressIndicator())
             else if (_children.isEmpty)
-              GlassCard(
-                padding: const EdgeInsets.all(20),
-                child: const Text('No children linked to your account yet.',
+              const GlassCard(
+                padding: EdgeInsets.all(20),
+                child: Text('No children linked to your account yet.',
                   style: TextStyle(color: AppTheme.white60)),
               )
             else
@@ -1110,11 +1138,11 @@ class _ParentDashboardState extends State<ParentDashboard> {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.visibility, size: 14, color: AppTheme.gold),
-                const SizedBox(width: 4),
+                Icon(Icons.visibility, size: 14, color: AppTheme.gold),
+                SizedBox(width: 4),
                 Text('View', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.gold),),
               ],
             ),
@@ -1255,8 +1283,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         children: [
                           Text(widget.user.name,
                             style: const TextStyle(color: AppTheme.white, fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text('Platform Administrator',
-                            style: const TextStyle(color: AppTheme.white60, fontSize: 13)),
+                          const Text('Platform Administrator',
+                            style: TextStyle(color: AppTheme.white60, fontSize: 13)),
                         ],
                       ),
                     ],
@@ -1315,7 +1343,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   }),
                   const SizedBox(height: 8),
                   _buildAdminAction(context, Icons.people, 'User Management', Colors.blue, () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdminUserManagementScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminUserManagementScreen()));
                   }),
                   const SizedBox(height: 8),
                   _buildAdminAction(context, Icons.leaderboard, 'National Leaderboard', Colors.orange, () {

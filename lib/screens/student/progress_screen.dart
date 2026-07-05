@@ -1,9 +1,10 @@
 // screens/student/progress_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
+
 import '../../models/progress.dart';
+import '../../models/user.dart';
 import '../../services/progress_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class StudentProgressScreen extends StatefulWidget {
@@ -98,12 +99,12 @@ class _StudentProgressScreenState extends State<StudentProgressScreen> {
           ),
           const SizedBox(height: 12),
           if (_progressList.isEmpty)
-            GlassCard(
-              padding: const EdgeInsets.all(40),
+            const GlassCard(
+              padding: EdgeInsets.all(40),
               child: Column(
                 children: [
                   Icon(Icons.bar_chart, size: 48, color: AppTheme.white30),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   Text('No progress data yet', style: TextStyle(color: AppTheme.white60, fontSize: 16)),
                 ],
               ),

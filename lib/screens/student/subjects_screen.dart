@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+
+import '../../data/book_data.dart';
+import '../../data/zimbabwe_curriculum.dart';
+import '../../models/book.dart';
+import '../../models/homework.dart';
+import '../../models/subject.dart';
+import '../../models/user.dart';
+import '../../services/homework_repository.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/subject_themes.dart';
-import '../../models/user.dart';
-import '../../models/subject.dart';
-import '../../models/book.dart';
-import '../../data/zimbabwe_curriculum.dart';
-import '../../data/book_data.dart';
-import '../../services/homework_repository.dart';
-import '../../models/homework.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/subject_scaffold.dart';
-import 'topic_detail_screen.dart';
 import 'past_exams_screen.dart';
+import 'topic_detail_screen.dart';
 
 class SubjectsScreen extends StatelessWidget {
   final User user;
@@ -164,9 +165,9 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             ),
             const SizedBox(height: 12),
             if (topics.isEmpty)
-              GlassCard(
-                padding: const EdgeInsets.all(20),
-                child: const Text('Topics loading...', style: TextStyle(color: AppTheme.white50)),
+              const GlassCard(
+                padding: EdgeInsets.all(20),
+                child: Text('Topics loading...', style: TextStyle(color: AppTheme.white50)),
               )
             else
               ...topics.map((t) => _buildTopicCard(t, color)),
@@ -237,7 +238,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             padding: const EdgeInsets.all(32),
             child: Column(
               children: [
-                Icon(Icons.menu_book, size: 40, color: AppTheme.white30),
+                const Icon(Icons.menu_book, size: 40, color: AppTheme.white30),
                 const SizedBox(height: 8),
                 const Text('Learning materials coming soon',
                   style: TextStyle(color: AppTheme.white60, fontSize: 14)),
@@ -485,13 +486,13 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             child: const Icon(Icons.history_edu, color: Colors.deepPurple, size: 24),
           ),
           const SizedBox(width: 14),
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Past Exam Papers',
+                Text('Past Exam Papers',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppTheme.white)),
-                const Text('Practice with real exam questions from past years',
+                Text('Practice with real exam questions from past years',
                   style: TextStyle(color: AppTheme.white50, fontSize: 11)),
               ],
             ),
@@ -622,7 +623,7 @@ class _HomeworkDetailScreenState extends State<HomeworkDetailScreen> {
                                 border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.2)),
                               ),
                               child: Text(widget.homework.gradeLevel,
-                                style: TextStyle(color: AppTheme.greenBright, fontWeight: FontWeight.bold, fontSize: 12)),
+                                style: const TextStyle(color: AppTheme.greenBright, fontWeight: FontWeight.bold, fontSize: 12)),
                             ),
                             const SizedBox(width: 8),
                             const Icon(Icons.calendar_today, size: 14, color: AppTheme.white50),

@@ -37,11 +37,11 @@ class PassportService {
 
   static List<AcademicRecord> _generateDemoRecords(String name) {
     return [
-      AcademicRecord(year: '2023', term: 'Term 1', gradeLevel: 'Grade 6', subjectScores: {'English': 72.0, 'Mathematics': 65.0, 'Science': 78.0, 'Heritage': 81.0, 'Shona': 70.0}, average: 73.2, className: '6A'),
-      AcademicRecord(year: '2023', term: 'Term 2', gradeLevel: 'Grade 6', subjectScores: {'English': 75.0, 'Mathematics': 68.0, 'Science': 80.0, 'Heritage': 83.0, 'Shona': 72.0}, average: 75.6, className: '6A'),
-      AcademicRecord(year: '2023', term: 'Term 3', gradeLevel: 'Grade 6', subjectScores: {'English': 76.0, 'Mathematics': 71.0, 'Science': 82.0, 'Heritage': 85.0, 'Shona': 74.0}, average: 77.6, className: '6A'),
-      AcademicRecord(year: '2024', term: 'Term 1', gradeLevel: 'Grade 7', subjectScores: {'English': 78.0, 'Mathematics': 73.0, 'Science': 84.0, 'Heritage': 86.0, 'Shona': 75.0}, average: 79.2, className: '7A'),
-      AcademicRecord(year: '2024', term: 'Term 2', gradeLevel: 'Grade 7', subjectScores: {'English': 80.0, 'Mathematics': 75.0, 'Science': 85.0, 'Heritage': 88.0, 'Shona': 76.0}, average: 80.8, className: '7A'),
+      const AcademicRecord(year: '2023', term: 'Term 1', gradeLevel: 'Grade 6', subjectScores: {'English': 72.0, 'Mathematics': 65.0, 'Science': 78.0, 'Heritage': 81.0, 'Shona': 70.0}, average: 73.2, className: '6A'),
+      const AcademicRecord(year: '2023', term: 'Term 2', gradeLevel: 'Grade 6', subjectScores: {'English': 75.0, 'Mathematics': 68.0, 'Science': 80.0, 'Heritage': 83.0, 'Shona': 72.0}, average: 75.6, className: '6A'),
+      const AcademicRecord(year: '2023', term: 'Term 3', gradeLevel: 'Grade 6', subjectScores: {'English': 76.0, 'Mathematics': 71.0, 'Science': 82.0, 'Heritage': 85.0, 'Shona': 74.0}, average: 77.6, className: '6A'),
+      const AcademicRecord(year: '2024', term: 'Term 1', gradeLevel: 'Grade 7', subjectScores: {'English': 78.0, 'Mathematics': 73.0, 'Science': 84.0, 'Heritage': 86.0, 'Shona': 75.0}, average: 79.2, className: '7A'),
+      const AcademicRecord(year: '2024', term: 'Term 2', gradeLevel: 'Grade 7', subjectScores: {'English': 80.0, 'Mathematics': 75.0, 'Science': 85.0, 'Heritage': 88.0, 'Shona': 76.0}, average: 80.8, className: '7A'),
     ];
   }
 

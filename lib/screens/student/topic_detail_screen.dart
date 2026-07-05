@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../theme/subject_themes.dart';
+
+import '../../data/book_data.dart';
+import '../../data/ecd_visual_aids.dart';
+import '../../data/lesson_content.dart';
+import '../../models/book.dart';
 import '../../models/subject.dart';
 import '../../models/user.dart';
-import '../../models/book.dart';
-import '../../data/book_data.dart';
-import '../../data/lesson_content.dart';
-import '../../data/ecd_visual_aids.dart';
+import '../../theme/app_theme.dart';
+import '../../theme/subject_themes.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/subject_scaffold.dart';
 import 'lesson_viewer_screen.dart';
@@ -180,7 +181,7 @@ class TopicDetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Icon(Icons.image, size: 24, color: AppTheme.white30),
+                      const Icon(Icons.image, size: 24, color: AppTheme.white30),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -223,7 +224,7 @@ class TopicDetailScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(32),
                 child: Column(
                   children: [
-                    Icon(Icons.menu_book, size: 40, color: AppTheme.white30),
+                    const Icon(Icons.menu_book, size: 40, color: AppTheme.white30),
                     const SizedBox(height: 12),
                     const Text('Books coming soon',
                       style: TextStyle(color: AppTheme.white60, fontSize: 15)),
@@ -366,7 +367,7 @@ class TopicDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(va.category,
-                        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppTheme.gold)),
+                        style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppTheme.gold)),
                     ),
                   ],
                 ),

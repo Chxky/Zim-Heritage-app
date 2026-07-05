@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/submission.dart';
 import 'app_config.dart';
 import 'mock_data_service.dart';
-import '../models/submission.dart';
 
 class SubmissionRepository {
   static Future<List<HomeworkSubmission>> getSubmissionsByStudent(String studentId) async {

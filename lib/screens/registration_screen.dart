@@ -1,8 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:ui';
+
 import '../theme/app_theme.dart';
-import '../widgets/glass_card.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -156,16 +157,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(Icons.security, color: AppTheme.greenBright, size: 20),
-                                      const SizedBox(width: 8),
+                                      Icon(Icons.security, color: AppTheme.greenBright, size: 20),
+                                      SizedBox(width: 8),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Text('Official Government Portal',
+                                            Text('Official Government Portal',
                                               style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
                                             Text('Secured under the Zimbabwe Cyber & Data Protection Act',
                                               style: TextStyle(color: AppTheme.greenBright, fontSize: 9)),
@@ -219,7 +220,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Widget _buildDropdown(String label, List<String> items, String value, Function(String?) onChanged) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(
         labelText: label,
         filled: true,

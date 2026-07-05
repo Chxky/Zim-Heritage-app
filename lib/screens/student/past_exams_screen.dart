@@ -1,11 +1,12 @@
 // screens/student/past_exams_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../theme/subject_themes.dart';
+
+import '../../data/past_exam_questions.dart';
+import '../../data/zimbabwe_curriculum.dart';
 import '../../models/lesson.dart';
 import '../../models/user.dart';
-import '../../data/zimbabwe_curriculum.dart';
-import '../../data/past_exam_questions.dart';
+import '../../theme/app_theme.dart';
+import '../../theme/subject_themes.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/subject_scaffold.dart';
 
@@ -152,7 +153,7 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
 
           Row(
             children: [
-              Icon(Icons.history_edu, color: AppTheme.gold, size: 20),
+              const Icon(Icons.history_edu, color: AppTheme.gold, size: 20),
               const SizedBox(width: 8),
               Text('${_filteredQuestions.length} Questions Available',
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppTheme.white)),
@@ -166,9 +167,9 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.school, size: 12, color: AppTheme.gold),
+                    const Icon(Icons.school, size: 12, color: AppTheme.gold),
                     const SizedBox(width: 4),
-                    Text(gradeBand, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppTheme.gold)),
+                    Text(gradeBand, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppTheme.gold)),
                   ],
                 ),
               ),
@@ -311,10 +312,10 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.check_circle, size: 14, color: AppTheme.greenBright),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         Text('Answer', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.greenBright, fontSize: 12)),
                       ],
                     ),
@@ -322,10 +323,10 @@ class _PastExamsScreenState extends State<PastExamsScreen> {
                     Text(eq.answer!, style: const TextStyle(fontSize: 12, color: AppTheme.white80)),
                     if (eq.explanation != null) ...[
                       const SizedBox(height: 8),
-                      Row(
+                      const Row(
                         children: [
                           Icon(Icons.lightbulb, size: 14, color: AppTheme.gold),
-                          const SizedBox(width: 6),
+                          SizedBox(width: 6),
                           Text('Explanation', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.gold, fontSize: 12)),
                         ],
                       ),

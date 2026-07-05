@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 import '../theme/app_theme.dart';
 
 class CyberSecurityScreen extends StatelessWidget {
@@ -95,7 +96,7 @@ class CyberSecurityScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              Text('This educational portal is fully compliant with Chapter 11:22, ensuring all student data is localized, anonymized, and secure.',
+              const Text('This educational portal is fully compliant with Chapter 11:22, ensuring all student data is localized, anonymized, and secure.',
                 style: TextStyle(color: AppTheme.white70, fontSize: 13, height: 1.5),
                 textAlign: TextAlign.center,
               ),

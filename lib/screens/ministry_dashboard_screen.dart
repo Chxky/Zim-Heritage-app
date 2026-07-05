@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
 import '../data/demo_data.dart';
 import '../data/national_data.dart';
 import '../theme/app_theme.dart';
@@ -22,10 +23,10 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
+        title: const Column(
           children: [
-            const Text('REPUBLIC OF ZIMBABWE', style: TextStyle(fontSize: 10, color: AppTheme.gold, letterSpacing: 2, fontWeight: FontWeight.bold)),
-            const Text('Ministry Intelligence Dashboard', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
+            Text('REPUBLIC OF ZIMBABWE', style: TextStyle(fontSize: 10, color: AppTheme.gold, letterSpacing: 2, fontWeight: FontWeight.bold)),
+            Text('Ministry Intelligence Dashboard', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
           ],
         ),
         centerTitle: true,
@@ -176,7 +177,7 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
                     showTitles: true,
                     reservedSize: 30,
                     getTitlesWidget: (value, meta) => Text('${value.toInt()}%',
-                      style: TextStyle(color: AppTheme.white30, fontSize: 10)),
+                      style: const TextStyle(color: AppTheme.white30, fontSize: 10)),
                   )),
                 ),
                 gridData: const FlGridData(show: false),
@@ -252,7 +253,7 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
               const SizedBox(height: 20),
               Text(provinceName, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppTheme.white)),
               const SizedBox(height: 4),
-              Text('Province Education Overview',
+              const Text('Province Education Overview',
                 style: TextStyle(color: AppTheme.white60, fontSize: 14)),
               const SizedBox(height: 20),
               Row(
@@ -330,8 +331,8 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
   Widget _buildRiskAlerts() {
     final risky = DemoData.provinceMetrics.entries.where((e) => e.value['risk'] == 'high').toList();
     if (risky.isEmpty) {
-      return GlassCard(
-        padding: const EdgeInsets.all(20),
+      return const GlassCard(
+        padding: EdgeInsets.all(20),
         child: Center(child: Text('No critical alerts',
           style: TextStyle(color: AppTheme.white70))),
       );
@@ -344,7 +345,7 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
           title: Text(prov.key,
             style: const TextStyle(color: AppTheme.white, fontWeight: FontWeight.w600)),
           subtitle: Text('Pass rate ${prov.value['passRate']}% · Needs immediate intervention',
-            style: TextStyle(color: AppTheme.white50)),
+            style: const TextStyle(color: AppTheme.white50)),
         )).toList(),
       ),
     );
@@ -384,7 +385,7 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
                     ),
                     const SizedBox(width: 12),
                     Text('${current.toStringAsFixed(1)}% → ${target.toStringAsFixed(0)}%',
-                      style: TextStyle(color: AppTheme.white50, fontSize: 11)),
+                      style: const TextStyle(color: AppTheme.white50, fontSize: 11)),
                   ],
                 ),
               ],
@@ -401,7 +402,7 @@ class _MinistryDashboardScreenState extends State<MinistryDashboardScreen> {
       decoration: BoxDecoration(
         color: AppTheme.gold.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border(left: BorderSide(color: AppTheme.gold, width: 4)),
+        border: const Border(left: BorderSide(color: AppTheme.gold, width: 4)),
       ),
       child: Row(
         children: [

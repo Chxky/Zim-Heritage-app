@@ -36,19 +36,19 @@ List<HeritageSite> getHeritageSites() => [
 ];
 
 List<OralHistory> getOralHistories() => [
-  OralHistory(id: 'oh_1', title: 'The Legend of Great Zimbabwe', storyteller: 'Ambuya M. Chigwedere', community: 'Masvingo',
+  const OralHistory(id: 'oh_1', title: 'The Legend of Great Zimbabwe', storyteller: 'Ambuya M. Chigwedere', community: 'Masvingo',
     language: 'Shona', category: 'foundation_myths',
     summary: 'The story of how Great Zimbabwe was built by the ancestors using supernatural assistance and the architectural knowledge passed down through generations.',
     transcript: 'According to our elders, Great Zimbabwe was not built by any outside force but by our own ancestors who received the knowledge of stone building from Mwari (God) through the mediums. The walls were constructed without mortar, yet they have stood for centuries...',
     durationSeconds: 2400, dateRecorded: '2024-03-15', recordedBy: 'Dr. T. Mufute',
     tags: ['great_zimbabwe', 'shona', 'architecture', 'ancestors'], verified: true),
-  OralHistory(id: 'oh_2', title: 'Ndebele Migration Story', storyteller: 'Gogo S. Ndlovu', community: 'Matobo',
+  const OralHistory(id: 'oh_2', title: 'Ndebele Migration Story', storyteller: 'Gogo S. Ndlovu', community: 'Matobo',
     language: 'Ndebele', category: 'migration',
     summary: 'The journey of the Ndebele people from Zululand to Zimbabwe under King Mzilikazi, including the battles and alliances formed along the way.',
     transcript: 'Our people left Zululand when Tshaka was king. Mzilikazi, our great king, led us north. We crossed the Limpopo and settled in the land we now call home...',
     durationSeconds: 3600, dateRecorded: '2024-01-20', recordedBy: 'Prof. B. Sibanda',
     tags: ['ndebele', 'mzilikazi', 'migration', 'history'], verified: true),
-  OralHistory(id: 'oh_3', title: 'Traditional Rainmaking Ceremonies', storyteller: 'Sekuru K. Mukombe', community: 'Buhera',
+  const OralHistory(id: 'oh_3', title: 'Traditional Rainmaking Ceremonies', storyteller: 'Sekuru K. Mukombe', community: 'Buhera',
     language: 'Shona', category: 'traditions',
     summary: 'The sacred process of rainmaking ceremonies conducted by spirit mediums, including the offerings, songs, and dances performed.',
     transcript: 'When the rains are late, we consult the spirits of our ancestors. The spirit medium enters a trance, and the community gathers with traditional beer and offerings...',

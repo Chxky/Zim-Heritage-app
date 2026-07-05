@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'user_repository.dart';
-import 'submission_repository.dart';
-import 'progress_repository.dart';
-import 'local_persistence_service.dart';
+
 import 'di_container.dart';
+import 'local_persistence_service.dart';
+import 'progress_repository.dart';
+import 'submission_repository.dart';
+import 'user_repository.dart';
 
 class PrivacyService {
   static Future<Map<String, dynamic>> exportUserData(String userId) async {

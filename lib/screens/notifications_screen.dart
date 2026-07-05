@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
+
 import '../models/user.dart';
+import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 
 class NotificationItem {
@@ -108,7 +109,7 @@ class NotificationsScreen extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.white10,
               shape: BoxShape.circle,
             ),

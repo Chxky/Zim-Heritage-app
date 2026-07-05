@@ -1,8 +1,9 @@
 // screens/teacher/ai_assistant_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/user.dart';
 import '../../services/gemini_service.dart';
+import '../../theme/app_theme.dart';
 
 class AIAssistantScreen extends StatefulWidget {
   final User user;
@@ -223,7 +224,7 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [AppTheme.surfaceDark, AppTheme.surfaceMid],
               begin: Alignment.topCenter,
@@ -244,11 +245,11 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
                     child: const Icon(Icons.auto_awesome, color: AppTheme.gold, size: 24),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('AI Teaching Assistant',
+                        Text('AI Teaching Assistant',
                           style: TextStyle(color: AppTheme.white, fontSize: 18, fontWeight: FontWeight.bold)),
                         Text('Powered by Gemini AI • ZIMSEC Curriculum Expert',
                           style: TextStyle(color: AppTheme.white70, fontSize: 11)),
@@ -392,7 +393,7 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
               ),
               const SizedBox(width: 8),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [AppTheme.primaryGreen, AppTheme.greenBright]),
                   shape: BoxShape.circle,
                 ),
@@ -427,11 +428,11 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!message.isUser)
-              Row(
+              const Row(
                 children: [
-                  const Icon(Icons.auto_awesome, size: 14, color: AppTheme.gold),
-                  const SizedBox(width: 4),
-                  const Text('ZimHeritage AI',
+                  Icon(Icons.auto_awesome, size: 14, color: AppTheme.gold),
+                  SizedBox(width: 4),
+                  Text('ZimHeritage AI',
                     style: TextStyle(color: AppTheme.gold, fontSize: 11, fontWeight: FontWeight.bold)),
                 ],
               ),
@@ -482,15 +483,15 @@ class _AIAssistantScreenState extends State<AIAssistantScreen> {
           borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
           boxShadow: AppTheme.cardGlow,
         ),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.auto_awesome, size: 14, color: AppTheme.gold),
-            const SizedBox(width: 8),
-            const SizedBox(width: 18, height: 18,
+            Icon(Icons.auto_awesome, size: 14, color: AppTheme.gold),
+            SizedBox(width: 8),
+            SizedBox(width: 18, height: 18,
               child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.gold)),
-            const SizedBox(width: 8),
-            const Text('Gemini AI is preparing your response...',
+            SizedBox(width: 8),
+            Text('Gemini AI is preparing your response...',
               style: TextStyle(color: AppTheme.white50, fontSize: 13)),
           ],
         ),

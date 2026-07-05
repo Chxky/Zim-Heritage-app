@@ -1,12 +1,13 @@
 // screens/student/submit_homework_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
+
 import '../../models/homework.dart';
 import '../../models/submission.dart';
-import '../../services/submission_repository.dart';
+import '../../models/user.dart';
 import '../../services/gamification_service.dart';
 import '../../services/gemini_service.dart';
+import '../../services/submission_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class SubmitHomeworkScreen extends StatefulWidget {
@@ -392,11 +393,11 @@ class _SubmitHomeworkScreenState extends State<SubmitHomeworkScreen>
         GlassCard(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           borderColor: AppTheme.gold.withValues(alpha: 0.15),
-          child: Row(
+          child: const Row(
             children: [
-              const Icon(Icons.lightbulb_outline, color: AppTheme.gold, size: 18),
-              const SizedBox(width: 10),
-              const Expanded(
+              Icon(Icons.lightbulb_outline, color: AppTheme.gold, size: 18),
+              SizedBox(width: 10),
+              Expanded(
                 child: Text('Stuck? Use the AI Tutor tab for hints — '
                     'but try your best first!',
                   style: TextStyle(color: AppTheme.white60, fontSize: 12)),

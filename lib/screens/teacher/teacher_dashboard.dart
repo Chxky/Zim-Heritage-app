@@ -1,17 +1,18 @@
 // screens/teacher/teacher_dashboard.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
-import '../../models/progress.dart';
-import '../../models/submission.dart';
-import '../../services/user_repository.dart';
-import '../../services/submission_repository.dart';
-import '../../services/progress_repository.dart';
-import '../../services/auth_service.dart';
+
 import '../../data/answer_keys.dart';
 import '../../data/zimbabwe_curriculum.dart';
-import '../../widgets/nav_bar.dart';
+import '../../models/progress.dart';
+import '../../models/submission.dart';
+import '../../models/user.dart';
+import '../../services/auth_service.dart';
+import '../../services/progress_repository.dart';
+import '../../services/submission_repository.dart';
+import '../../services/user_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
+import '../../widgets/nav_bar.dart';
 import 'ai_assistant_screen.dart';
 
 class TeacherDashboard extends StatefulWidget {
@@ -363,13 +364,13 @@ class GradeStudentsScreen extends StatelessWidget {
         ),
       ),
       body: students.isEmpty
-          ? Center(
+          ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.people_outline, size: 64, color: AppTheme.white50),
-                  const SizedBox(height: 16),
-                  const Text('No students in this grade', style: TextStyle(color: AppTheme.white60)),
+                  SizedBox(height: 16),
+                  Text('No students in this grade', style: TextStyle(color: AppTheme.white60)),
                 ],
               ),
             )
@@ -498,7 +499,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                                   color: AppTheme.greenBright.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text('ID: ${widget.student.id}', style: TextStyle(color: AppTheme.greenBright, fontSize: 11)),
+                                child: Text('ID: ${widget.student.id}', style: const TextStyle(color: AppTheme.greenBright, fontSize: 11)),
                               ),
                             ],
                           ),
@@ -510,9 +511,9 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
                   const Text('Subject Performance', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
                   const SizedBox(height: 12),
                   if (_progress.isEmpty)
-                    GlassCard(
-                      padding: const EdgeInsets.all(20),
-                      child: const Text('No progress data available yet.', style: TextStyle(color: AppTheme.white60)),
+                    const GlassCard(
+                      padding: EdgeInsets.all(20),
+                      child: Text('No progress data available yet.', style: TextStyle(color: AppTheme.white60)),
                     )
                   else
                     ..._progress.map((p) => _buildSubjectProgress(p)),
@@ -588,14 +589,14 @@ class AnswerKeysScreen extends StatelessWidget {
       itemCount: grades.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+          return const Padding(
+            padding: EdgeInsets.only(bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Answer Keys', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.white)),
-                const SizedBox(height: 4),
-                const Text('Model answers and marking guides for all levels',
+                Text('Answer Keys', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                SizedBox(height: 4),
+                Text('Model answers and marking guides for all levels',
                   style: TextStyle(color: AppTheme.white60, fontSize: 13)),
               ],
             ),
@@ -662,13 +663,13 @@ class GradeAnswerKeysScreen extends StatelessWidget {
         ),
       ),
       body: answerKeys.isEmpty
-          ? Center(
+          ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.vpn_key_off, size: 64, color: AppTheme.white50),
-                  const SizedBox(height: 16),
-                  const Text('No answer keys available for this grade', style: TextStyle(color: AppTheme.white60)),
+                  SizedBox(height: 16),
+                  Text('No answer keys available for this grade', style: TextStyle(color: AppTheme.white60)),
                 ],
               ),
             )
@@ -744,7 +745,7 @@ class GradeAnswerKeysScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text('${e.marks} marks',
-                                      style: TextStyle(color: AppTheme.greenBright, fontSize: 11, fontWeight: FontWeight.w600)),
+                                      style: const TextStyle(color: AppTheme.greenBright, fontSize: 11, fontWeight: FontWeight.w600)),
                                   ),
                                 ),
                               ],
@@ -1164,13 +1165,13 @@ class _MarkHomeworkScreenState extends State<MarkHomeworkScreen> {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.3)),
               ),
-              child: Row(
+              child: const Row(
                 children: [
-                  const Icon(Icons.lightbulb, color: AppTheme.greenBright, size: 18),
-                  const SizedBox(width: 8),
+                  Icon(Icons.lightbulb, color: AppTheme.greenBright, size: 18),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Text('Provide constructive guidance rather than just correct/incorrect. Suggest how they can improve.',
-                      style: const TextStyle(color: AppTheme.white60, fontSize: 12)),
+                      style: TextStyle(color: AppTheme.white60, fontSize: 12)),
                   ),
                 ],
               ),
@@ -1179,9 +1180,9 @@ class _MarkHomeworkScreenState extends State<MarkHomeworkScreen> {
             TextField(
               controller: _feedbackController,
               maxLines: 4,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Write constructive feedback for the student...',
-                hintStyle: const TextStyle(color: AppTheme.white50),
+                hintStyle: TextStyle(color: AppTheme.white50),
                 filled: true,
                 fillColor: AppTheme.white10,
               ),

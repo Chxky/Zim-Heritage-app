@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../services/challenge_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
-import '../services/challenge_service.dart';
 
 class ChallengesScreen extends StatefulWidget {
   const ChallengesScreen({super.key});

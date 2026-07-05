@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/message.dart';
 import '../../services/messaging_service.dart';
+import '../../theme/app_theme.dart';
 
 class ChatScreen extends StatefulWidget {
   final String currentUserId;
@@ -186,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           const SizedBox(width: 8),
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.greenBright,
               shape: BoxShape.circle,
             ),

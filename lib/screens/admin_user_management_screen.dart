@@ -1,8 +1,9 @@
 // screens/admin_user_management_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/user.dart';
 import '../../services/user_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class AdminUserManagementScreen extends StatefulWidget {
@@ -179,11 +180,11 @@ class _AdminUserManagementScreenState
           fillColor: AppTheme.surfaceMid,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppTheme.white20),
+            borderSide: const BorderSide(color: AppTheme.white20),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppTheme.white20),
+            borderSide: const BorderSide(color: AppTheme.white20),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),

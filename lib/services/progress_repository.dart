@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/progress.dart';
 import 'app_config.dart';
 import 'mock_data_service.dart';
-import '../models/progress.dart';
 
 class ProgressRepository {
   static Future<List<StudentProgress>> getProgressForStudent(String studentId) async {

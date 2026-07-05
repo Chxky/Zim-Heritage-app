@@ -1,11 +1,12 @@
 // screens/teacher/homework_create_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
-import '../../models/homework.dart';
-import '../../services/homework_repository.dart';
+
 import '../../data/zimbabwe_curriculum.dart';
+import '../../models/homework.dart';
 import '../../models/subject.dart';
+import '../../models/user.dart';
+import '../../services/homework_repository.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class HomeworkCreateScreen extends StatefulWidget {
@@ -191,8 +192,8 @@ class _HomeworkCreateScreenState extends State<HomeworkCreateScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Homework created successfully!'),
+        const SnackBar(
+          content: Text('Homework created successfully!'),
           backgroundColor: AppTheme.primaryGreen,
         ),
       );
@@ -258,11 +259,11 @@ class _HomeworkCreateScreenState extends State<HomeworkCreateScreen> {
                 child: const Icon(Icons.assignment_add, color: AppTheme.gold, size: 28),
               ),
               const SizedBox(width: 14),
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('New Homework',
+                    Text('New Homework',
                       style: TextStyle(color: AppTheme.white, fontSize: 18, fontWeight: FontWeight.bold)),
                     Text('Create and assign homework to your class',
                       style: TextStyle(color: AppTheme.white60, fontSize: 12)),
@@ -388,13 +389,13 @@ class _HomeworkCreateScreenState extends State<HomeworkCreateScreen> {
         ),
         const SizedBox(height: 12),
         if (_questions.isEmpty)
-          GlassCard(
-            padding: const EdgeInsets.all(24),
+          const GlassCard(
+            padding: EdgeInsets.all(24),
             child: Center(
               child: Column(
                 children: [
                   Icon(Icons.help_outline, color: AppTheme.white30, size: 40),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Text('No questions yet. Tap the button below to add one.',
                     style: TextStyle(color: AppTheme.white50, fontSize: 13),
                     textAlign: TextAlign.center),
@@ -539,7 +540,7 @@ class _HomeworkCreateScreenState extends State<HomeworkCreateScreen> {
                       ),
                       if (q.optionControllers.length > 2)
                         IconButton(
-                          icon: Icon(Icons.remove_circle_outline, color: AppTheme.redBright, size: 18),
+                          icon: const Icon(Icons.remove_circle_outline, color: AppTheme.redBright, size: 18),
                           onPressed: () => _removeOption(index, oi),
                           visualDensity: VisualDensity.compact,
                         ),

@@ -1,6 +1,6 @@
 import '../models/homework.dart';
-import '../models/submission.dart';
 import '../models/progress.dart';
+import '../models/submission.dart';
 
 class SampleData {
   static final List<Homework> homeworkAssignments = [

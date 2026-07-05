@@ -5,7 +5,7 @@ class ChallengeService {
   static const String _completedChallengesKey = 'completed_challenges';
 
   static final List<Challenge> _availableChallenges = [
-    Challenge(
+    const Challenge(
       id: 'hw_5_week',
       title: 'Homework Hero',
       description: 'Complete 5 homework assignments this week',
@@ -15,7 +15,7 @@ class ChallengeService {
       target: 5,
       category: 'homework',
     ),
-    Challenge(
+    const Challenge(
       id: 'quiz_80_3',
       title: 'Quiz Master',
       description: 'Achieve 80%+ on 3 consecutive quizzes',
@@ -25,7 +25,7 @@ class ChallengeService {
       target: 3,
       category: 'quiz',
     ),
-    Challenge(
+    const Challenge(
       id: 'streak_7',
       title: 'Week Warrior',
       description: 'Study every day for 7 days straight',
@@ -35,7 +35,7 @@ class ChallengeService {
       target: 7,
       category: 'streak',
     ),
-    Challenge(
+    const Challenge(
       id: 'subjects_3',
       title: 'Well Rounded',
       description: 'Study 3 different subjects this week',
@@ -45,7 +45,7 @@ class ChallengeService {
       target: 3,
       category: 'variety',
     ),
-    Challenge(
+    const Challenge(
       id: 'ai_chat_5',
       title: 'AI Curious',
       description: 'Ask 5 questions to the AI tutor',
@@ -55,7 +55,7 @@ class ChallengeService {
       target: 5,
       category: 'ai',
     ),
-    Challenge(
+    const Challenge(
       id: 'heritage_explorer',
       title: 'Heritage Explorer',
       description: 'Explore 3 heritage sites in the app',
@@ -65,7 +65,7 @@ class ChallengeService {
       target: 3,
       category: 'heritage',
     ),
-    Challenge(
+    const Challenge(
       id: 'perfect_score',
       title: 'Perfectionist',
       description: 'Get 100% on any homework assignment',
@@ -75,7 +75,7 @@ class ChallengeService {
       target: 1,
       category: 'achievement',
     ),
-    Challenge(
+    const Challenge(
       id: 'early_bird',
       title: 'Early Bird',
       description: 'Submit 3 homework assignments before the due date',

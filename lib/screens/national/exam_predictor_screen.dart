@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
 import '../../models/exam_prediction.dart';
 import '../../services/prediction_service.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
 class ExamPredictorScreen extends StatefulWidget {
@@ -366,7 +367,7 @@ class _ExamPredictorScreenState extends State<ExamPredictorScreen> {
                   ),
                   child: Center(
                     child: Text('${r.priority}',
-                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppTheme.greenBright)),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppTheme.greenBright)),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -379,7 +380,7 @@ class _ExamPredictorScreenState extends State<ExamPredictorScreen> {
                         style: const TextStyle(fontSize: 11, color: AppTheme.white60, height: 1.3)),
                       const SizedBox(height: 2),
                       Text('~${r.estimatedHours} hours recommended',
-                        style: TextStyle(fontSize: 10, color: AppTheme.greenBright, fontWeight: FontWeight.w500)),
+                        style: const TextStyle(fontSize: 10, color: AppTheme.greenBright, fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ),

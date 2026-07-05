@@ -106,7 +106,7 @@ class _EcdColoringScreenState extends State<EcdColoringScreen> {
   }
 
   Widget _buildColorBox(Color color) {
-    bool isSelected = _selectedColor == color;
+    final bool isSelected = _selectedColor == color;
     return GestureDetector(
       onTap: () {
         setState(() {

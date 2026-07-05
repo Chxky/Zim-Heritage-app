@@ -213,7 +213,7 @@ class _AIReadingAssistantState extends State<AIReadingAssistant>
                     ),
                     const Spacer(),
                     Text('Exercise ${_currentExercise + 1}/${_readingExercises.length}',
-                      style: TextStyle(color: AppTheme.greyMedium, fontSize: 12)),
+                      style: const TextStyle(color: AppTheme.greyMedium, fontSize: 12)),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -256,7 +256,7 @@ class _AIReadingAssistantState extends State<AIReadingAssistant>
                   maxLines: 2,
                   decoration: InputDecoration(
                     hintText: 'Type the sentence here...',
-                    hintStyle: TextStyle(color: AppTheme.greyMedium),
+                    hintStyle: const TextStyle(color: AppTheme.greyMedium),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

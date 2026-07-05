@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import '../../theme/app_theme.dart';
+
 import '../../services/env_config.dart';
+import '../../theme/app_theme.dart';
 
 class AiAssistantScreen extends StatefulWidget {
   const AiAssistantScreen({super.key});

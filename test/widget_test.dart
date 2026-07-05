@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zim_heritage_app/theme/app_theme.dart';
-import 'package:zim_heritage_app/services/security_service.dart';
+import 'package:zim_heritage_app/models/user.dart';
 import 'package:zim_heritage_app/services/deep_link_service.dart';
 import 'package:zim_heritage_app/services/l10n_service.dart';
-import 'package:zim_heritage_app/models/user.dart';
+import 'package:zim_heritage_app/services/security_service.dart';
+import 'package:zim_heritage_app/theme/app_theme.dart';
 
 void main() {
   group('SecurityService', () {

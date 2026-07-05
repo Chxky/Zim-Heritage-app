@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../data/demo_data.dart';
 import '../data/heritage_data.dart';
 import '../data/national_data.dart';
@@ -123,7 +122,7 @@ class _ZimbabweMapScreenState extends State<ZimbabweMapScreen> {
   }
 
   List<Widget> _buildProvinceMarkers() {
-    final provinces = DemoData.provinceMetrics;
+    const provinces = DemoData.provinceMetrics;
     return provinces.entries.map((entry) {
       final pos = _provincePositions[entry.key];
       if (pos == null) return const SizedBox.shrink();

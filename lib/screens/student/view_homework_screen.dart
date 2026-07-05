@@ -1,11 +1,12 @@
 // screens/student/view_homework_screen.dart
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
+
+import '../../models/homework.dart';
+import '../../models/submission.dart';
 import '../../models/user.dart';
 import '../../services/homework_repository.dart';
 import '../../services/submission_repository.dart';
-import '../../models/homework.dart';
-import '../../models/submission.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 import 'submit_homework_screen.dart';
 
@@ -68,7 +69,7 @@ class _ViewHomeworkScreenState extends State<ViewHomeworkScreen> {
               child: const Icon(Icons.assignment, size: 48, color: AppTheme.greenBright),
             ),
             const SizedBox(height: 16),
-            Text('No homework assigned yet',
+            const Text('No homework assigned yet',
               style: TextStyle(fontSize: 18, color: AppTheme.white60)),
           ],
         ),
@@ -213,7 +214,7 @@ class _ViewHomeworkScreenState extends State<ViewHomeworkScreen> {
                       const Icon(Icons.feedback, color: AppTheme.greenBright, size: 18),
                       const SizedBox(width: 8),
                       Text('Score: ${sub.marksObtained ?? 0}/${hw.questions.fold(0, (sum, q) => sum + q.marks)}',
-                        style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.greenBright)),
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.greenBright)),
                       const Spacer(),
                       const Text('Feedback available',
                         style: TextStyle(color: AppTheme.greenBright, fontSize: 12)),

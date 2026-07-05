@@ -41,7 +41,7 @@ class _EcdStoryScreenState extends State<EcdStoryScreen> {
   }
 
   Future<void> _initTts() async {
-    await _flutterTts.setLanguage("en-US");
+    await _flutterTts.setLanguage('en-US');
     await _flutterTts.setSpeechRate(0.4);
     await _flutterTts.setVolume(1.0);
   }

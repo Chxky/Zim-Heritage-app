@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
+
 import '../models/user.dart';
-import '../widgets/glass_card.dart';
 import '../services/auth_service.dart';
-import '../services/l10n_service.dart';
 import '../services/privacy_service.dart';
 import '../services/update_service.dart';
-import '../services/security_service.dart';
-import '../services/accessibility_helper.dart';
-import 'package:share_plus/share_plus.dart';
+import '../theme/app_theme.dart';
+import '../widgets/glass_card.dart';
 
 class SettingsScreen extends StatefulWidget {
   final User user;

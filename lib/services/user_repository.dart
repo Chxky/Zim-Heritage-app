@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/user.dart';
 import 'app_config.dart';
 import 'mock_data_service.dart';
-import '../models/user.dart';
 
 class UserRepository {
   static Future<User?> getUserByUid(String uid) async {
