@@ -48,7 +48,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
           _reviewedCount = submissions.where((s) => s.status == 'reviewed').length;
         });
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('TeacherDashboard._loadData error: $e');
+    }
   }
 
   @override

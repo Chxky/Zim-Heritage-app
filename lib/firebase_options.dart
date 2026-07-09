@@ -1,9 +1,5 @@
-// Generated via flutterfire CLI - Web config from Firebase Console.
-// For Android/iOS/macOS/Windows/Linux, add those apps in Firebase Console
-// and run: flutterfire configure --project=zim-edu-bridge
-//
-// NOTE: Android/iOS/macOS app IDs are placeholders - run flutterfire configure
-// against the Firebase project "zim-edu-bridge" to get correct values.
+// Generated via flutterfire CLI against Firebase project "zim-edu-bridge".
+// To regenerate for all platforms, run: flutterfire configure --project=zim-edu-bridge
 
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'

@@ -1,9 +1,18 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+
 import 'app_config.dart';
+
+typedef NavigationCallback = void Function(String route, Map<String, String> data);
 
 class NotificationService {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   static String? _deviceToken;
+  static NavigationCallback? _onNavigate;
+
+  static void setNavigationHandler(NavigationCallback handler) {
+    _onNavigate = handler;
+  }
 
   static Future<String?> get deviceToken async {
     _deviceToken ??= await _messaging.getToken();
@@ -28,19 +37,26 @@ class NotificationService {
 
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
-      _handleNotificationTap(initialMessage);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _handleNotificationTap(initialMessage);
+      });
     }
   }
 
-  static void _handleForegroundMessage(RemoteMessage message) {
-    final notification = message.notification;
-    if (notification != null) {}
-  }
+  static void _handleForegroundMessage(RemoteMessage message) {}
 
   static void _handleNotificationTap(RemoteMessage message) {
     final data = message.data;
     final route = data['route'] as String?;
-    if (route != null) {}
+    if (route != null && _onNavigate != null) {
+      final params = <String, String>{};
+      for (final entry in data.entries) {
+        if (entry.key != 'route') {
+          params[entry.key] = entry.value;
+        }
+      }
+      _onNavigate!(route, params);
+    }
   }
 
   static Future<void> subscribeToTopic(String topic) async {

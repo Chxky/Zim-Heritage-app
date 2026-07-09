@@ -31,7 +31,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       final version = await UpdateService.getCurrentVersion();
       if (mounted) setState(() => _appVersion = version);
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('SettingsScreen._loadAppInfo error: $e');
+    }
   }
 
   void _showSnackbar(String message) {

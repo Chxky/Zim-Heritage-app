@@ -1,0 +1,11 @@
+{
+  "name": "zimheritage-gemini-proxy",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Function proxy for Gemini API — keeps API key server-side",
+  "main": "index.js",
+  "dependencies": {
+    "firebase-functions": "^6.0.0",
+    "@google/generative-ai": "^0.21.0"
+  },
+  "private": true
+}

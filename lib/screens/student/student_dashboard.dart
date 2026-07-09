@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
-import '../../models/user.dart';
-import '../../models/subject.dart';
+
 import '../../data/zimbabwe_curriculum.dart';
+import '../../models/subject.dart';
+import '../../models/user.dart';
+import '../../services/analytics_tracker.dart';
+import '../../services/auth_service.dart';
 import '../../services/homework_repository.dart';
 import '../../services/progress_repository.dart';
-import '../../services/auth_service.dart';
-import '../../widgets/nav_bar.dart';
-import '../../widgets/glass_card.dart';
+import '../../theme/app_theme.dart';
 import '../../widgets/ai_reading_assistant.dart';
 import '../../widgets/ai_tutor.dart';
-import 'subjects_screen.dart';
-import 'view_homework_screen.dart';
-import 'progress_screen.dart';
-import 'past_exams_screen.dart';
-import 'ecd_play_screen.dart';
-import 'ecd_coloring_screen.dart';
-import 'ecd_word_games_screen.dart';
-import 'ecd_story_screen.dart';
+import '../../widgets/feedback_button.dart';
+import '../../widgets/glass_card.dart';
+import '../../widgets/nav_bar.dart';
 import '../national/exam_predictor_screen.dart';
 import '../national/learner_passport_screen.dart';
+import 'ecd_coloring_screen.dart';
+import 'ecd_story_screen.dart';
+import 'ecd_word_games_screen.dart';
+import 'past_exams_screen.dart';
+import 'progress_screen.dart';
+import 'subjects_screen.dart';
+import 'view_homework_screen.dart';
 
 class StudentDashboard extends StatefulWidget {
   final User user;
@@ -38,6 +40,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
   @override
   void initState() {
     super.initState();
+    AnalyticsTracker.trackPageView('StudentDashboard');
     _loadData();
   }
 
@@ -56,7 +59,9 @@ class _StudentDashboardState extends State<StudentDashboard> {
           _averageScore = avg;
         });
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('StudentDashboard._loadData error: $e');
+    }
   }
 
   @override
@@ -148,11 +153,26 @@ class _StudentDashboardState extends State<StudentDashboard> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/ai-assistant'),
-        backgroundColor: AppTheme.gold,
-        tooltip: 'ZimHeritage AI Assistant',
-        child: const Icon(Icons.auto_awesome, color: AppTheme.black),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton.small(
+            heroTag: 'feedback',
+            backgroundColor: AppTheme.gold,
+            onPressed: () => FeedbackButton.showFeedbackDialog(context, screen: 'StudentDashboard'),
+
+            tooltip: 'Send Feedback',
+            child: const Icon(Icons.feedback_outlined, color: AppTheme.black),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            heroTag: 'ai-assistant',
+            onPressed: () => Navigator.pushNamed(context, '/ai-assistant'),
+            backgroundColor: AppTheme.primaryGreen,
+            tooltip: 'AI Assistant',
+            child: const Icon(Icons.auto_awesome, color: AppTheme.white),
+          ),
+        ],
       ),
       ),
     );

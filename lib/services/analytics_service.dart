@@ -2,6 +2,8 @@ import '../data/national_data.dart';
 import '../models/national_models.dart';
 
 class AnalyticsService {
+  /// Returns total schools from sample data.
+  /// In production, this should be fetched from Firestore.
   static int totalSchools() {
     var count = 0;
     for (final p in getProvinces()) {
@@ -9,11 +11,14 @@ class AnalyticsService {
         count += d.schools.length;
       }
     }
-    return count * 120;
+    return count;
   }
 
+  /// Estimated total students. Replace with Firestore aggregation in production.
   static int totalStudents() => 4800000;
 
+  /// Returns total teachers from sample data.
+  /// In production, this should be fetched from Firestore.
   static int totalTeachers() {
     var count = 0;
     for (final p in getProvinces()) {
@@ -21,7 +26,7 @@ class AnalyticsService {
         count += d.schools.fold<int>(0, (sum, s) => sum + s.teachers);
       }
     }
-    return count * 100;
+    return count;
   }
 
   static double nationalPassRate() {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../../services/env_config.dart';
+import '../../services/gemini_service.dart';
 import '../../theme/app_theme.dart';
 
 class AiAssistantScreen extends StatefulWidget {
@@ -15,18 +14,10 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
   bool _isLoading = false;
-  late GenerativeModel _model;
-  late ChatSession _chat;
 
   @override
   void initState() {
     super.initState();
-    _model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: EnvConfig.geminiApiKey,
-      systemInstruction: Content.system('You are the ZimHeritage AI Assistant. You are an expert on the Zimbabwe Heritage-Based Curriculum. Answer student questions about Zimbabwean history, culture, and NDS1 in a friendly, encouraging way.'),
-    );
-    _chat = _model.startChat();
     _messages.add({'role': 'assistant', 'text': 'Mhoro! Siyabonga! I am the ZimHeritage AI Assistant. How can I help you with your Heritage Studies today?'});
   }
 
@@ -40,9 +31,12 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     _controller.clear();
 
     try {
-      final response = await _chat.sendMessage(Content.text(text));
+      final response = await GeminiService.askTeacherAssistant(
+        userMessage: text,
+        subject: 'Heritage Studies',
+      );
       setState(() {
-        _messages.add({'role': 'assistant', 'text': response.text ?? 'I am not sure how to answer that.'});
+        _messages.add({'role': 'assistant', 'text': response});
       });
     } catch (e) {
       setState(() {

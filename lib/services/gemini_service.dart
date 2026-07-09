@@ -1,16 +1,26 @@
+import 'dart:convert';
+
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:http/http.dart' as http;
+
 import 'env_config.dart';
 
 /// Gemini AI Service for EduBridge Zimbabwe Heritage App.
 /// Uses gemini-2.0-flash with a Zimbabwe Heritage curriculum context.
 /// Falls back to templated responses if the API key is not configured.
+///
+/// In production, prompts are sent to a Firebase Cloud Function (GEMINI_FUNCTION_URL)
+/// so the API key stays server-side. For local development, the SDK is used directly.
 class GeminiService {
   static String get _apiKey => EnvConfig.geminiApiKey;
+  static String get _functionUrl => EnvConfig.geminiFunctionUrl;
 
   static GenerativeModel? _model;
 
-  static bool get _isConfigured =>
+  static bool get _hasFunctionUrl => _functionUrl.isNotEmpty;
+  static bool get _hasApiKey =>
       _apiKey.isNotEmpty && _apiKey != 'your_gemini_api_key_here';
+  static bool get _isConfigured => _hasFunctionUrl || _hasApiKey;
 
   static GenerativeModel get _getModel {
     _model ??= GenerativeModel(
@@ -48,6 +58,33 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
     return _model!;
   }
 
+  /// Send a prompt to the Cloud Function proxy and return the response text.
+  static Future<String> _callFunction({
+    required String prompt,
+    required String scenario,
+    List<Map<String, String>>? messages,
+  }) async {
+    try {
+      final body = {
+        'prompt': prompt,
+        'scenario': scenario,
+        if (messages != null) 'messages': messages,
+      };
+      final response = await http.post(
+        Uri.parse(_functionUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        return data['response'] as String? ?? '';
+      }
+      return '';
+    } catch (_) {
+      return '';
+    }
+  }
+
   /// Send a message for a student AI tutor session.
   static Future<String> askTutor({
     required String userMessage,
@@ -57,6 +94,22 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
     List<({String role, String text})> history = const [],
   }) async {
     if (!_isConfigured) {
+      return _fallbackTutorResponse(userMessage, gradeLevel, subject, difficulty);
+    }
+
+    if (_hasFunctionUrl) {
+      final prompt = StringBuffer();
+      prompt.write('Grade: $gradeLevel. ');
+      if (subject != null) prompt.write('Subject: $subject. ');
+      if (difficulty != null) prompt.write('Difficulty: $difficulty. ');
+      prompt.write('\n\nStudent question: $userMessage');
+
+      final messages = history.map((m) => {'role': m.role, 'text': m.text}).toList();
+      final result = await _callFunction(prompt: prompt.toString(), scenario: 'tutor', messages: messages);
+      if (result.isNotEmpty) return result;
+    }
+
+    if (!_hasApiKey) {
       return _fallbackTutorResponse(userMessage, gradeLevel, subject, difficulty);
     }
 
@@ -92,6 +145,23 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
       return _fallbackTeacherResponse(userMessage, subject, grade, difficulty);
     }
 
+    if (_hasFunctionUrl) {
+      final prompt = StringBuffer();
+      prompt.write('You are assisting a TEACHER (not a student). ');
+      if (grade != null) prompt.write('Grade: $grade. ');
+      if (subject != null) prompt.write('Subject: $subject. ');
+      if (difficulty != null) prompt.write('Difficulty level: $difficulty. ');
+      prompt.write('\n\nTeacher request: $userMessage');
+
+      final messages = history.map((m) => {'role': m.role, 'text': m.text}).toList();
+      final result = await _callFunction(prompt: prompt.toString(), scenario: 'teacher', messages: messages);
+      if (result.isNotEmpty) return result;
+    }
+
+    if (!_hasApiKey) {
+      return _fallbackTeacherResponse(userMessage, subject, grade, difficulty);
+    }
+
     try {
       final chat = _getModel.startChat(
         history: history
@@ -121,7 +191,36 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
     required int maxMarks,
     required String gradeLevel,
   }) async {
-    if (!_isConfigured || studentAnswer.trim().isEmpty) {
+    if (studentAnswer.trim().isEmpty) {
+      return _fallbackGrade(studentAnswer, correctAnswer, maxMarks);
+    }
+
+    if (_hasFunctionUrl) {
+      final prompt = '''
+Grade Level: $gradeLevel
+Question: $question
+Model Answer: $correctAnswer
+Student's Answer: $studentAnswer
+Maximum Marks: $maxMarks
+
+MARKING TASK:
+1. Award marks fairly (0 to $maxMarks) based on accuracy and completeness.
+2. Write 1-2 sentences of specific, encouraging feedback.
+3. Respond ONLY in this exact format:
+SCORE: [number]
+FEEDBACK: [your feedback here]''';
+
+      final result = await _callFunction(prompt: prompt, scenario: 'grading');
+      if (result.isNotEmpty) {
+        final scoreMatch = RegExp(r'SCORE:\s*(\d+)').firstMatch(result);
+        final feedbackMatch = RegExp(r'FEEDBACK:\s*(.+)', dotAll: true).firstMatch(result);
+        final score = int.tryParse(scoreMatch?.group(1) ?? '0') ?? 0;
+        final feedback = feedbackMatch?.group(1)?.trim() ?? 'Good attempt! Keep practising.';
+        return (score: score.clamp(0, maxMarks), maxScore: maxMarks, feedback: feedback);
+      }
+    }
+
+    if (!_hasApiKey) {
       return _fallbackGrade(studentAnswer, correctAnswer, maxMarks);
     }
 

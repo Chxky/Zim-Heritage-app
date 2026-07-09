@@ -19,6 +19,13 @@ class EnvConfig {
     return dotenv.env['GEMINI_API_KEY'] ?? '';
   }
 
+  /// URL of the Firebase Cloud Function that proxies Gemini requests.
+  /// When set, the client sends prompts here instead of calling Gemini directly.
+  /// The Cloud Function holds the actual API key server-side.
+  static String get geminiFunctionUrl {
+    return dotenv.env['GEMINI_FUNCTION_URL'] ?? '';
+  }
+
   static String get sentryDsn {
     return dotenv.env['SENTRY_DSN'] ?? '';
   }

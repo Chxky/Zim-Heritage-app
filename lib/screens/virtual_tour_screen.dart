@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:panorama_viewer/panorama_viewer.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 

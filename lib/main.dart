@@ -1,62 +1,57 @@
 import 'dart:ui';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'firebase_options.dart';
-import 'theme/app_theme.dart';
-import 'models/user.dart' as models;
-import 'data/zimbabwe_curriculum.dart';
+
 import 'data/cambridge_curriculum.dart';
-import 'services/auth_service.dart';
-import 'services/env_config.dart';
-import 'services/seeding_service.dart';
-import 'services/user_repository.dart';
-import 'services/submission_repository.dart';
-import 'services/homework_repository.dart';
-import 'services/sentry_service.dart';
-import 'services/di_container.dart';
-import 'services/notification_service.dart';
-import 'services/l10n_service.dart';
-import 'services/local_persistence_service.dart';
-import 'services/privacy_service.dart';
-import 'services/security_service.dart';
-import 'services/deep_link_service.dart';
-import 'services/update_service.dart';
-import 'services/security_service.dart';
-import 'screens/student/student_dashboard.dart';
-import 'screens/teacher/teacher_dashboard.dart';
-import 'screens/parent/parent_dashboard.dart';
-import 'screens/registration_screen.dart';
-import 'screens/forgot_password_screen.dart';
-import 'screens/parent_child_detail_screen.dart';
-import 'screens/edit_profile_screen.dart';
-import 'screens/notifications_screen.dart';
-import 'screens/settings_screen.dart';
+import 'data/zimbabwe_curriculum.dart';
+import 'firebase_options.dart';
+import 'models/user.dart' as models;
+import 'services/analytics_tracker.dart';
 import 'screens/admin_user_management_screen.dart';
-import 'screens/teacher/homework_create_screen.dart';
-import 'screens/national/national_dashboard.dart';
-import 'screens/national/exam_predictor_screen.dart';
-import 'screens/national/learner_passport_screen.dart';
-import 'screens/national/heritage_preservation_screen.dart';
-import 'screens/ministry_dashboard_screen.dart';
-import 'screens/zimbabwe_map_screen.dart';
-import 'screens/virtual_tour_screen.dart';
-import 'screens/registration_screen.dart';
+import 'screens/calendar_screen.dart';
+import 'screens/challenges_screen.dart';
 import 'screens/cyber_security_screen.dart';
+import 'screens/edit_profile_screen.dart';
+import 'screens/forgot_password_screen.dart';
+import 'screens/leaderboard_screen.dart';
+import 'screens/messaging/conversation_list_screen.dart';
+import 'screens/ministry_dashboard_screen.dart';
+import 'screens/national/exam_predictor_screen.dart';
+import 'screens/national/heritage_preservation_screen.dart';
+import 'screens/national/learner_passport_screen.dart';
+import 'screens/national/national_dashboard.dart';
+import 'screens/notifications_screen.dart';
+import 'screens/parent_child_detail_screen.dart';
+import 'screens/registration_screen.dart';
+import 'screens/report_card_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/student/ai_assistant_screen.dart';
+import 'screens/student/attendance_screen.dart';
 import 'screens/student/digital_library_screen.dart';
 import 'screens/student/heritage_learning_hub.dart';
-import 'screens/leaderboard_screen.dart';
-import 'screens/challenges_screen.dart';
-import 'screens/report_card_screen.dart';
-import 'screens/student/attendance_screen.dart';
-import 'screens/messaging/conversation_list_screen.dart';
-import 'screens/calendar_screen.dart';
-import 'screens/student/ai_assistant_screen.dart';
+import 'screens/student/student_dashboard.dart';
+import 'screens/teacher/homework_create_screen.dart';
+import 'screens/teacher/teacher_dashboard.dart';
+import 'screens/virtual_tour_screen.dart';
+import 'screens/zimbabwe_map_screen.dart';
+import 'services/auth_service.dart';
+import 'services/di_container.dart';
+import 'services/env_config.dart';
+import 'services/homework_repository.dart';
+import 'services/l10n_service.dart';
+import 'services/notification_service.dart';
+import 'services/security_service.dart';
+import 'services/seeding_service.dart';
+import 'services/sentry_service.dart';
+import 'services/submission_repository.dart';
+import 'services/user_repository.dart';
+import 'theme/app_theme.dart';
 import 'widgets/glass_card.dart';
 
 Future<void> main() async {
@@ -105,12 +100,31 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
-class ZimHeritageApp extends StatelessWidget {
+class ZimHeritageApp extends StatefulWidget {
   const ZimHeritageApp({super.key});
+
+  @override
+  State<ZimHeritageApp> createState() => _ZimHeritageAppState();
+}
+
+class _ZimHeritageAppState extends State<ZimHeritageApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService.setNavigationHandler((route, data) {
+        final args = data.isNotEmpty ? data : null;
+        _navigatorKey.currentState?.pushNamed(route, arguments: args);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       title: 'ZimHeritage - Zimbabwe Heritage Curriculum',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
@@ -749,26 +763,23 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                           ),
                                   ),
                                   const SizedBox(height: 12),
-                                  SizedBox(
-                                    width: double.infinity, height: 50,
-                                    child: OutlinedButton.icon(
-                                      onPressed: () async {
-                                        setState(() { _isLoading = true; _error = null; });
-                                        try {
-                                          await launchUrl(Uri.parse('https://accounts.google.com/signup'), mode: LaunchMode.externalApplication);
-                                        } catch (_) {}
-                                        try {
-                                          final user = await AuthService.signInWithGoogle();
-                                          if (!context.mounted) return;
-                                          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
-                                        } catch (e) {
-                                          if (!context.mounted) return;
-                                          setState(() {
-                                            _isLoading = false;
-                                            _error = e.toString().replaceFirst('Exception: ', '');
-                                          });
-                                        }
-                                      },
+                                    SizedBox(
+                                      width: double.infinity, height: 50,
+                                      child: OutlinedButton.icon(
+                                        onPressed: () async {
+                                          setState(() { _isLoading = true; _error = null; });
+                                          try {
+                                            final user = await AuthService.signInWithGoogle();
+                                            if (!context.mounted) return;
+                                            Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+                                          } catch (e) {
+                                            if (!context.mounted) return;
+                                            setState(() {
+                                              _isLoading = false;
+                                              _error = e.toString().replaceFirst('Exception: ', '');
+                                            });
+                                          }
+                                        },
                                       icon: const Icon(Icons.g_mobiledata, size: 28),
                                       label: const Text('Sign in with Google'),
                                       style: OutlinedButton.styleFrom(
