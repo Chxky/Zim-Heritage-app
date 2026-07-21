@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../theme/app_theme.dart';
+import '../services/auth_service.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -14,6 +15,12 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _schoolController = TextEditingController();
+  final _districtController = TextEditingController();
+  bool _isLoading = false;
   
   String _selectedRole = 'Student';
   String _selectedCurriculum = 'ZIMSEC (Core Heritage Curriculum)';
@@ -32,6 +39,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     'Ndebele', 'Shangani', 'Shona', 'Sign Language', 'Sotho', 'Tonga',
     'Tswana', 'Venda', 'Xhosa'
   ];
+
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _schoolController.dispose();
+    _districtController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +118,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               children: [
                                 _buildSectionTitle('Personal Information', Icons.person),
                                 const SizedBox(height: 16),
-                                _buildTextField('Full Name', Icons.badge),
+                                _buildTextField('Full Name', Icons.badge, _nameController),
                                 const SizedBox(height: 12),
-                                _buildTextField('Email Address', Icons.email),
+                                _buildTextField('Email Address', Icons.email, _emailController),
                                 const SizedBox(height: 12),
-                                _buildTextField('Password', Icons.lock, obscureText: true),
+                                _buildTextField('Password', Icons.lock, _passwordController, obscureText: true),
                                 const SizedBox(height: 12),
                                 _buildDropdown('Role', _roles, _selectedRole, (v) => setState(() => _selectedRole = v!)),
                                 
@@ -113,7 +131,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 const SizedBox(height: 16),
                                 _buildDropdown('Curriculum Pathway', _curricula, _selectedCurriculum, (v) => setState(() => _selectedCurriculum = v!)),
                                 const SizedBox(height: 12),
-                                _buildTextField('MoPSE School Registration Code', Icons.numbers),
+                                _buildTextField('MoPSE School Registration Code', Icons.numbers, _schoolController),
                                 
                                 const SizedBox(height: 24),
                                 _buildSectionTitle('Geo-Tagging & Demographics', Icons.my_location),
@@ -123,7 +141,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 const SizedBox(height: 16),
                                 _buildDropdown('Province', _provinces, _selectedProvince, (v) => setState(() => _selectedProvince = v!)),
                                 const SizedBox(height: 12),
-                                _buildTextField('District / Locality', Icons.map),
+                                _buildTextField('District / Locality', Icons.map, _districtController),
                                 const SizedBox(height: 12),
                                 _buildDropdown('Primary Language', _languages, _selectedLanguage, (v) => setState(() => _selectedLanguage = v!)),
                                 
@@ -139,14 +157,62 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ),
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-                                        // Auto route to login or dashboard
-                                        Navigator.pop(context);
+                                        setState(() => _isLoading = true);
+                                        AuthService.register(
+                                          name: _nameController.text.trim(),
+                                          email: _emailController.text.trim(),
+                                          password: _passwordController.text,
+                                          role: _selectedRole.toLowerCase(),
+                                          gradeLevel: 'N/A', // Set later in app
+                                          school: _schoolController.text.trim(),
+                                          age: 0,
+                                          curriculum: _selectedCurriculum,
+                                        ).then((user) {
+                                          if (!mounted) return;
+                                          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+                                        }).catchError((e) {
+                                          if (!mounted) return;
+                                          setState(() => _isLoading = false);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text(e.toString()), backgroundColor: Colors.red)
+                                          );
+                                        });
+                                      }
+                                    },
+                                    child: _isLoading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: AppTheme.surfaceDark, strokeWidth: 2)) : const Text('REGISTER & GEO-TAG ACCOUNT', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: OutlinedButton.icon(
+                                    onPressed: () async {
+                                      setState(() => _isLoading = true);
+                                      try {
+                                        final user = await AuthService.signInWithGoogle(
+                                          role: _selectedRole,
+                                          curriculum: _selectedCurriculum,
+                                          province: _selectedProvince,
+                                          language: _selectedLanguage,
+                                        );
+                                        if (!mounted) return;
+                                        Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+                                      } catch (e) {
+                                        if (!mounted) return;
+                                        setState(() => _isLoading = false);
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('Registration Successful! Please login.', style: TextStyle(color: AppTheme.white)), backgroundColor: AppTheme.primaryGreen)
+                                          SnackBar(content: Text(e.toString()), backgroundColor: Colors.red)
                                         );
                                       }
                                     },
-                                    child: const Text('REGISTER & GEO-TAG ACCOUNT', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                                    icon: const Icon(Icons.g_mobiledata, size: 28),
+                                    label: const Text('Sign in with Google'),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(vertical: 14),
+                                      side: const BorderSide(color: AppTheme.white50),
+                                      foregroundColor: AppTheme.white80,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 16),
@@ -202,8 +268,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget _buildTextField(String label, IconData icon, {bool obscureText = false}) {
+  Widget _buildTextField(String label, IconData icon, TextEditingController controller, {bool obscureText = false}) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText,
       style: const TextStyle(color: AppTheme.white, fontSize: 13),
       decoration: InputDecoration(

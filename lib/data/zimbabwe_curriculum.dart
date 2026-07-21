@@ -141,6 +141,7 @@ final Map<String, List<Subject>> curriculumByGrade = {
     Subject(id: 'o3_geo', name: 'Geography', description: 'Geomorphology, climatology, environmental management, and GIS', gradeLevel: 'Form 3', color: '0xFF795548', icon: 'explore'),
     Subject(id: 'o3_acc', name: 'Accounting', description: 'Financial accounting, bookkeeping, trial balance, and financial statements', gradeLevel: 'Form 3', color: '0xFF4CAF50', icon: 'account_balance'),
     Subject(id: 'o3_eco', name: 'Economics', description: 'Microeconomics, macroeconomics, markets, and economic development', gradeLevel: 'Form 3', color: '0xFFE91E63', icon: 'trending_up'),
+    Subject(id: 'o3_frs', name: 'Family and Religious Studies', description: 'Indigenous Religion, Judaism, Christianity, Islam, and Ethics', gradeLevel: 'Form 3', color: '0xFF795548', icon: 'church'),
   ],
   'Form 4': [
     Subject(id: 'o4_eng', name: 'English Language', description: 'O-Level exam preparation: past papers, exam techniques, and revision', gradeLevel: 'Form 4', color: '0xFF2196F3', icon: 'abc'),
@@ -156,6 +157,7 @@ final Map<String, List<Subject>> curriculumByGrade = {
     Subject(id: 'o4_eco', name: 'Economics', description: 'O-Level economics: national income, trade, and exam preparation', gradeLevel: 'Form 4', color: '0xFFE91E63', icon: 'trending_up'),
     Subject(id: 'o4_com', name: 'Computer Science', description: 'O-Level computing: programming, databases, and exam preparation', gradeLevel: 'Form 4', color: '0xFF3F51B5', icon: 'computer'),
     Subject(id: 'o4_ftd', name: 'Food Technology and Design', description: 'Food science, nutrition, meal planning, and design projects', gradeLevel: 'Form 4', color: '0xFFFF9800', icon: 'restaurant'),
+    Subject(id: 'o4_frs', name: 'Family and Religious Studies', description: 'O-Level FRS revision, exam techniques, and religious studies', gradeLevel: 'Form 4', color: '0xFF795548', icon: 'church'),
   ],
   // ========== ADVANCED LEVEL - FORM 5 ==========
   'Form 5': [
@@ -171,6 +173,7 @@ final Map<String, List<Subject>> curriculumByGrade = {
     Subject(id: 'a5_div', name: 'Divinity', description: 'Advanced divinity: biblical studies, ethics, and comparative religion', gradeLevel: 'Form 5', color: '0xFF795548', icon: 'church'),
     Subject(id: 'a5_acc', name: 'Accounting', description: 'Advanced accounting: financial accounting, costing, and auditing', gradeLevel: 'Form 5', color: '0xFF4CAF50', icon: 'account_balance'),
     Subject(id: 'a5_csc', name: 'Computer Science', description: 'Advanced computing: data structures, algorithms, and software development', gradeLevel: 'Form 5', color: '0xFF3F51B5', icon: 'computer'),
+    Subject(id: 'a5_frs', name: 'Family and Religious Studies', description: 'Advanced FRS: theology, ethics, and indigenous religions', gradeLevel: 'Form 5', color: '0xFF795548', icon: 'church'),
   ],
   'Form 6': [
     Subject(id: 'a6_mat', name: 'Mathematics', description: 'A-Level mathematics: advanced calculus, mechanics, and further pure maths', gradeLevel: 'Form 6', color: '0xFF4CAF50', icon: 'calculate'),
@@ -185,6 +188,7 @@ final Map<String, List<Subject>> curriculumByGrade = {
     Subject(id: 'a6_div', name: 'Divinity', description: 'A-Level divinity: theological studies, ethics, and philosophy of religion', gradeLevel: 'Form 6', color: '0xFF795548', icon: 'church'),
     Subject(id: 'a6_acc', name: 'Accounting', description: 'A-Level accounting: corporate accounting, financial reporting, and analysis', gradeLevel: 'Form 6', color: '0xFF4CAF50', icon: 'account_balance'),
     Subject(id: 'a6_csc', name: 'Computer Science', description: 'A-Level computing: AI, machine learning, networks, and cybersecurity', gradeLevel: 'Form 6', color: '0xFF3F51B5', icon: 'computer'),
+    Subject(id: 'a6_frs', name: 'Family and Religious Studies', description: 'A-Level FRS: advanced theology, comparative religion, and moral philosophy', gradeLevel: 'Form 6', color: '0xFF795548', icon: 'church'),
   ],
 };
 
@@ -620,4 +624,12 @@ List<Topic> _allTopics = [
   Topic(id: 'o4_com_2', subjectId: 'o4_com', name: 'Database Systems', description: 'Database design and management', subtopics: ['Database models', 'SQL basics', 'Data integrity', 'Database applications'], gradeLevel: 'Form 4', term: 'Term 2'),
   Topic(id: 'o4_ftd_1', subjectId: 'o4_ftd', name: 'Food Science', description: 'Science of food and cooking', subtopics: ['Food nutrients', 'Cooking methods', 'Food preservation', 'Food spoilage'], gradeLevel: 'Form 4', term: 'Term 1'),
   Topic(id: 'o4_ftd_2', subjectId: 'o4_ftd', name: 'Meal Planning', description: 'Nutrition and meal design', subtopics: ['Balanced diets', 'Meal planning', 'Special diets', 'Menu design'], gradeLevel: 'Form 4', term: 'Term 2'),
+  Topic(id: 'o3_frs_1', subjectId: 'o3_frs', name: 'Indigenous Religion', description: 'Traditional beliefs and practices', subtopics: ['Concept of God', 'Ancestors', 'Rituals and ceremonies', 'Moral values'], gradeLevel: 'Form 3', term: 'Term 1'),
+  Topic(id: 'o3_frs_2', subjectId: 'o3_frs', name: 'World Religions', description: 'Judaism, Christianity, and Islam', subtopics: ['Origins', 'Sacred texts', 'Core beliefs', 'Practices'], gradeLevel: 'Form 3', term: 'Term 2'),
+  Topic(id: 'o4_frs_1', subjectId: 'o4_frs', name: 'Ethics and Morality', description: 'Moral decision making', subtopics: ['Personal ethics', 'Social ethics', 'Contemporary moral issues', 'Human rights'], gradeLevel: 'Form 4', term: 'Term 1'),
+  Topic(id: 'o4_frs_2', subjectId: 'o4_frs', name: 'Exam Preparation', description: 'O-Level FRS exam readiness', subtopics: ['Past paper practice', 'Essay techniques', 'Comparative analysis', 'Revision strategies'], gradeLevel: 'Form 4', term: 'Term 2'),
+  Topic(id: 'a5_frs_1', subjectId: 'a5_frs', name: 'Advanced Indigenous Religion', description: 'In-depth study of African traditional religion', subtopics: ['Theology', 'Cosmology', 'Rites of passage', 'Modern challenges'], gradeLevel: 'Form 5', term: 'Term 1'),
+  Topic(id: 'a5_frs_2', subjectId: 'a5_frs', name: 'Advanced Christian Theology', description: 'In-depth study of Christianity', subtopics: ['Church history', 'Doctrines', 'Biblical interpretation', 'Christian ethics'], gradeLevel: 'Form 5', term: 'Term 2'),
+  Topic(id: 'a6_frs_1', subjectId: 'a6_frs', name: 'Comparative Religion', description: 'Comparing major world religions', subtopics: ['Thematic comparisons', 'Interfaith dialogue', 'Religion and society', 'Global perspectives'], gradeLevel: 'Form 6', term: 'Term 1'),
+  Topic(id: 'a6_frs_2', subjectId: 'a6_frs', name: 'Advanced Moral Philosophy', description: 'Complex ethical dilemmas', subtopics: ['Ethical theories', 'Bioethics', 'Environmental ethics', 'Business ethics'], gradeLevel: 'Form 6', term: 'Term 2'),
 ];

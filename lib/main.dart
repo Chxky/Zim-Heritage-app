@@ -1,3 +1,4 @@
+// main.dart
 import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -12,7 +13,6 @@ import 'data/cambridge_curriculum.dart';
 import 'data/zimbabwe_curriculum.dart';
 import 'firebase_options.dart';
 import 'models/user.dart' as models;
-import 'services/analytics_tracker.dart';
 import 'screens/admin_user_management_screen.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/challenges_screen.dart';
@@ -568,10 +568,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         );
         
         if (didAuthenticate) {
-          setState(() { _isLoading = true; _error = null; });
-          final user = await AuthService.login('student@demo.com', '123456');
-          if (!mounted) return;
-          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
+          setState(() { _error = 'Biometric login requires an active session. Please sign in with email first.'; });
         }
       } else {
         setState(() { _error = 'Biometrics not supported on this device.'; });
@@ -818,34 +815,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                     ),
                                   ),
                                   const SizedBox(height: 12),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: ElevatedButton.icon(
-                                      onPressed: () async {
-                                        setState(() { _isLoading = true; _error = null; });
-                                        try {
-                                          final user = await AuthService.login('student@demo.com', '123456');
-                                          if (!context.mounted) return;
-                                          Navigator.pushReplacementNamed(context, '/dashboard', arguments: user);
-                                        } catch (e) {
-                                          if (!context.mounted) return;
-                                          setState(() {
-                                            _isLoading = false;
-                                            _error = e.toString().replaceFirst('Exception: ', '');
-                                          });
-                                        }
-                                      },
-                                      icon: const Icon(Icons.play_circle_fill),
-                                      label: const Text('Demo Login (Student)'),
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(vertical: 14),
-                                        backgroundColor: AppTheme.gold.withValues(alpha: 0.2),
-                                        foregroundColor: AppTheme.gold,
-                                        side: const BorderSide(color: AppTheme.gold, width: 1),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
+
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                     decoration: BoxDecoration(

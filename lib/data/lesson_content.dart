@@ -927,6 +927,137 @@ final Map<String, List<Lesson>> lessonsByTopic = {
       references: ['Cambridge International AS & A Level Mathematics Coursebook'],
     ),
   ],
+  ],
+
+  // ======================== FORM 3 FRS ========================
+  'o3_frs_1': [
+    Lesson(
+      id: 'lsn_o3_frs_1_1', subjectId: 'o3_frs', topicId: 'o3_frs_1',
+      title: 'Indigenous Religion: Concept of God', gradeLevel: 'Form 3',
+      objectives: ['Understand the African concept of a Supreme Being', 'Identify local names for God', 'Explain the role of ancestors as intermediaries'],
+      sections: [
+        LessonSection(
+          heading: 'The Supreme Being',
+          content: 'In Zimbabwean Indigenous Religion, God is viewed as the Supreme Being, the Creator (Musiki/uMdali), and the source of all life. God is considered transcendent (far away and holy) but also immanent (involved in everyday life through intermediaries).',
+          bulletPoints: ['Shona names for God: Mwari (The Supreme), Nyadenga (Lord of the Sky), Musikavanhu (Creator of humanity).', 'Ndebele names for God: uNkulunkulu (The Greatest), uMdali (Creator).', 'God is rarely approached directly; intermediaries are used.'],
+          example: 'When rain is needed, communities do not pray to God directly. They approach the ancestors (midzimu/amadlozi), who then take the plea to God.',
+        ),
+        LessonSection(
+          heading: 'Role of Ancestors',
+          content: 'Ancestors (midzimu in Shona, amadlozi in Ndebele) play a vital role as mediators between the living and the Supreme Being. They are respected and honored, not worshipped.',
+          bulletPoints: ['They protect the family from evil.', 'They act as messengers to God.', 'They are consulted during times of crisis or illness.', 'Offerings (like beer or snuff) are given to appease or thank them.'],
+        ),
+      ],
+      keyPoints: ['God is the Creator and Sustainer of life.', 'Ancestors act as intermediaries between humans and God.', 'Different names for God reflect His various attributes.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Give two names for God in the Shona religion and explain their meanings.', answer: 'Musikavanhu (Creator of humanity) and Nyadenga (Lord of the Sky).', explanation: 'These names highlight God\'s role as creator and his transcendent nature.'),
+        PracticeQuestion(question: 'Explain the role of ancestors in Indigenous Religion.', answer: 'They act as intermediaries or mediators between the living and the Supreme Being.', explanation: 'Ancestors bridge the gap between the physical and spiritual worlds.'),
+      ],
+      references: ['O-Level FRS Textbook'],
+    ),
+  ],
+  'o3_frs_2': [
+    Lesson(
+      id: 'lsn_o3_frs_2_1', subjectId: 'o3_frs', topicId: 'o3_frs_2',
+      title: 'Christianity: Origins and Core Beliefs', gradeLevel: 'Form 3',
+      objectives: ['Trace the origins of Christianity', 'Identify the core beliefs of the Christian faith', 'Understand the significance of the Bible'],
+      sections: [
+        LessonSection(
+          heading: 'Origins of Christianity',
+          content: 'Christianity originated in the 1st century AD in Judea. It is based on the life, teachings, death, and resurrection of Jesus Christ, whom Christians believe to be the Son of God and the Messiah (Savior).',
+          bulletPoints: ['Started as a sect within Judaism.', 'Spread through the Roman Empire by apostles like Paul.', 'Emphasizes love, forgiveness, and salvation.'],
+        ),
+        LessonSection(
+          heading: 'Core Beliefs',
+          content: 'The central tenet of Christianity is the belief in the Trinity (God the Father, God the Son, and God the Holy Spirit).',
+          bulletPoints: ['Incarnation: Jesus is God in human form.', 'Atonement: Jesus\' death on the cross pays the penalty for human sin.', 'Resurrection: Jesus rose from the dead, offering eternal life.'],
+        ),
+      ],
+      keyPoints: ['Founded on the life and teachings of Jesus Christ.', 'The Bible is the sacred text.', 'Core beliefs include the Trinity, Incarnation, and Resurrection.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'What is the doctrine of the Trinity?', answer: 'The belief that God is one in essence but exists in three persons: Father, Son, and Holy Spirit.', explanation: 'This is a foundational concept in mainstream Christianity.'),
+      ],
+      references: ['O-Level FRS Textbook'],
+    ),
+  ],
+
+  // ======================== FORM 4 FRS ========================
+  'o4_frs_1': [
+    Lesson(
+      id: 'lsn_o4_frs_1_1', subjectId: 'o4_frs', topicId: 'o4_frs_1',
+      title: 'Ethics and Morality in Society', gradeLevel: 'Form 4',
+      objectives: ['Define ethics and morality', 'Differentiate between secular and religious ethics', 'Apply ethical principles to contemporary issues'],
+      sections: [
+        LessonSection(
+          heading: 'Understanding Ethics',
+          content: 'Ethics is the branch of philosophy that deals with moral principles—what is right and wrong. Morality refers to the actual beliefs and practices regarding good and bad behavior.',
+          bulletPoints: ['Religious ethics: Based on divine commands and sacred texts (e.g., Ten Commandments).', 'Secular ethics: Based on human reason, logic, and societal well-being (e.g., Utilitarianism).', 'Ubuntu/Unhu: The African philosophy of humaneness and community solidarity.'],
+          example: 'Ubuntu/Unhu states "I am because we are." It emphasizes respect, compassion, and living in harmony with others.',
+        ),
+        LessonSection(
+          heading: 'Contemporary Moral Issues',
+          content: 'Modern society faces complex ethical dilemmas where right and wrong are heavily debated.',
+          bulletPoints: ['Bioethics: Abortion, euthanasia, cloning.', 'Environmental ethics: Deforestation, pollution, climate change.', 'Social ethics: Corruption, human rights violations, poverty.'],
+        ),
+      ],
+      keyPoints: ['Ethics guides human behavior.', 'Ubuntu/Unhu is central to Zimbabwean moral philosophy.', 'Ethical dilemmas require careful consideration of different perspectives.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Briefly explain the concept of Ubuntu/Unhu.', answer: 'It is an African philosophy emphasizing community, respect, compassion, and the interconnectedness of humanity ("I am because we are").', explanation: 'Ubuntu is the moral foundation of many African societies.'),
+        PracticeQuestion(question: 'Distinguish between religious and secular ethics.', answer: 'Religious ethics rely on divine revelation, while secular ethics rely on human reason and societal impact.', explanation: 'The source of moral authority differs between the two.'),
+      ],
+      references: ['O-Level FRS Textbook'],
+    ),
+  ],
+
+  // ======================== ADVANCED LEVEL FRS ========================
+  'a5_frs_1': [
+    Lesson(
+      id: 'lsn_a5_frs_1_1', subjectId: 'a5_frs', topicId: 'a5_frs_1',
+      title: 'Advanced Study of African Traditional Religion (ATR)', gradeLevel: 'Form 5',
+      objectives: ['Analyze the cosmology of ATR', 'Evaluate the impact of modernity on ATR practices', 'Examine the significance of rites of passage'],
+      sections: [
+        LessonSection(
+          heading: 'Cosmology and Worldview',
+          content: 'ATR presents a holistic universe where the physical and spiritual realms are deeply intertwined. There is no sharp distinction between the sacred and the secular.',
+          bulletPoints: ['Hierarchical structure: Supreme Being, divinities, ancestors, living humans, and lower creation.', 'Vital force: A spiritual energy that permeates all living things.', 'Health and prosperity are seen as signs of spiritual harmony.'],
+        ),
+        LessonSection(
+          heading: 'Rites of Passage',
+          content: 'Rites of passage mark critical transitions in a person\'s life, integrating them into the community and conferring new spiritual status.',
+          bulletPoints: ['Birth and naming ceremonies.', 'Initiation (transition from childhood to adulthood).', 'Marriage (uniting two families, not just individuals).', 'Death and Kurova Guva/Umbuyiso (bringing the spirit back to protect the family).'],
+        ),
+      ],
+      keyPoints: ['ATR worldview is holistic and community-centered.', 'Rites of passage ensure the continuity of society and spiritual harmony.', 'Modernization poses challenges to traditional practices.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Analyze the significance of the Kurova Guva ceremony.', answer: 'It elevates the deceased to the status of an ancestor, allowing them to protect and guide the living family members.', explanation: 'It is a crucial ritual for ensuring the spiritual security of the family.'),
+      ],
+      references: ['A-Level Divinity/FRS Textbook'],
+    ),
+  ],
+  'a6_frs_1': [
+    Lesson(
+      id: 'lsn_a6_frs_1_1', subjectId: 'a6_frs', topicId: 'a6_frs_1',
+      title: 'Comparative Religion: Thematic Approaches', gradeLevel: 'Form 6',
+      objectives: ['Compare concepts of salvation across religions', 'Analyze interfaith dialogue initiatives', 'Evaluate the role of religion in peacebuilding'],
+      sections: [
+        LessonSection(
+          heading: 'Concepts of Salvation',
+          content: 'Different religions offer varying paths to ultimate liberation or salvation.',
+          bulletPoints: ['Christianity: Salvation through grace and faith in Jesus Christ.', 'Islam: Salvation through submission to Allah and adherence to the Five Pillars.', 'ATR: Salvation understood as well-being, harmony with ancestors, and community prosperity.', 'Buddhism: Nirvana—liberation from the cycle of rebirth (Samsara) through enlightenment.'],
+        ),
+        LessonSection(
+          heading: 'Interfaith Dialogue and Peacebuilding',
+          content: 'In a pluralistic world, dialogue between religions is essential for social cohesion.',
+          bulletPoints: ['Aims to build mutual understanding, not conversion.', 'Addresses shared social issues (poverty, injustice).', 'Religions can be sources of conflict but also powerful tools for reconciliation and peace.'],
+        ),
+      ],
+      keyPoints: ['Salvation concepts vary significantly across faiths.', 'Interfaith dialogue promotes peace and understanding.', 'Religions must actively address global challenges.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Compare the Christian and ATR concepts of salvation.', answer: 'Christianity views salvation as eternal life and deliverance from sin through Christ. ATR views salvation as present well-being, health, and harmony with the spiritual realm.', explanation: 'Christianity is often eschatological (future-focused), while ATR is pragmatic (present-focused).'),
+      ],
+      references: ['A-Level Comparative Religion Texts'],
+    ),
+  ],
 };
 
 List<Lesson> getLessonsForTopic(String topicId) {

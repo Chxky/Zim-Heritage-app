@@ -1,3 +1,4 @@
+// services/gemini_service.dart
 import 'dart:convert';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -36,6 +37,12 @@ You support BOTH curricula:
 - ZIMSEC: Zimbabwe Heritage-Based Curriculum (local exams)
 - Cambridge International: IGCSE, AS & A Level (international exams)
 
+RESTRICTIONS (CRITICAL):
+- You MUST restrict your assistance strictly to homework help and subject-related questions.
+- Do NOT answer general chit-chat, personal questions, or provide information outside of the educational curriculum context.
+- Do NOT write essays, complete assignments, or do the work FOR the students or teachers. You are a guide, not a shortcut.
+- If a user asks a question unrelated to academics or attempts to abuse the AI, politely decline and refocus the conversation on their studies.
+
 CORE PRINCIPLES:
 - Guide learners to DISCOVER answers through questions, never just give them.
 - Ground examples in Zimbabwean context when relevant (Great Zimbabwe, agriculture, local culture, Shona/Ndebele).
@@ -68,7 +75,7 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
       final body = {
         'prompt': prompt,
         'scenario': scenario,
-        if (messages != null) 'messages': messages,
+        'messages': ?messages,
       };
       final response = await http.post(
         Uri.parse(_functionUrl),

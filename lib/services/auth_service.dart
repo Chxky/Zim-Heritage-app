@@ -30,7 +30,12 @@ class AuthService {
     return user;
   }
 
-  static Future<User> signInWithGoogle() async {
+  static Future<User> signInWithGoogle({
+    String? role,
+    String? curriculum,
+    String? province,
+    String? language,
+  }) async {
     if (AppConfig.useFirebase) {
       UserCredential userCredential;
       String email;
@@ -65,7 +70,7 @@ class AuthService {
         id: uid,
         name: displayName,
         email: email,
-        role: 'parent',
+        role: role?.toLowerCase() ?? 'student',
         gradeLevel: 'N/A',
         school: '',
         isVerified: true,
