@@ -927,7 +927,7 @@ final Map<String, List<Lesson>> lessonsByTopic = {
       references: ['Cambridge International AS & A Level Mathematics Coursebook'],
     ),
   ],
-  ],
+
 
   // ======================== FORM 3 FRS ========================
   'o3_frs_1': [
