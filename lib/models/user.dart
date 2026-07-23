@@ -36,7 +36,7 @@ class User {
       role: map['role'] as String? ?? 'student',
       gradeLevel: map['gradeLevel'] as String? ?? '',
       school: map['school'] as String? ?? '',
-      age: map['age'] as int? ?? 0,
+      age: (map['age'] as num?)?.toInt() ?? 0,
       isVerified: map['isVerified'] as bool? ?? false,
       hasFacialRecognition: map['hasFacialRecognition'] as bool? ?? false,
       authProvider: map['authProvider'] as String? ?? 'email',
