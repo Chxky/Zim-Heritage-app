@@ -50,11 +50,20 @@ class SeedingService {
     for (final user in users) {
       await FirebaseFirestore.instance.collection('users').doc(user.id).set(user.toMap());
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: user.email,
           password: '123456',
         );
-      } catch (_) {}
+        await FirebaseFirestore.instance.collection('users').doc(cred.user!.uid).set(user.copyWith(id: cred.user!.uid).toMap());
+      } catch (_) {
+        try {
+          final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: user.email,
+            password: '123456',
+          );
+          await FirebaseFirestore.instance.collection('users').doc(cred.user!.uid).set(user.copyWith(id: cred.user!.uid).toMap());
+        } catch (_) {}
+      }
     }
   }
 
