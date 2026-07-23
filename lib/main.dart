@@ -801,6 +801,50 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                     ),
                                   ),
                                   const SizedBox(height: 12),
+                                   const Text('1-CLICK INVESTOR DEMO ACCOUNTS',
+                                     style: TextStyle(color: AppTheme.gold, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+                                   const SizedBox(height: 8),
+                                   Wrap(
+                                     spacing: 8,
+                                     runSpacing: 8,
+                                     alignment: WrapAlignment.center,
+                                     children: [
+                                       ActionChip(
+                                         avatar: const CircleAvatar(backgroundColor: AppTheme.gold, child: Text('M', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
+                                         label: const Text('Mazvita (Form 4 FRS)', style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                                         backgroundColor: AppTheme.primaryGreen,
+                                         side: const BorderSide(color: AppTheme.gold, width: 1.5),
+                                         onPressed: () {
+                                           _emailController.text = 'mazvita@demo.com';
+                                           _passwordController.text = '123456';
+                                           _login();
+                                         },
+                                       ),
+                                       ActionChip(
+                                         avatar: const CircleAvatar(backgroundColor: AppTheme.greenBright, child: Text('T', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
+                                         label: const Text('Tendai (Form 1)', style: TextStyle(color: AppTheme.white, fontSize: 11)),
+                                         backgroundColor: AppTheme.surfaceDark,
+                                         side: BorderSide(color: AppTheme.white.withValues(alpha: 0.3)),
+                                         onPressed: () {
+                                           _emailController.text = 'student@demo.com';
+                                           _passwordController.text = '123456';
+                                           _login();
+                                         },
+                                       ),
+                                       ActionChip(
+                                         avatar: const CircleAvatar(backgroundColor: AppTheme.gold, child: Text('C', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
+                                         label: const Text('Teacher', style: TextStyle(color: AppTheme.white, fontSize: 11)),
+                                         backgroundColor: AppTheme.surfaceDark,
+                                         side: BorderSide(color: AppTheme.white.withValues(alpha: 0.3)),
+                                         onPressed: () {
+                                           _emailController.text = 'teacher@demo.com';
+                                           _passwordController.text = '123456';
+                                           _login();
+                                         },
+                                       ),
+                                     ],
+                                   ),
+                                   const SizedBox(height: 16),
                                   SizedBox(
                                     width: double.infinity,
                                     child: OutlinedButton.icon(
