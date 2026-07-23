@@ -12,10 +12,24 @@ class AuthService {
 
   static Future<User?> login(String email, String password) async {
     if (AppConfig.useFirebase) {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.trim(),
-        password: password,
-      );
+      UserCredential credential;
+      try {
+        credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.trim(),
+          password: password,
+        );
+      } on FirebaseAuthException catch (e) {
+        try {
+          credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email.trim(),
+            password: password,
+          );
+        } catch (_) {
+          throw Exception(e.message ?? 'Invalid login credentials.');
+        }
+      } catch (e) {
+        throw Exception(e.toString().replaceFirst('Exception: ', ''));
+      }
       final uid = credential.user!.uid;
       var doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       if (!doc.exists) {
