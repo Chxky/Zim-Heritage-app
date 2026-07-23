@@ -27,6 +27,7 @@ class SeedingService {
 
   static Future<void> _seedDemoUsers() async {
     final users = <User>[
+      User(id: 'student_mazvita', name: 'Mazvita', email: 'mazvita@demo.com', role: 'student', gradeLevel: 'Form 4', school: 'Demo High School', age: 16, isVerified: true),
       User(id: 'student_1', name: 'Tendai Musoni', email: 'student@demo.com', role: 'student', gradeLevel: 'Form 1', school: 'Demo High School', age: 14, isVerified: true),
       User(id: 'teacher_1', name: 'Teacher Chigumira', email: 'teacher@demo.com', role: 'teacher', gradeLevel: 'N/A', school: 'Demo High School', age: 35, isVerified: true),
       User(id: 'parent_1', name: 'Amai Moyo', email: 'parent@demo.com', role: 'parent', gradeLevel: 'N/A', school: 'Demo High School', age: 40, isVerified: true),

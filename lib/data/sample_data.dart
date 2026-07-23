@@ -273,6 +273,21 @@ class SampleData {
 
   static final List<StudentProgress> sampleProgress = [
     StudentProgress(
+      studentId: 'student_mazvita',
+      subjectId: 'o4_frs',
+      subjectName: 'Family and Religious Studies',
+      topics: [
+        TopicProgress(topicName: 'Indigenous Religion', status: 'completed', score: 85),
+        TopicProgress(topicName: 'Judaism and Christianity', status: 'in_progress', score: 75),
+        TopicProgress(topicName: 'Islam and Ethics', status: 'not_started', score: 0),
+        TopicProgress(topicName: 'O-Level FRS revision', status: 'not_started', score: 0),
+      ],
+      quizzesTaken: 2,
+      homeworksSubmitted: 3,
+      homeworksReviewed: 3,
+      averageScore: 80.0,
+    ),
+    StudentProgress(
       studentId: 'student_1',
       subjectId: 'o1_mat',
       subjectName: 'Mathematics',
@@ -409,6 +424,7 @@ class SampleData {
   }
 
   static final List<StudentRecord> sampleStudents = [
+    StudentRecord(id: 'student_mazvita', name: 'Mazvita', gradeLevel: 'Form 4', subjectProgress: {}),
     StudentRecord(id: 'student_1', name: 'Tendai Musoni', gradeLevel: 'Form 1', subjectProgress: {}),
     StudentRecord(id: 'student_2', name: 'Chipo Dube', gradeLevel: 'Grade 3', subjectProgress: {}),
     StudentRecord(id: 'student_3', name: 'Tafadzwa Chikwanha', gradeLevel: 'Grade 5', subjectProgress: {}),

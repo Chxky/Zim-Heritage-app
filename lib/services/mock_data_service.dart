@@ -10,6 +10,7 @@ import '../models/user.dart';
 
 class MockDataService {
   static final List<User> _users = [
+    User(id: 'student_mazvita', name: 'Mazvita', email: 'mazvita@demo.com', role: 'student', gradeLevel: 'Form 4', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 16, isVerified: true),
     User(id: 'student_1', name: 'Tendai Musoni', email: 'student@demo.com', role: 'student', gradeLevel: 'Form 1', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 14, isVerified: true),
     User(id: 'teacher_1', name: 'Teacher Chigumira', email: 'teacher@demo.com', role: 'teacher', gradeLevel: 'N/A', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 35, isVerified: true),
     User(id: 'parent_1', name: 'Amai Moyo', email: 'parent@demo.com', role: 'parent', gradeLevel: 'N/A', school: 'Demo High School', schoolMotto: 'Learn, Lead, Inspire', age: 40, isVerified: true),
