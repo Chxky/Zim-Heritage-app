@@ -18,6 +18,19 @@ class SeedingService {
     if (needsHomeworks) await _seedHomeworks();
     if (needsSubmissions) await _seedSubmissions();
     if (needsProgress) await _seedProgress();
+
+    // FORCE SEED Mazvita for the test phase
+    try {
+      final mazvita = User(id: 'student_mazvita', name: 'Mazvita', email: 'mazvita@demo.com', role: 'student', gradeLevel: 'Form 4', school: 'Demo High School', age: 16, isVerified: true);
+      await FirebaseFirestore.instance.collection('users').doc(mazvita.id).set(mazvita.toMap());
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: mazvita.email, password: '123456');
+    } catch (_) {}
+
+    try {
+      final prog = SampleData.sampleProgress.firstWhere((p) => p.studentId == 'student_mazvita');
+      final id = '${prog.studentId}_${prog.subjectId}';
+      await FirebaseFirestore.instance.collection('progress').doc(id).set(prog.toMap());
+    } catch (_) {}
   }
 
   static Future<bool> _collectionEmpty(String collection) async {
