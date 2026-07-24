@@ -46,16 +46,7 @@ class AuthService {
               }
             } catch (_) {}
             if (isMazvita || cleanEmail.endsWith('@demo.com')) {
-              _currentUser = User(
-                id: isMazvita ? 'student_mazvita' : 'demo_user',
-                name: isMazvita ? 'Mazvita' : 'Demo Student',
-                email: cleanEmail,
-                role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
-                gradeLevel: 'Form 4',
-                school: 'Demo High School',
-                age: 16,
-                isVerified: true,
-              );
+              _currentUser = _createDemoUser(cleanEmail, isMazvita ? 'student_mazvita' : 'demo_user');
               return _currentUser;
             }
             throw Exception(e.message ?? 'Invalid login credentials.');
@@ -78,16 +69,7 @@ class AuthService {
                 await FirebaseFirestore.instance.collection('users').doc(uid).set(fallbackUser.toMap());
                 doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
               } else {
-                final defaultUser = User(
-                  id: isMazvita ? 'student_mazvita' : uid,
-                  name: isMazvita ? 'Mazvita' : cleanEmail.split('@').first,
-                  email: cleanEmail,
-                  role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
-                  gradeLevel: 'Form 4',
-                  school: 'Demo High School',
-                  age: 16,
-                  isVerified: true,
-                );
+                final defaultUser = _createDemoUser(cleanEmail, isMazvita ? 'student_mazvita' : uid);
                 await FirebaseFirestore.instance.collection('users').doc(uid).set(defaultUser.toMap());
                 doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
               }
@@ -97,34 +79,15 @@ class AuthService {
             _currentUser = User.fromMap(docData, targetId);
             return _currentUser;
           } catch (_) {
-            _currentUser = User(
-              id: isMazvita ? 'student_mazvita' : uid,
-              name: isMazvita ? 'Mazvita' : cleanEmail.split('@').first,
-              email: cleanEmail,
-              role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
-              gradeLevel: 'Form 4',
-              school: 'Demo High School',
-              age: 16,
-              isVerified: true,
-            );
+            _currentUser = _createDemoUser(cleanEmail, isMazvita ? 'student_mazvita' : uid);
             return _currentUser;
           }
         }
       } catch (e) {
         if (isMazvita || cleanEmail.endsWith('@demo.com')) {
-          _currentUser = User(
-            id: isMazvita ? 'student_mazvita' : 'demo_user',
-            name: isMazvita ? 'Mazvita' : 'Demo Student',
-            email: cleanEmail,
-            role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
-            gradeLevel: 'Form 4',
-            school: 'Demo High School',
-            age: 16,
-            isVerified: true,
-          );
+          _currentUser = _createDemoUser(cleanEmail, isMazvita ? 'student_mazvita' : 'demo_user');
           return _currentUser;
         }
-        // Fall back to MockDataService if Firebase throws permission or network error
         try {
           return await MockDataService.login(cleanEmail, password);
         } catch (_) {
@@ -135,6 +98,63 @@ class AuthService {
     final user = await MockDataService.login(cleanEmail, password);
     _currentUser = user;
     return user;
+  }
+
+  static User _createDemoUser(String email, String fallbackId) {
+    final clean = email.toLowerCase();
+    if (clean.contains('mazvita')) {
+      return User(
+        id: 'student_mazvita',
+        name: 'Mazvita',
+        email: 'mazvita@demo.com',
+        role: 'student',
+        gradeLevel: 'Form 4',
+        school: 'Demo High School',
+        schoolMotto: 'Learn, Lead, Inspire',
+        age: 16,
+        isVerified: true,
+        isAgeVerified: true,
+      );
+    }
+    if (clean.contains('teacher')) {
+      return User(
+        id: 'teacher_1',
+        name: 'Teacher Chigumira',
+        email: 'teacher@demo.com',
+        role: 'teacher',
+        gradeLevel: 'Form 4 Teacher',
+        school: 'Demo High School',
+        schoolMotto: 'Learn, Lead, Inspire',
+        age: 35,
+        isVerified: true,
+        isAgeVerified: true,
+      );
+    }
+    if (clean.contains('admin')) {
+      return User(
+        id: 'admin_1',
+        name: 'Pardon Mahara (Ministry Admin)',
+        email: 'admin@demo.com',
+        role: 'admin',
+        gradeLevel: 'National Directorate',
+        school: 'Ministry of Primary & Secondary Education',
+        schoolMotto: 'Preserving our heritage',
+        age: 42,
+        isVerified: true,
+        isAgeVerified: true,
+      );
+    }
+    return User(
+      id: fallbackId,
+      name: clean.split('@').first,
+      email: clean,
+      role: 'student',
+      gradeLevel: 'Form 4',
+      school: 'Demo High School',
+      age: 16,
+      isVerified: true,
+      isAgeVerified: true,
+    );
   }
 
   static Future<User> signInWithGoogle({

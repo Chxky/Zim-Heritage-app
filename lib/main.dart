@@ -811,34 +811,34 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                      children: [
                                        ActionChip(
                                          avatar: const CircleAvatar(backgroundColor: AppTheme.gold, child: Text('M', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
-                                         label: const Text('Mazvita (Form 4 FRS)', style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                                         label: const Text('Mazvita (Student)', style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
                                          backgroundColor: AppTheme.primaryGreen,
                                          side: const BorderSide(color: AppTheme.gold, width: 1.5),
                                          onPressed: () {
                                            _emailController.text = 'mazvita@demo.com';
-                                           _passwordController.text = '123456';
+                                           _passwordController.text = 'password123';
                                            _login();
                                          },
                                        ),
                                        ActionChip(
                                          avatar: const CircleAvatar(backgroundColor: AppTheme.greenBright, child: Text('T', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
-                                         label: const Text('Tendai (Form 1)', style: TextStyle(color: AppTheme.white, fontSize: 11)),
+                                         label: const Text('Teacher Portal', style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
                                          backgroundColor: AppTheme.surfaceDark,
-                                         side: BorderSide(color: AppTheme.white.withValues(alpha: 0.3)),
+                                         side: BorderSide(color: AppTheme.greenBright.withValues(alpha: 0.5)),
                                          onPressed: () {
-                                           _emailController.text = 'student@demo.com';
-                                           _passwordController.text = '123456';
+                                           _emailController.text = 'teacher@demo.com';
+                                           _passwordController.text = 'password123';
                                            _login();
                                          },
                                        ),
                                        ActionChip(
-                                         avatar: const CircleAvatar(backgroundColor: AppTheme.gold, child: Text('C', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
-                                         label: const Text('Teacher', style: TextStyle(color: AppTheme.white, fontSize: 11)),
+                                         avatar: const CircleAvatar(backgroundColor: AppTheme.gold, child: Text('A', style: TextStyle(fontSize: 10, color: AppTheme.surfaceDark, fontWeight: FontWeight.bold))),
+                                         label: const Text('Ministry Admin', style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
                                          backgroundColor: AppTheme.surfaceDark,
-                                         side: BorderSide(color: AppTheme.white.withValues(alpha: 0.3)),
+                                         side: BorderSide(color: AppTheme.gold.withValues(alpha: 0.5)),
                                          onPressed: () {
-                                           _emailController.text = 'teacher@demo.com';
-                                           _passwordController.text = '123456';
+                                           _emailController.text = 'admin@demo.com';
+                                           _passwordController.text = 'password123';
                                            _login();
                                          },
                                        ),
