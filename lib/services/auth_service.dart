@@ -200,6 +200,10 @@ class AuthService {
     required String gradeLevel,
     required String school,
     required int age,
+    String? dateOfBirth,
+    bool isAgeVerified = true,
+    String? guardianName,
+    String? guardianContact,
     bool hasFacialRecognition = false,
     String curriculum = 'zimsec',
     String? schoolMotto,
@@ -213,6 +217,8 @@ class AuthService {
       final user = User(
         id: uid, name: name, email: email.trim(), role: role,
         gradeLevel: gradeLevel, school: school, age: age,
+        dateOfBirth: dateOfBirth, isAgeVerified: isAgeVerified,
+        guardianName: guardianName, guardianContact: guardianContact,
         isVerified: true, hasFacialRecognition: hasFacialRecognition,
         curriculum: curriculum,
         schoolMotto: schoolMotto,
@@ -228,8 +234,13 @@ class AuthService {
       curriculum: curriculum,
       schoolMotto: schoolMotto,
     );
-    _currentUser = user;
-    return user;
+    _currentUser = user.copyWith(
+      dateOfBirth: dateOfBirth,
+      isAgeVerified: isAgeVerified,
+      guardianName: guardianName,
+      guardianContact: guardianContact,
+    );
+    return _currentUser!;
   }
 
   static Future<void> logout() async {

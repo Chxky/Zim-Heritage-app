@@ -6,6 +6,10 @@ class User {
   final String gradeLevel;
   final String school;
   final int age;
+  final String? dateOfBirth;
+  final bool isAgeVerified;
+  final String? guardianName;
+  final String? guardianContact;
   final bool isVerified;
   final bool hasFacialRecognition;
   final String authProvider;
@@ -20,6 +24,10 @@ class User {
     required this.gradeLevel,
     required this.school,
     this.age = 0,
+    this.dateOfBirth,
+    this.isAgeVerified = false,
+    this.guardianName,
+    this.guardianContact,
     this.isVerified = false,
     this.hasFacialRecognition = false,
     this.authProvider = 'email',
@@ -42,23 +50,16 @@ class User {
       gradeLevel: map['gradeLevel'] as String? ?? '',
       school: map['school'] as String? ?? '',
       age: (map['age'] as num?)?.toInt() ?? 0,
+      dateOfBirth: map['dateOfBirth'] as String?,
+      isAgeVerified: map['isAgeVerified'] as bool? ?? (map['age'] != null && (map['age'] as num) > 0),
+      guardianName: map['guardianName'] as String?,
+      guardianContact: map['guardianContact'] as String?,
       isVerified: map['isVerified'] as bool? ?? false,
       hasFacialRecognition: map['hasFacialRecognition'] as bool? ?? false,
       authProvider: map['authProvider'] as String? ?? 'email',
       schoolMotto: map['schoolMotto'] as String?,
       curriculum: map['curriculum'] as String? ?? 'zimsec',
     );
-  }
-
-  static DateTime? _parseDate(dynamic val) {
-    if (val == null) return null;
-    if (val is DateTime) return val;
-    if (val is String) return DateTime.tryParse(val);
-    try {
-      return (val as dynamic).toDate();
-    } catch (_) {
-      return null;
-    }
   }
 
   Map<String, dynamic> toMap() {
@@ -70,6 +71,10 @@ class User {
       'gradeLevel': gradeLevel,
       'school': school,
       'age': age,
+      'dateOfBirth': dateOfBirth,
+      'isAgeVerified': isAgeVerified,
+      'guardianName': guardianName,
+      'guardianContact': guardianContact,
       'isVerified': isVerified,
       'hasFacialRecognition': hasFacialRecognition,
       'authProvider': authProvider,
@@ -86,6 +91,10 @@ class User {
     String? gradeLevel,
     String? school,
     int? age,
+    String? dateOfBirth,
+    bool? isAgeVerified,
+    String? guardianName,
+    String? guardianContact,
     bool? isVerified,
     bool? hasFacialRecognition,
     String? authProvider,
@@ -100,6 +109,10 @@ class User {
       gradeLevel: gradeLevel ?? this.gradeLevel,
       school: school ?? this.school,
       age: age ?? this.age,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      isAgeVerified: isAgeVerified ?? this.isAgeVerified,
+      guardianName: guardianName ?? this.guardianName,
+      guardianContact: guardianContact ?? this.guardianContact,
       isVerified: isVerified ?? this.isVerified,
       hasFacialRecognition: hasFacialRecognition ?? this.hasFacialRecognition,
       authProvider: authProvider ?? this.authProvider,

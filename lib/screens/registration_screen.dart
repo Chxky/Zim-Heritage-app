@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
-import '../theme/app_theme.dart';
 import '../services/auth_service.dart';
+import '../theme/app_theme.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -20,6 +21,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _passwordController = TextEditingController();
   final _schoolController = TextEditingController();
   final _districtController = TextEditingController();
+  
+  // Age & Guardian Verification Controllers
+  final _guardianNameController = TextEditingController();
+  final _guardianContactController = TextEditingController();
+  
+  DateTime? _selectedDob;
+  int _calculatedAge = 0;
+  bool _hasParentalConsent = false;
   bool _isLoading = false;
   
   String _selectedRole = 'Student';
@@ -40,7 +49,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     'Tswana', 'Venda', 'Xhosa'
   ];
 
-
   @override
   void dispose() {
     _nameController.dispose();
@@ -48,11 +56,56 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _passwordController.dispose();
     _schoolController.dispose();
     _districtController.dispose();
+    _guardianNameController.dispose();
+    _guardianContactController.dispose();
     super.dispose();
+  }
+
+  void _calculateAge(DateTime dob) {
+    final today = DateTime.now();
+    int age = today.year - dob.year;
+    if (today.month < dob.month || (today.month == dob.month && today.day < dob.day)) {
+      age--;
+    }
+    setState(() {
+      _selectedDob = dob;
+      _calculatedAge = age;
+    });
+  }
+
+  Future<void> _pickDateOfBirth() async {
+    final now = DateTime.now();
+    final initialDate = _selectedDob ?? DateTime(now.year - 14, now.month, now.day);
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(1930),
+      lastDate: now,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: AppTheme.gold,
+              onPrimary: AppTheme.surfaceDark,
+              surface: AppTheme.surfaceMid,
+              onSurface: AppTheme.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      _calculateAge(picked);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isTeacherOrParent = _selectedRole == 'Teacher' || _selectedRole == 'Parent';
+    final isMinorStudent = _selectedRole == 'Student' && _calculatedAge > 0 && _calculatedAge < 18;
+    final isAgeInvalidForRole = isTeacherOrParent && _selectedDob != null && _calculatedAge < 18;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -127,6 +180,138 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 _buildDropdown('Role', _roles, _selectedRole, (v) => setState(() => _selectedRole = v!)),
                                 
                                 const SizedBox(height: 24),
+                                _buildSectionTitle('Age & Identity Verification', Icons.verified_user),
+                                const SizedBox(height: 8),
+                                const Text('Date of birth is required to verify identity under National Cyber & Data Protection regulations.', 
+                                  style: TextStyle(color: AppTheme.white50, fontSize: 10)),
+                                const SizedBox(height: 12),
+                                
+                                // Date of Birth Picker Field
+                                InkWell(
+                                  onTap: _pickDateOfBirth,
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.surfaceDark.withValues(alpha: 0.5),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: _selectedDob == null
+                                            ? AppTheme.white20
+                                            : (isAgeInvalidForRole ? Colors.red : AppTheme.greenBright),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.cake, color: AppTheme.gold, size: 20),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            _selectedDob == null
+                                                ? 'Select Date of Birth (Tap to set)'
+                                                : '${DateFormat('dd MMMM yyyy').format(_selectedDob!)}  (Age: $_calculatedAge yrs)',
+                                            style: TextStyle(
+                                              color: _selectedDob == null ? AppTheme.white50 : AppTheme.white,
+                                              fontSize: 13,
+                                              fontWeight: _selectedDob != null ? FontWeight.bold : FontWeight.normal,
+                                            ),
+                                          ),
+                                        ),
+                                        const Icon(Icons.calendar_today, color: AppTheme.white60, size: 18),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                
+                                // Age Verification Status Badge
+                                if (_selectedDob != null) ...[
+                                  const SizedBox(height: 10),
+                                  if (isAgeInvalidForRole)
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.withValues(alpha: 0.15),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.redAccent),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.warning, color: Colors.redAccent, size: 18),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text('$_selectedRole accounts require age 18+. Currently calculated age: $_calculatedAge years.',
+                                              style: const TextStyle(color: Colors.redAccent, fontSize: 11, fontWeight: FontWeight.bold)),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  else
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.greenBright.withValues(alpha: 0.15),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: AppTheme.greenBright.withValues(alpha: 0.4)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.check_circle, color: AppTheme.greenBright, size: 18),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text('Age Verified: $_calculatedAge Years Old (${isMinorStudent ? "Student Minor" : "Adult Verified"})',
+                                              style: const TextStyle(color: AppTheme.greenBright, fontSize: 11, fontWeight: FontWeight.bold)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+
+                                // Parent/Guardian Consent Verification for Minor Students
+                                if (isMinorStudent) ...[
+                                  const SizedBox(height: 16),
+                                  Container(
+                                    padding: const EdgeInsets.all(14),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.gold.withValues(alpha: 0.1),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(color: AppTheme.gold.withValues(alpha: 0.3)),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Row(
+                                          children: [
+                                            Icon(Icons.family_restroom, color: AppTheme.gold, size: 18),
+                                            SizedBox(width: 8),
+                                            Text('Parent / Guardian Verification (Under 18)',
+                                              style: TextStyle(color: AppTheme.gold, fontSize: 12, fontWeight: FontWeight.bold)),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        _buildTextField('Parent / Guardian Full Name', Icons.person_outline, _guardianNameController),
+                                        const SizedBox(height: 10),
+                                        _buildTextField('Parent / Guardian Phone / National ID', Icons.phone, _guardianContactController),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: _hasParentalConsent,
+                                              activeColor: AppTheme.gold,
+                                              checkColor: AppTheme.surfaceDark,
+                                              onChanged: (v) => setState(() => _hasParentalConsent = v ?? false),
+                                            ),
+                                            const Expanded(
+                                              child: Text('Parent / Guardian has authorized registration.',
+                                                style: TextStyle(color: AppTheme.white80, fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+
+                                const SizedBox(height: 24),
                                 _buildSectionTitle('Academic Profile', Icons.school),
                                 const SizedBox(height: 16),
                                 _buildDropdown('Curriculum Pathway', _curricula, _selectedCurriculum, (v) => setState(() => _selectedCurriculum = v!)),
@@ -156,6 +341,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                     ),
                                     onPressed: () {
+                                      if (_selectedDob == null) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Please select Date of Birth to verify age.'), backgroundColor: Colors.orange)
+                                        );
+                                        return;
+                                      }
+                                      if (isAgeInvalidForRole) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('$_selectedRole accounts require age 18+.'), backgroundColor: Colors.red)
+                                        );
+                                        return;
+                                      }
+                                      if (isMinorStudent && !_hasParentalConsent) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Parent / Guardian consent checkbox is required for learners under 18.'), backgroundColor: Colors.orange)
+                                        );
+                                        return;
+                                      }
+
                                       if (_formKey.currentState!.validate()) {
                                         setState(() => _isLoading = true);
                                         AuthService.register(
@@ -163,9 +367,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           email: _emailController.text.trim(),
                                           password: _passwordController.text,
                                           role: _selectedRole.toLowerCase(),
-                                          gradeLevel: 'N/A', // Set later in app
+                                          gradeLevel: 'Form 1', // Default starter level
                                           school: _schoolController.text.trim(),
-                                          age: 0,
+                                          age: _calculatedAge,
+                                          dateOfBirth: DateFormat('yyyy-MM-dd').format(_selectedDob!),
+                                          isAgeVerified: true,
+                                          guardianName: isMinorStudent ? _guardianNameController.text.trim() : null,
+                                          guardianContact: isMinorStudent ? _guardianContactController.text.trim() : null,
                                           curriculum: _selectedCurriculum,
                                         ).then((user) {
                                           if (!mounted) return;
@@ -179,7 +387,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         });
                                       }
                                     },
-                                    child: _isLoading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: AppTheme.surfaceDark, strokeWidth: 2)) : const Text('REGISTER & GEO-TAG ACCOUNT', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                                    child: _isLoading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: AppTheme.surfaceDark, strokeWidth: 2)) : const Text('REGISTER & VERIFY AGE', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -234,7 +442,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           children: [
                                             Text('Official Government Portal',
                                               style: TextStyle(color: AppTheme.white, fontSize: 11, fontWeight: FontWeight.bold)),
-                                            Text('Secured under the Zimbabwe Cyber & Data Protection Act',
+                                            Text('Age & identity verified under Zimbabwe Cyber & Data Protection Act',
                                               style: TextStyle(color: AppTheme.greenBright, fontSize: 9)),
                                           ],
                                         ),
