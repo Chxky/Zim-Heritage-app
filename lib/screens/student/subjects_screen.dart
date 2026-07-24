@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/book_data.dart';
+import '../../data/study_resources.dart';
 import '../../data/zimbabwe_curriculum.dart';
 import '../../models/book.dart';
 import '../../models/homework.dart';
+import '../../models/study_resource.dart';
 import '../../models/subject.dart';
 import '../../models/user.dart';
 import '../../services/homework_repository.dart';
@@ -177,6 +180,8 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             ],
             const SizedBox(height: 24),
             _buildBooksSection(color),
+            const SizedBox(height: 24),
+            _buildStudyResourcesSection(color),
             if (_homeworks.isNotEmpty || _loading) ...[
               const SizedBox(height: 24),
               Row(
@@ -207,6 +212,124 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   }
 
   User get user => widget.user;
+
+  Widget _buildStudyResourcesSection(Color color) {
+    final resources = getResourcesForSubject(widget.subject.id, user.gradeLevel);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.language, color: AppTheme.gold, size: 20),
+            const SizedBox(width: 8),
+            const Text('Internet & Open Study Resources',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.white)),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text('${resources.length}',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        const Text('Sourced Open Educational Resources (OER), video labs, simulations & study portals',
+          style: TextStyle(fontSize: 12, color: AppTheme.white50)),
+        const SizedBox(height: 12),
+        ...resources.map((res) => _buildResourceCard(res, color)),
+      ],
+    );
+  }
+
+  Widget _buildResourceCard(StudyResource res, Color subjectColor) {
+    IconData categoryIcon;
+    Color categoryColor;
+    switch (res.category) {
+      case 'video_lesson':
+        categoryIcon = Icons.play_circle_fill;
+        categoryColor = Colors.redAccent;
+        break;
+      case 'interactive_simulation':
+        categoryIcon = Icons.science;
+        categoryColor = Colors.purpleAccent;
+        break;
+      case 'past_papers':
+        categoryIcon = Icons.description;
+        categoryColor = AppTheme.gold;
+        break;
+      case 'heritage_archive':
+        categoryIcon = Icons.account_balance;
+        categoryColor = AppTheme.greenBright;
+        break;
+      default:
+        categoryIcon = Icons.language;
+        categoryColor = Colors.blueAccent;
+    }
+
+    return GlassCard(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(14),
+      borderColor: subjectColor.withValues(alpha: 0.15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: categoryColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(categoryIcon, color: categoryColor, size: 20),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(res.title,
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                    Text(res.provider,
+                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: categoryColor)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(res.description,
+            style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                final uri = Uri.parse(res.url);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                } else {
+                  await launchUrl(uri, mode: LaunchMode.inAppWebView);
+                }
+              },
+              icon: const Icon(Icons.open_in_new, size: 16),
+              label: const Text('Open Internet Study Source', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: subjectColor.withValues(alpha: 0.25),
+                foregroundColor: AppTheme.white,
+                side: BorderSide(color: subjectColor.withValues(alpha: 0.5)),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildBooksSection(Color color) {
     final books = getBooksForSubject(widget.subject.id, user.gradeLevel);

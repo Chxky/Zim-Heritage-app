@@ -1,53 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../data/book_data.dart';
+import '../../data/study_resources.dart';
+import '../../models/book.dart';
+import '../../models/study_resource.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 
-class DigitalLibraryScreen extends StatelessWidget {
+class DigitalLibraryScreen extends StatefulWidget {
   const DigitalLibraryScreen({super.key});
 
-  final List<Map<String, String>> _textbooks = const [
-    {
-      'title': 'Heritage Studies',
-      'publisher': 'Secondary Book Press',
-      'subject': 'Heritage Studies (Core)',
-      'icon': '🏛️',
-      'color': '0xFFD4AF37'
-    },
-    {
-      'title': 'New General Mathematics',
-      'publisher': 'College Press',
-      'subject': 'Mathematics (Core)',
-      'icon': '📐',
-      'color': '0xFF3A86FF'
-    },
-    {
-      'title': 'Step Ahead: English Language',
-      'publisher': 'College Press',
-      'subject': 'English Language (Core)',
-      'icon': '📚',
-      'color': '0xFFFF006E'
-    },
-    {
-      'title': 'Focus on Combined Science',
-      'publisher': 'College Press',
-      'subject': 'Combined Science (Core)',
-      'icon': '🔬',
-      'color': '0xFF06D6A0'
-    },
-    {
-      'title': 'ChiShona & Ndebele Literature',
-      'publisher': 'Secondary Book Press',
-      'subject': 'Indigenous Language (Core)',
-      'icon': '🗣️',
-      'color': '0xFFFFBE0B'
-    },
-  ];
+  @override
+  State<DigitalLibraryScreen> createState() => _DigitalLibraryScreenState();
+}
+
+class _DigitalLibraryScreenState extends State<DigitalLibraryScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Digital Library (HBC)'),
+        title: const Text('Digital Library & Open Study Hub'),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -57,100 +44,216 @@ class DigitalLibraryScreen extends StatelessWidget {
             ),
           ),
         ),
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: AppTheme.gold,
+          labelColor: AppTheme.gold,
+          unselectedLabelColor: AppTheme.white60,
+          tabs: const [
+            Tab(icon: Icon(Icons.import_contacts), text: 'MoPSE & Set Books'),
+            Tab(icon: Icon(Icons.language), text: 'Internet & OER Portals'),
+          ],
+        ),
       ),
       backgroundColor: AppTheme.surfaceDark,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: TabBarView(
+          controller: _tabController,
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.primaryGreen, AppTheme.surfaceMid],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Zimbabwe Heritage-Based Curriculum', 
-                    style: TextStyle(color: AppTheme.gold, fontSize: 14, fontWeight: FontWeight.bold, letterSpacing: 1)),
-                  const SizedBox(height: 8),
-                  const Text('Official Course Textbooks', 
-                    style: TextStyle(color: AppTheme.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  Text('Access MoPSE approved textbooks for your registered curriculum.', 
-                    style: TextStyle(color: AppTheme.white.withValues(alpha: 0.8), fontSize: 13)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: _textbooks.length,
-                itemBuilder: (context, index) {
-                  final book = _textbooks[index];
-                  return _buildBookCard(book);
-                },
-              ),
-            ),
+            _buildTextbooksTab(),
+            _buildStudyResourcesTab(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBookCard(Map<String, String> book) {
-    final color = Color(int.parse(book['color']!));
+  Widget _buildTextbooksTab() {
+    final books = allBooks;
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: books.length,
+      itemBuilder: (context, index) {
+        final book = books[index];
+        return _buildBookCard(book);
+      },
+    );
+  }
+
+  Widget _buildStudyResourcesTab() {
+    final resources = allStudyResources;
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: resources.length,
+      itemBuilder: (context, index) {
+        final res = resources[index];
+        return _buildResourceCard(res);
+      },
+    );
+  }
+
+  Widget _buildBookCard(Book book) {
+    IconData typeIcon;
+    Color typeColor;
+    switch (book.type) {
+      case 'textbook':
+        typeIcon = Icons.import_contacts;
+        typeColor = AppTheme.primaryGreen;
+        break;
+      case 'set_book':
+        typeIcon = Icons.auto_stories;
+        typeColor = AppTheme.gold;
+        break;
+      case 'reference':
+        typeIcon = Icons.find_in_page;
+        typeColor = Colors.blueAccent;
+        break;
+      case 'activity_book':
+        typeIcon = Icons.handyman;
+        typeColor = Colors.orangeAccent;
+        break;
+      case 'storybook':
+        typeIcon = Icons.child_care;
+        typeColor = Colors.pinkAccent;
+        break;
+      default:
+        typeIcon = Icons.book;
+        typeColor = AppTheme.white60;
+    }
+
     return GlassCard(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 60,
-              width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      borderColor: typeColor.withValues(alpha: 0.2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: typeColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(typeIcon, color: typeColor, size: 24),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(book.title,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                    Text('Author: ${book.author}',
+                      style: const TextStyle(fontSize: 12, color: AppTheme.white60)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(book.description,
+            style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 6,
+            runSpacing: 4,
+            children: book.gradeLevels.map((g) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
+                color: AppTheme.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Center(
-                child: Text(book['icon']!, style: const TextStyle(fontSize: 32)),
+              child: Text(g, style: const TextStyle(fontSize: 10, color: AppTheme.gold, fontWeight: FontWeight.bold)),
+            )).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResourceCard(StudyResource res) {
+    IconData categoryIcon;
+    Color categoryColor;
+    switch (res.category) {
+      case 'video_lesson':
+        categoryIcon = Icons.play_circle_fill;
+        categoryColor = Colors.redAccent;
+        break;
+      case 'interactive_simulation':
+        categoryIcon = Icons.science;
+        categoryColor = Colors.purpleAccent;
+        break;
+      case 'past_papers':
+        categoryIcon = Icons.description;
+        categoryColor = AppTheme.gold;
+        break;
+      case 'heritage_archive':
+        categoryIcon = Icons.account_balance;
+        categoryColor = AppTheme.greenBright;
+        break;
+      default:
+        categoryIcon = Icons.language;
+        categoryColor = Colors.blueAccent;
+    }
+
+    return GlassCard(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      borderColor: categoryColor.withValues(alpha: 0.2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: categoryColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(categoryIcon, color: categoryColor, size: 24),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(res.title,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.white)),
+                    Text(res.provider,
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: categoryColor)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(res.description,
+            style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                final uri = Uri.parse(res.url);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                } else {
+                  await launchUrl(uri, mode: LaunchMode.inAppWebView);
+                }
+              },
+              icon: const Icon(Icons.open_in_new, size: 16),
+              label: const Text('Open Resource', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: categoryColor.withValues(alpha: 0.25),
+                foregroundColor: AppTheme.white,
+                side: BorderSide(color: categoryColor.withValues(alpha: 0.5)),
               ),
             ),
-            const Spacer(),
-            Text(book['subject']!, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text(book['title']!, style: const TextStyle(color: AppTheme.white, fontSize: 14, fontWeight: FontWeight.bold), maxLines: 2, overflow: TextOverflow.ellipsis),
-            const SizedBox(height: 4),
-            Text(book['publisher']!, style: const TextStyle(color: AppTheme.white50, fontSize: 11)),
-            const SizedBox(height: 8),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text('READ NOW', textAlign: TextAlign.center, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
