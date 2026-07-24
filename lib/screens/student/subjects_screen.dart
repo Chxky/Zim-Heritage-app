@@ -10,10 +10,12 @@ import '../../models/study_resource.dart';
 import '../../models/subject.dart';
 import '../../models/user.dart';
 import '../../services/homework_repository.dart';
+import '../../services/offline_book_service.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/subject_themes.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/subject_scaffold.dart';
+import 'offline_book_reader_screen.dart';
 import 'past_exams_screen.dart';
 import 'topic_detail_screen.dart';
 
@@ -436,15 +438,38 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                   maxLines: 2, overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 11, color: AppTheme.white50, height: 1.4)),
                 const SizedBox(height: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: typeColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: typeColor.withValues(alpha: 0.2)),
-                  ),
-                  child: Text(_typeLabel(book.type),
-                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: typeColor)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: typeColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: typeColor.withValues(alpha: 0.2)),
+                      ),
+                      child: Text(_typeLabel(book.type),
+                        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: typeColor)),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        await OfflineBookService.downloadBookForOffline(book);
+                        if (!context.mounted) return;
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => OfflineBookReaderScreen(book: book),
+                        ));
+                      },
+                      icon: const Icon(Icons.download_for_offline, size: 14),
+                      label: const Text('READ OFFLINE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: typeColor.withValues(alpha: 0.2),
+                        foregroundColor: AppTheme.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

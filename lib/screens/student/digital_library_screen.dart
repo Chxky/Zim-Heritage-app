@@ -5,8 +5,10 @@ import '../../data/book_data.dart';
 import '../../data/study_resources.dart';
 import '../../models/book.dart';
 import '../../models/study_resource.dart';
+import '../../services/offline_book_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
+import 'offline_book_reader_screen.dart';
 
 class DigitalLibraryScreen extends StatefulWidget {
   const DigitalLibraryScreen({super.key});
@@ -156,17 +158,39 @@ class _DigitalLibraryScreenState extends State<DigitalLibraryScreen> with Single
           Text(book.description,
             style: const TextStyle(fontSize: 12, color: AppTheme.white70)),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 6,
-            runSpacing: 4,
-            children: book.gradeLevels.map((g) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: AppTheme.white.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: book.gradeLevels.map((g) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppTheme.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(g, style: const TextStyle(fontSize: 10, color: AppTheme.gold, fontWeight: FontWeight.bold)),
+                )).toList(),
               ),
-              child: Text(g, style: const TextStyle(fontSize: 10, color: AppTheme.gold, fontWeight: FontWeight.bold)),
-            )).toList(),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  await OfflineBookService.downloadBookForOffline(book);
+                  if (!context.mounted) return;
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => OfflineBookReaderScreen(book: book),
+                  ));
+                },
+                icon: const Icon(Icons.download_for_offline, size: 16),
+                label: const Text('READ OFFLINE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.gold,
+                  foregroundColor: AppTheme.surfaceDark,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                ),
+              ),
+            ],
           ),
         ],
       ),
