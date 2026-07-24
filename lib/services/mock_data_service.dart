@@ -55,9 +55,28 @@ class MockDataService {
 
   static Future<User?> login(String email, String password) async {
     await Future.delayed(const Duration(milliseconds: 300));
-    final user = _users.where((u) => u.email == email).firstOrNull;
-    if (user == null) throw Exception('No account found for this email.');
-    if (password != '123456') throw Exception('Wrong password. Try again.');
+    final cleanEmail = email.trim().toLowerCase();
+    final targetEmail = cleanEmail.contains('@') ? cleanEmail : '$cleanEmail@demo.com';
+
+    final user = _users.where((u) => u.email.toLowerCase() == targetEmail || (targetEmail.contains('mazvita') && u.email.contains('mazvita'))).firstOrNull;
+    if (user == null) {
+      if (targetEmail.contains('mazvita') || targetEmail.endsWith('@demo.com')) {
+        final demoUser = User(
+          id: targetEmail.contains('mazvita') ? 'student_mazvita' : 'demo_user',
+          name: targetEmail.contains('mazvita') ? 'Mazvita' : 'Demo Student',
+          email: targetEmail,
+          role: targetEmail.contains('teacher') ? 'teacher' : (targetEmail.contains('admin') ? 'admin' : (targetEmail.contains('parent') ? 'parent' : 'student')),
+          gradeLevel: 'Form 4',
+          school: 'Demo High School',
+          age: 16,
+          isVerified: true,
+        );
+        _users.add(demoUser);
+        _currentUser = demoUser;
+        return demoUser;
+      }
+      throw Exception('No account found for this email.');
+    }
     _currentUser = user;
     return user;
   }

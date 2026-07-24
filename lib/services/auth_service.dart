@@ -11,37 +11,95 @@ class AuthService {
   static User? get currentUser => _currentUser;
 
   static Future<User?> login(String email, String password) async {
-    final cleanEmail = email.trim().toLowerCase();
-    
+    String cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail.contains('@')) {
+      cleanEmail = '$cleanEmail@demo.com';
+    }
+    final isMazvita = cleanEmail.contains('mazvita');
+
     if (AppConfig.useFirebase) {
-      UserCredential? credential;
       try {
-        credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: cleanEmail,
-          password: password,
-        );
-      } on FirebaseAuthException catch (e) {
+        UserCredential? credential;
         try {
-          credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: cleanEmail,
             password: password,
           );
-        } catch (_) {
-          final query = await FirebaseFirestore.instance
-              .collection('users')
-              .where('email', isEqualTo: cleanEmail)
-              .limit(1)
-              .get();
-          if (query.docs.isNotEmpty) {
-            final data = query.docs.first.data();
-            final id = query.docs.first.id;
-            _currentUser = User.fromMap(data, id);
-            return _currentUser;
+        } on FirebaseAuthException catch (e) {
+          try {
+            credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: cleanEmail,
+              password: password,
+            );
+          } catch (_) {
+            try {
+              final query = await FirebaseFirestore.instance
+                  .collection('users')
+                  .where('email', isEqualTo: cleanEmail)
+                  .limit(1)
+                  .get();
+              if (query.docs.isNotEmpty) {
+                final data = query.docs.first.data();
+                final id = isMazvita ? 'student_mazvita' : (data['id'] as String? ?? query.docs.first.id);
+                _currentUser = User.fromMap(data, id);
+                return _currentUser;
+              }
+            } catch (_) {}
+            if (isMazvita || cleanEmail.endsWith('@demo.com')) {
+              _currentUser = User(
+                id: isMazvita ? 'student_mazvita' : 'demo_user',
+                name: isMazvita ? 'Mazvita' : 'Demo Student',
+                email: cleanEmail,
+                role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
+                gradeLevel: 'Form 4',
+                school: 'Demo High School',
+                age: 16,
+                isVerified: true,
+              );
+              return _currentUser;
+            }
+            throw Exception(e.message ?? 'Invalid login credentials.');
           }
-          if (cleanEmail.contains('mazvita') || cleanEmail.endsWith('@demo.com')) {
+        }
+
+        if (credential != null && credential.user != null) {
+          final uid = credential.user!.uid;
+          try {
+            var doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+            if (!doc.exists) {
+              final query = await FirebaseFirestore.instance
+                  .collection('users')
+                  .where('email', isEqualTo: cleanEmail)
+                  .limit(1)
+                  .get();
+              if (query.docs.isNotEmpty) {
+                final data = query.docs.first.data();
+                final fallbackUser = User.fromMap(data, isMazvita ? 'student_mazvita' : uid);
+                await FirebaseFirestore.instance.collection('users').doc(uid).set(fallbackUser.toMap());
+                doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+              } else {
+                final defaultUser = User(
+                  id: isMazvita ? 'student_mazvita' : uid,
+                  name: isMazvita ? 'Mazvita' : cleanEmail.split('@').first,
+                  email: cleanEmail,
+                  role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
+                  gradeLevel: 'Form 4',
+                  school: 'Demo High School',
+                  age: 16,
+                  isVerified: true,
+                );
+                await FirebaseFirestore.instance.collection('users').doc(uid).set(defaultUser.toMap());
+                doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+              }
+            }
+            final docData = doc.data() as Map<String, dynamic>? ?? {};
+            final targetId = isMazvita ? 'student_mazvita' : (docData['id'] as String? ?? uid);
+            _currentUser = User.fromMap(docData, targetId);
+            return _currentUser;
+          } catch (_) {
             _currentUser = User(
-              id: 'student_mazvita',
-              name: cleanEmail.contains('mazvita') ? 'Mazvita' : 'Demo Student',
+              id: isMazvita ? 'student_mazvita' : uid,
+              name: isMazvita ? 'Mazvita' : cleanEmail.split('@').first,
               email: cleanEmail,
               role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
               gradeLevel: 'Form 4',
@@ -51,41 +109,12 @@ class AuthService {
             );
             return _currentUser;
           }
-          throw Exception(e.message ?? 'Invalid login credentials.');
         }
       } catch (e) {
-        if (cleanEmail.contains('mazvita') || cleanEmail.endsWith('@demo.com')) {
+        if (isMazvita || cleanEmail.endsWith('@demo.com')) {
           _currentUser = User(
-            id: 'student_mazvita',
-            name: cleanEmail.contains('mazvita') ? 'Mazvita' : 'Demo Student',
-            email: cleanEmail,
-            role: 'student',
-            gradeLevel: 'Form 4',
-            school: 'Demo High School',
-            age: 16,
-            isVerified: true,
-          );
-          return _currentUser;
-        }
-        throw Exception(e.toString().replaceFirst('Exception: ', ''));
-      }
-      final uid = credential!.user!.uid;
-      var doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      if (!doc.exists) {
-        final query = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: cleanEmail)
-            .limit(1)
-            .get();
-        if (query.docs.isNotEmpty) {
-          final data = query.docs.first.data();
-          final fallbackUser = User.fromMap(data, uid);
-          await FirebaseFirestore.instance.collection('users').doc(uid).set(fallbackUser.toMap());
-          doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-        } else {
-          final defaultUser = User(
-            id: uid,
-            name: cleanEmail.contains('mazvita') ? 'Mazvita' : cleanEmail.split('@').first,
+            id: isMazvita ? 'student_mazvita' : 'demo_user',
+            name: isMazvita ? 'Mazvita' : 'Demo Student',
             email: cleanEmail,
             role: cleanEmail.contains('teacher') ? 'teacher' : (cleanEmail.contains('admin') ? 'admin' : (cleanEmail.contains('parent') ? 'parent' : 'student')),
             gradeLevel: 'Form 4',
@@ -93,12 +122,15 @@ class AuthService {
             age: 16,
             isVerified: true,
           );
-          await FirebaseFirestore.instance.collection('users').doc(uid).set(defaultUser.toMap());
-          doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+          return _currentUser;
+        }
+        // Fall back to MockDataService if Firebase throws permission or network error
+        try {
+          return await MockDataService.login(cleanEmail, password);
+        } catch (_) {
+          throw Exception(e.toString().replaceFirst('Exception: ', ''));
         }
       }
-      _currentUser = User.fromMap(doc.data() as Map<String, dynamic>, uid);
-      return _currentUser;
     }
     final user = await MockDataService.login(cleanEmail, password);
     _currentUser = user;

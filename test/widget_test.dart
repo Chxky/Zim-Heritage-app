@@ -145,5 +145,33 @@ void main() {
       expect(updated.role, 'student');
       expect(updated.id, 'u1');
     });
+
+    test('fromMap preserves student_mazvita id for Mazvita user', () {
+      final map = {
+        'name': 'Mazvita',
+        'email': 'mazvita@demo.com',
+        'role': 'student',
+        'gradeLevel': 'Form 4',
+        'school': 'Demo High School',
+      };
+      final user = User.fromMap(map, 'random_uid_123');
+      expect(user.id, 'student_mazvita');
+      expect(user.name, 'Mazvita');
+      expect(user.email, 'mazvita@demo.com');
+    });
+
+    test('toMap includes id field', () {
+      final user = User(
+        id: 'student_mazvita',
+        name: 'Mazvita',
+        email: 'mazvita@demo.com',
+        role: 'student',
+        gradeLevel: 'Form 4',
+        school: 'Demo High School',
+      );
+      final map = user.toMap();
+      expect(map['id'], 'student_mazvita');
+      expect(map['email'], 'mazvita@demo.com');
+    });
   });
 }

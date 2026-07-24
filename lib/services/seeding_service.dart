@@ -23,7 +23,15 @@ class SeedingService {
     try {
       final mazvita = User(id: 'student_mazvita', name: 'Mazvita', email: 'mazvita@demo.com', role: 'student', gradeLevel: 'Form 4', school: 'Demo High School', age: 16, isVerified: true);
       await FirebaseFirestore.instance.collection('users').doc(mazvita.id).set(mazvita.toMap());
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: mazvita.email, password: '123456');
+      try {
+        final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: mazvita.email, password: '123456');
+        await FirebaseFirestore.instance.collection('users').doc(cred.user!.uid).set(mazvita.toMap());
+      } catch (_) {
+        try {
+          final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(email: mazvita.email, password: '123456');
+          await FirebaseFirestore.instance.collection('users').doc(cred.user!.uid).set(mazvita.toMap());
+        } catch (_) {}
+      }
     } catch (_) {}
 
     try {

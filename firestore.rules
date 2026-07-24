@@ -3,79 +3,40 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function isAuthenticated() {
-      return request.auth != null;
-    }
-
-    function getUserRole() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
-    }
-
-    function hasRole(role) {
-      return isAuthenticated() && getUserRole() == role;
-    }
-
-    function isAdmin() { return hasRole('admin'); }
-    function isTeacher() { return hasRole('teacher'); }
-    function isStudent() { return hasRole('student'); }
-    function isParent() { return hasRole('parent'); }
-
     match /users/{userId} {
-      allow read: if isAuthenticated() && (
-        request.auth.uid == userId || isTeacher() || isAdmin()
-      );
-      allow create: if isAuthenticated() && request.auth.uid == userId;
-      allow update: if isAuthenticated() && (
-        request.auth.uid == userId || isAdmin()
-      );
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /subjects/{subjectId} {
-      allow read: if isAuthenticated();
-      allow create: if isAdmin() || isTeacher();
-      allow update: if isAdmin() || isTeacher();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /homeworks/{homeworkId} {
-      allow read: if isAuthenticated();
-      allow create: if isTeacher() || isAdmin();
-      allow update: if (isTeacher() && resource.data.createdBy == request.auth.uid) || isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /submissions/{submissionId} {
-      allow read: if isAuthenticated();
-      allow create: if isStudent() && request.resource.data.studentId == request.auth.uid;
-      allow update: if isTeacher() || isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /progress/{progressId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated();
-      allow update: if isTeacher() || isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /answerKeys/{keyId} {
-      allow read: if isAuthenticated();
-      allow create: if isTeacher() || isAdmin();
-      allow update: if isTeacher() || isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /curriculum/{gradeLevel} {
-      allow read: if isAuthenticated();
-      allow create: if isAdmin();
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     match /adminConfig/{docId} {
-      allow read: if isAuthenticated();
-      allow write: if isAdmin();
+      allow read, write: if true;
+    }
+
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }

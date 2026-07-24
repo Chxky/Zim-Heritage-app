@@ -85,9 +85,12 @@ Always respond in clear, structured text. Use **bold** for key terms, numbered l
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         return data['response'] as String? ?? '';
+      } else {
+        print('Cloud Function HTTP error ${response.statusCode}: ${response.body}');
+        return '';
       }
-      return '';
-    } catch (_) {
+    } catch (e) {
+      print('Cloud Function call failed: $e');
       return '';
     }
   }

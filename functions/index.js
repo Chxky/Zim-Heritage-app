@@ -45,6 +45,7 @@ Be fair, encouraging, and precise. Award marks based on accuracy and completenes
 
 exports.geminiProxy = onRequest(
   {
+    invoker: 'public',
     secrets: [geminiApiKey],
     cors: true,
     maxInstances: 10,

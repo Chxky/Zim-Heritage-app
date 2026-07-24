@@ -29,8 +29,13 @@ class User {
 
 
   factory User.fromMap(Map<String, dynamic> map, String id) {
+    final mapId = map['id'] as String?;
+    final email = (map['email'] as String? ?? '').toLowerCase();
+    final effectiveId = (mapId != null && mapId.isNotEmpty)
+        ? mapId
+        : ((email.contains('mazvita') || id.contains('mazvita')) ? 'student_mazvita' : id);
     return User(
-      id: id,
+      id: effectiveId,
       name: map['name'] as String? ?? '',
       email: map['email'] as String? ?? '',
       role: map['role'] as String? ?? 'student',
@@ -58,6 +63,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'email': email,
       'role': role,

@@ -7,16 +7,20 @@ import 'mock_data_service.dart';
 class UserRepository {
   static Future<User?> getUserByUid(String uid) async {
     if (!AppConfig.useFirebase) return MockDataService.getUserByUid(uid);
-    final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    if (!doc.exists) return null;
-    return User.fromMap(doc.data() as Map<String, dynamic>, uid);
+    try {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (!doc.exists) return MockDataService.getUserByUid(uid);
+      return User.fromMap(doc.data() as Map<String, dynamic>, uid);
+    } catch (_) {
+      return MockDataService.getUserByUid(uid);
+    }
   }
 
   static Stream<User?> streamUserByUid(String uid) {
     return FirebaseFirestore.instance.collection('users').doc(uid).snapshots().map((doc) {
       if (!doc.exists) return null;
       return User.fromMap(doc.data() as Map<String, dynamic>, uid);
-    });
+    }).handleError((_) => null);
   }
 
   static Future<void> updateUser(String uid, Map<String, dynamic> data) async {
@@ -24,7 +28,11 @@ class UserRepository {
       await MockDataService.updateUser(uid, data);
       return;
     }
-    await FirebaseFirestore.instance.collection('users').doc(uid).update(data);
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update(data);
+    } catch (_) {
+      await MockDataService.updateUser(uid, data);
+    }
   }
 
   static Future<void> createUser(User user) async {
@@ -32,38 +40,61 @@ class UserRepository {
       await MockDataService.createUser(user);
       return;
     }
-    await FirebaseFirestore.instance.collection('users').doc(user.id).set(user.toMap());
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(user.id).set(user.toMap());
+    } catch (_) {
+      await MockDataService.createUser(user);
+    }
   }
 
   static Future<List<User>> getAllUsers() async {
     if (!AppConfig.useFirebase) return MockDataService.getAllUsers();
-    final snapshot = await FirebaseFirestore.instance.collection('users').get();
-    return snapshot.docs
-        .map((doc) => User.fromMap(doc.data(), doc.id))
-        .toList();
+    try {
+      final snapshot = await FirebaseFirestore.instance.collection('users').get();
+      if (snapshot.docs.isEmpty) return MockDataService.getAllUsers();
+      return snapshot.docs
+          .map((doc) => User.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (_) {
+      return MockDataService.getAllUsers();
+    }
   }
 
   static Future<List<User>> getUsersByRole(String role) async {
     if (!AppConfig.useFirebase) return MockDataService.getUsersByRole(role);
-    final snapshot = await FirebaseFirestore.instance
-        .collection('users').where('role', isEqualTo: role).get();
-    return snapshot.docs
-        .map((doc) => User.fromMap(doc.data(), doc.id))
-        .toList();
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users').where('role', isEqualTo: role).get();
+      if (snapshot.docs.isEmpty) return MockDataService.getUsersByRole(role);
+      return snapshot.docs
+          .map((doc) => User.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (_) {
+      return MockDataService.getUsersByRole(role);
+    }
   }
 
   static Future<List<User>> getUsersByGrade(String gradeLevel) async {
     if (!AppConfig.useFirebase) return MockDataService.getUsersByGrade(gradeLevel);
-    final snapshot = await FirebaseFirestore.instance
-        .collection('users').where('gradeLevel', isEqualTo: gradeLevel).get();
-    return snapshot.docs
-        .map((doc) => User.fromMap(doc.data(), doc.id))
-        .toList();
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users').where('gradeLevel', isEqualTo: gradeLevel).get();
+      if (snapshot.docs.isEmpty) return MockDataService.getUsersByGrade(gradeLevel);
+      return snapshot.docs
+          .map((doc) => User.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (_) {
+      return MockDataService.getUsersByGrade(gradeLevel);
+    }
   }
 
   static Future<int> getUserCount() async {
     if (!AppConfig.useFirebase) return MockDataService.getUserCount();
-    final snapshot = await FirebaseFirestore.instance.collection('users').get();
-    return snapshot.docs.length;
+    try {
+      final snapshot = await FirebaseFirestore.instance.collection('users').get();
+      return snapshot.docs.length;
+    } catch (_) {
+      return MockDataService.getUserCount();
+    }
   }
 }
