@@ -504,6 +504,18 @@ final Map<String, List<PastExamQuestion>> pastExamQuestions = {
       answer: 'The fundamental principles of Economics involve understanding its core methodologies and applying them to solve practical problems in the field.',
       explanation: 'Mastery of Economics requires both theoretical knowledge and practical application.', topic: 'Economics Concepts'),
   ],
+  'o1_frs': [
+    PastExamQuestion(id: 'pe_o1_frs_1', subjectId: 'o1_frs', gradeLevel: 'Form 1', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Identify three Supreme Being names in Zimbabwean indigenous languages and explain their meanings. (6 marks)', marks: 6,
+      answer: '1) Mwari (The Supreme Creator in Shona), 2) uNkulunkulu (The Greatest One in Ndebele), 3) Nyadenga (Lord of the Heavens).',
+      explanation: 'These reverence names portray God\'s power, transcendence, and creative authorship.', topic: 'Indigenous Religion'),
+  ],
+  'o2_frs': [
+    PastExamQuestion(id: 'pe_o2_frs_1', subjectId: 'o2_frs', gradeLevel: 'Form 2', year: '2023', term: 'Term 1', paper: '1',
+      question: 'Explain the significance of the Kuroora/Ukulobola marriage ceremony in African Traditional Religion. (6 marks)', marks: 6,
+      answer: 'It expresses appreciation to the bride\'s family, unites two extended families, and notifies ancestors of a sacred covenant.',
+      explanation: 'Roora/Lobola establishes social harmony and moral accountability between clans.', topic: 'Rites of Passage'),
+  ],
   'o3_frs': [
     PastExamQuestion(id: 'pe_o3_frs_1', subjectId: 'o3_frs', gradeLevel: 'Form 3', year: '2023', term: 'Term 1', paper: '1',
       question: 'Discuss the importance of rites of passage in traditional African communities. (5 marks)', marks: 5,

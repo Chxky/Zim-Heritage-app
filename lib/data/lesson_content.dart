@@ -929,6 +929,73 @@ final Map<String, List<Lesson>> lessonsByTopic = {
   ],
 
 
+  // ======================== FORM 1 FRS ========================
+  'o1_frs_1': [
+    Lesson(
+      id: 'lsn_o1_frs_1_1', subjectId: 'o1_frs', topicId: 'o1_frs_1',
+      title: 'Foundations of Family & Religion in Zimbabwe', gradeLevel: 'Form 1',
+      objectives: ['Understand family types in Zimbabwe', 'Explain the role of religion in community life', 'Identify Supreme Being names across Zimbabwean languages'],
+      sections: [
+        LessonSection(
+          heading: 'Family Structures and Heritage',
+          content: 'In Zimbabwe, family is the cornerstone of society. It includes extended family systems (grandparents, uncles, aunts, cousins) working together under Unhu/Ubuntu.',
+          bulletPoints: ['Nuclear Family: Parents and children.', 'Extended Family: Multi-generational household providing social safety nets.', 'Totems (Mitupo/Izibongo): Heritage identities preventing incest and maintaining clan unity.'],
+          example: 'A child bearing the Shumba (Lion) totem respects all members of the Shumba clan as family.',
+        ),
+        LessonSection(
+          heading: 'Concept of God in African Indigenous Religion (AIR)',
+          content: 'God is known by reverence names: Mwari in Shona, uNkulunkulu in Ndebele, Nyadenga, Musikavanhu.',
+          bulletPoints: ['God is supreme, omnipotent, and the giver of rain and harvest.', 'Respect for elders and ancestors reflects divine moral order.'],
+        ),
+      ],
+      keyPoints: ['Extended family fosters community security.', 'Unhu/Ubuntu defines personal dignity and respect.', 'Totems preserve heritage and environmental conservation.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'State two functions of totems (mitupo/izibongo) in Zimbabwean society.', answer: 'Preserving clan identity and preventing marriage between close relatives.', explanation: 'Totems serve both social and biological preservation roles.'),
+      ],
+      references: ['Step Ahead FRS Form 1', 'MoPSE FRS Syllabus'],
+    ),
+  ],
+  'o1_frs_2': [
+    Lesson(
+      id: 'lsn_o1_frs_2_1', subjectId: 'o1_frs', topicId: 'o1_frs_2',
+      title: 'Judaism and Christianity Foundations', gradeLevel: 'Form 1',
+      objectives: ['Trace Abrahamic covenant roots', 'Examine the Ten Commandments', 'Understand the life and moral parables of Jesus Christ'],
+      sections: [
+        LessonSection(
+          heading: 'The Abrahamic Covenant & Mosaic Law',
+          content: 'Judaism and Christianity share historical roots beginning with Abraham and Moses in the Old Testament.',
+          bulletPoints: ['Ten Commandments (Decalogue): Moral foundation covering duties to God and neighbors.', 'Covenant: Binding promise between God and His people.'],
+        ),
+      ],
+      keyPoints: ['Ten Commandments govern moral behavior.', 'Jesus taught love, humility, and forgiveness.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'What is the central message of the Parable of the Good Samaritan?', answer: 'Neighborly love transcends tribal, racial, and religious boundaries.', explanation: 'Jesus used the parable to redefine who a neighbor is.'),
+      ],
+      references: ['Step Ahead FRS Form 1'],
+    ),
+  ],
+
+  // ======================== FORM 2 FRS ========================
+  'o2_frs_1': [
+    Lesson(
+      id: 'lsn_o2_frs_1_1', subjectId: 'o2_frs', topicId: 'o2_frs_1',
+      title: 'AIR Rites of Passage and Traditional Ceremonies', gradeLevel: 'Form 2',
+      objectives: ['Detail stages of human development in AIR', 'Explain Kuroora/Ukulobola marriage customs', 'Understand Kurova Guva/Umbuyiso ceremonies'],
+      sections: [
+        LessonSection(
+          heading: 'Marriage Customs (Kuroora/Ukulobola)',
+          content: 'Marriage in AIR is not merely between two individuals, but a sacred covenant uniting two extended families and honoring ancestors.',
+          bulletPoints: ['Bride price (Roora/Lobola) symbolizes gratitude to the bride\'s parents.', 'Ancestors are notified (Kutenda midzimu) of the union.'],
+        ),
+      ],
+      keyPoints: ['Rites of passage mark lifelong spiritual progress.', 'Roora/Lobola builds enduring social bridges between families.'],
+      practiceQuestions: [
+        PracticeQuestion(question: 'Explain the social significance of Kuroora/Ukulobola in Zimbabwe.', answer: 'It expresses gratitude to the bride\'s family and seals a long-term bond between two extended families.', explanation: 'It is a symbol of respect and appreciation, not commercial purchase.'),
+      ],
+      references: ['Step Ahead FRS Form 2'],
+    ),
+  ],
+
   // ======================== FORM 3 FRS ========================
   'o3_frs_1': [
     Lesson(

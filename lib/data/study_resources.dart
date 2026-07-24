@@ -146,8 +146,52 @@ final List<StudyResource> allStudyResources = [
   ),
 
   // ==========================================
-  // HERITAGE-SOCIAL STUDIES & HISTORY
+  // FAMILY & RELIGIOUS STUDIES (FRS / FRM / DIVINITY)
   // ==========================================
+  StudyResource(
+    id: 'res_frs_01',
+    subjectId: 'o3_frs',
+    title: 'ZIMSEC Family & Religious Studies (FRS) Open Portal',
+    description: 'Comprehensive syllabus modules covering African Traditional Religion (AIR), Abrahamic Faiths, and Unhu/Ubuntu Ethics.',
+    url: 'https://mopse.ac.zw/',
+    category: 'open_textbook',
+    provider: 'Zimbabwe Ministry of Primary and Secondary Education',
+    gradeLevels: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Form 1', 'Form 2', 'Form 3', 'Form 4', 'Form 5', 'Form 6'],
+    curriculum: 'zimsec',
+  ),
+  StudyResource(
+    id: 'res_frs_02',
+    subjectId: 'o4_frs',
+    title: 'BBC Bitesize Religious Studies, Ethics & World Faiths',
+    description: 'Interactive guides, video summaries, and ethics case studies on Christianity, Islam, Judaism, and Moral Philosophy.',
+    url: 'https://www.bbc.co.uk/bitesize/subjects/zb48q6f',
+    category: 'video_lesson',
+    provider: 'BBC Bitesize Religious Studies',
+    gradeLevels: ['Form 1', 'Form 2', 'Form 3', 'Form 4', 'Form 5', 'Form 6'],
+    curriculum: 'both',
+  ),
+  StudyResource(
+    id: 'res_frs_03',
+    subjectId: 'o1_frs',
+    title: 'UNESCO African Indigenous Knowledge Systems & Traditional Religion Archive',
+    description: 'Historical records, sacred shrines, rites of passage, ancestral veneration, and traditional moral ethics in Africa.',
+    url: 'https://whc.unesco.org/en/list/364/',
+    category: 'heritage_archive',
+    provider: 'UNESCO Indigenous Heritage Archive',
+    gradeLevels: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Form 1', 'Form 2', 'Form 3', 'Form 4', 'Form 5', 'Form 6'],
+    curriculum: 'zimsec',
+  ),
+  StudyResource(
+    id: 'res_frs_04',
+    subjectId: 'a5_frs',
+    title: 'MIT OpenCourseWare Religious Studies & Ethics Philosophy',
+    description: 'Advanced theological exegesis, Old and New Testament hermeneutics, bioethics, and comparative religious studies.',
+    url: 'https://ocw.mit.edu/courses/humanities/',
+    category: 'open_textbook',
+    provider: 'MIT OpenCourseWare & Cambridge Divinity Portal',
+    gradeLevels: ['Form 5', 'Form 6'],
+    curriculum: 'both',
+  ),
   StudyResource(
     id: 'res_his_01',
     subjectId: 'o1_his',
